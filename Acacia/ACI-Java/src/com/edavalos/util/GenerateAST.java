@@ -16,6 +16,7 @@ public final class GenerateAST {
 
         // All our expression tree types
         List<String> exprs = Arrays.asList(
+                "Assign   : Token name, Expr value",
                 "Binary   : Expr left, Token operator, Expr right",
                 "Grouping : Expr expression",
                 "Literal  : Object value",
