@@ -57,8 +57,28 @@ class Scanner {
             }
             case ' ', '\r', '\t' -> {}
             case '\n' -> line++;
+            case '"' -> string();
             default -> Acacia.error(line, "Unexpected character.");
         }
+    }
+
+    private void string() {
+        while (peek() != '"' && !isAtEnd()) {
+            if (peek() == '\n') line++;
+            advance();
+        }
+
+        if (isAtEnd()) {
+            Acacia.error(line, "Unterminated string.");
+            return;
+        }
+
+        // The closing '"'
+        advance();
+
+        // Trim the surrounding quotes
+        String value = source.substring(start + 1, current - 1);
+        addToken(STRING, value);
     }
 
     private boolean match(char expected) {
