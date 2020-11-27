@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 public final class Acacia {
     static boolean hadError = false;
@@ -45,8 +46,8 @@ public final class Acacia {
     }
 
     private static void run(String source) {
-//        Scanner scanner = new Scanner(source);
-//        List<Token> tokens = scanner.scanTokens();
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
 
         // For now, just print the tokens.
         for (Token token : tokens) {
