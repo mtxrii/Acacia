@@ -13,7 +13,7 @@ public final class Acacia {
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
-            System.out.println("Usage: acacia [script]");
+            System.out.println("Usage: acacia [script.aci]");
             System.exit(64);
 
         } else if (args.length == 1) { // run a script
@@ -24,8 +24,14 @@ public final class Acacia {
         }
     }
 
-    private static void runFile(String path) throws IOException {
-        byte[] bytes = Files.readAllBytes(Paths.get(path));
+    private static void runFile(String path) {
+        byte[] bytes = null;
+        try {
+            bytes = Files.readAllBytes(Paths.get(path));
+        } catch (IOException exception) {
+            System.out.println("Error: could not find file '" + path + "'");
+            System.exit(64);
+        }
         run(new String(bytes, Charset.defaultCharset()));
 
         // Indicate an error in the exit code.
