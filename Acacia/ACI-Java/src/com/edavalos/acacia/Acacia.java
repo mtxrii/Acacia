@@ -32,9 +32,17 @@ public final class Acacia {
             System.out.println("Error: could not find file '" + path + "'");
             System.exit(64);
         }
+
+        // checks if filetype is of .aci (really can just be any text document though)
+        var parts = path.split(".");
+        if (!parts[parts.length - 1].equals("aci")) {
+            System.out.println("Warn: file '" + path + "' is not of filetype '.aci'");
+        }
+
+        // Send to runner method
         run(new String(bytes, Charset.defaultCharset()));
 
-        // Indicate an error in the exit code.
+        // Indicate an error in the exit code
         if (hadError) System.exit(65);
     }
 
@@ -55,7 +63,7 @@ public final class Acacia {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
-        // For now, just print the tokens.
+        // For now, just print the tokens
         for (Token token : tokens) {
             System.out.println(token);
         }
