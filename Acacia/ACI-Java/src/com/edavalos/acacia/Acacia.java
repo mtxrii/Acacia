@@ -34,7 +34,7 @@ public final class Acacia {
         }
 
         // checks if filetype is of .aci (really can just be any text document though)
-        var parts = path.split(".");
+        var parts = path.split("\\.");
         if (!parts[parts.length - 1].equals("aci")) {
             System.out.println("Warn: file '" + path + "' is not of filetype '.aci'");
         }
