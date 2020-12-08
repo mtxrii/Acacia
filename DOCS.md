@@ -190,3 +190,6 @@ match x with {
 }
 
 ```
+
+# Functions
+* todo
