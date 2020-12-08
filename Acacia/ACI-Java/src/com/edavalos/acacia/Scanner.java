@@ -12,22 +12,27 @@ class Scanner {
 
     static {
         keywords = new HashMap<>();
-        keywords.put("and",    AND);
-        keywords.put("class",  CLASS);
-        keywords.put("def",    DEF);
-        keywords.put("else",   ELSE);
-        keywords.put("false",  FALSE);
-        keywords.put("for",    FOR);
-        keywords.put("if",     IF);
-        keywords.put("let",    LET);
-        keywords.put("nil",    NIL);
-        keywords.put("or",     OR);
-        keywords.put("print",  PRINT);
-        keywords.put("return", RETURN);
-        keywords.put("super",  SUPER);
-        keywords.put("this",   THIS);
-        keywords.put("true",   TRUE);
-        keywords.put("while",  WHILE);
+        keywords.put("and",      AND);
+        keywords.put("break",    BREAK);
+        keywords.put("class",    CLASS);
+        keywords.put("continue", CONTINUE);
+        keywords.put("def",      DEF);
+        keywords.put("else",     ELSE);
+        keywords.put("false",    FALSE);
+        keywords.put("for",      FOR);
+        keywords.put("foreach",  FOREACH);
+        keywords.put("if",       IF);
+        keywords.put("let",      LET);
+        keywords.put("match",    MATCH);
+        keywords.put("nil",      NIL);
+        keywords.put("or",       OR);
+        keywords.put("print",    PRINT);
+        keywords.put("return",   RETURN);
+        keywords.put("super",    SUPER);
+        keywords.put("this",     THIS);
+        keywords.put("true",     TRUE);
+        keywords.put("while",    WHILE);
+        keywords.put("with",     WITH);
     }
 
     private final String source;
@@ -131,7 +136,7 @@ class Scanner {
     private void identifier() {
         while (isAlphaNumeric(peek())) advance();
 
-        String text = source.substring(start, current);
+        String text = source.substring(start, current).toLowerCase();
         TokenType type = keywords.get(text);
         if (type == null) type = IDENTIFIER;
         addToken(type);
