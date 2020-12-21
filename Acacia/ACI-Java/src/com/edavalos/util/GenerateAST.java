@@ -3,6 +3,7 @@ package com.edavalos.util;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
 public final class GenerateAST {
@@ -12,6 +13,14 @@ public final class GenerateAST {
             System.exit(64);
         }
         String outputDir = args[0];
+
+        List<String> types = Arrays.asList( // All our tree types
+                "Binary   : Expr left, Token operator, Expr right",
+                "Grouping : Expr expression",
+                "Literal  : Object value",
+                "Unary    : Token operator, Expr right"
+        );
+        defineAst(outputDir, "Expr", types);
     }
 
     private static void defineAst(String outputDir, String baseName, List<String> types) throws IOException {
