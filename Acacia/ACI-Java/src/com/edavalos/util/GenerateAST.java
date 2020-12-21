@@ -1,6 +1,8 @@
 package com.edavalos.util;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 public final class GenerateAST {
     public static void main(String[] args) throws IOException {
@@ -9,5 +11,19 @@ public final class GenerateAST {
             System.exit(64);
         }
         String outputDir = args[0];
+    }
+
+    private static void defineAst(String outputDir, String baseName, List<String> types) throws IOException {
+        String path = outputDir + "/" + baseName + ".java";
+        PrintWriter writer = new PrintWriter(path, "UTF-8");
+
+        writer.println("package com.craftinginterpreters.lox;");
+        writer.println();
+        writer.println("import java.util.List;");
+        writer.println();
+        writer.println("abstract class " + baseName + " {");
+
+        writer.println("}");
+        writer.close();
     }
 }
