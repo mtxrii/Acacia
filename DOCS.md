@@ -217,4 +217,13 @@ match x with {
 ```
 
 # Functions
-* todo
+Functions are called the same way as in most C style languages.
+```javascript
+// arguments
+sendTranscript(idNumber, date);
+
+// or no arguments
+sendOranscript(); // it's all dynamicly typed so there's no difference with runtime.
+```
+
+The parenthesis are required, because like in python, they are required to call a function. Without them, it instead references the function.
