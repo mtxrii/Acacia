@@ -237,5 +237,11 @@ def sendTranscript(idNumber) someDate {
 }
 
 sendTranscript(100234); // (for example)
+```
 
 ### Defining New Functons
+To create a new subroutine / procedure / function, use the keyword `def`.
+```javascript
+def getAvg(total, sum) {
+  return sum / total;
+}
