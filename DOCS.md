@@ -217,4 +217,31 @@ match x with {
 ```
 
 # Functions
-* todo
+Functions are called the same way as in most C style languages.
+```javascript
+// arguments
+sendTranscript(idNumber, date);
+
+// or no arguments
+sendOranscript(); // it's all dynamicly typed so there's no difference with runtime.
+```
+
+The parenthesis are required, because they are needed to call a function. Without them, it instead references the function. Arguments already defined can stay however.
+
+You can also define some arguments of a function to partially ready a procedure or program.
+
+```javascript
+let someDate = Date("2020-12-22");
+def sendTranscript(idNumber) someDate {
+  print("It's been " + (Time.now() - someDate);
+}
+
+sendTranscript(100234); // (for example)
+```
+
+### Defining New Functons
+To create a new subroutine / procedure / function, use the keyword `def`.
+```javascript
+def getAvg(total, sum) {
+  return sum / total;
+}
