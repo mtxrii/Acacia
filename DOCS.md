@@ -226,11 +226,16 @@ sendTranscript(idNumber, date);
 sendOranscript(); // it's all dynamicly typed so there's no difference with runtime.
 ```
 
-The parenthesis are required, because like in python, they are required to call a function. Without them, it instead references the function.
+The parenthesis are required, because they are needed to call a function. Without them, it instead references the function. Arguments already defined can stay however.
 
 You can also define some arguments of a function to partially ready a procedure or program.
 
 ```javascript
-def sendTranscript(idNumber) 
+let someDate = Date("2020-12-22");
+def sendTranscript(idNumber) someDate {
+  print("It's been " + (Time.now() - someDate);
+}
+
+sendTranscript(100234); // (for example)
 
 ### Defining New Functons
