@@ -166,7 +166,7 @@ for (let i = 0; i < length(letters); i = i + 1) {
 }
 ```
 
-`match with` is a take on the switch statement.
+`match with` is a take on the switch statement inspired by OCaml. It can compare equality as well as types.
 ```ocaml
 let x = 12;
 
@@ -186,7 +186,32 @@ match x with {
     break;
   }
   
+  (number) {
+    print("yes, however a match has already been found (12) and so this wont be printed");
+    break;
+  }
+  
   print("default");
+}
+
+
+let y = true;
+
+match x with {
+  (string) {
+    print("nope, not a string");
+    break;
+  }
+  
+  (number) {
+    print("also not a number");
+    break;
+  }
+  
+  (bool) {
+    print("yup, its a boolean");
+    break;
+  }
 }
 
 ```
