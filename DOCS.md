@@ -227,3 +227,10 @@ sendOranscript(); // it's all dynamicly typed so there's no difference with runt
 ```
 
 The parenthesis are required, because like in python, they are required to call a function. Without them, it instead references the function.
+
+You can also define some arguments of a function to partially ready a procedure or program.
+
+```javascript
+def sendTranscript(idNumber) 
+
+### Defining New Functons
