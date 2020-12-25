@@ -12,6 +12,7 @@ class Parser {
         this.tokens = tokens;
     }
 
+
     private Expr expression() {
         return equality();
     }
@@ -51,6 +52,21 @@ class Parser {
 
         return expr;
     }
+
+    private Expr factor() {
+        Expr expr = unary();
+
+        while (match(SLASH, STAR)) {
+            Token operator = previous();
+            Expr right = unary();
+            expr = new Expr.Binary(expr, operator, right);
+        }
+
+        return expr;
+    }
+
+
+
 
     private boolean match(TokenType... types) {
         for (TokenType type : types) {
