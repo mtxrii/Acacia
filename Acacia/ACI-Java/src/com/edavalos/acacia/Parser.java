@@ -5,6 +5,8 @@ import java.util.List;
 import static com.edavalos.acacia.TokenType.*;
 
 class Parser {
+    private static class ParseError extends RuntimeException {}
+
     private final List<Token> tokens;
     private int current = 0;
 
@@ -89,6 +91,8 @@ class Parser {
             consume(RIGHT_PAREN, "Expect ')' after expression.");
             return new Expr.Grouping(expr);
         }
+
+        throw error(peek(), "Expected expression.");
     }
 
 
@@ -131,5 +135,33 @@ class Parser {
 
     private Token previous() {
         return tokens.get(current - 1);
+    }
+
+    /* --- Error handling methods --- */
+
+    private ParseError error(Token token, String message) {
+        Acacia.error(token, message);
+        return new ParseError();
+    }
+
+    // Discards tokens until parser reaches an end of statement
+    private void synchronize() {
+        advance();
+
+        while (!isAtEnd()) {
+            // Semicolon means end of statement
+            if (previous().type == SEMICOLON) {
+                return;
+            }
+
+            // Start of new statement means end of previous one
+            switch (peek().type) {
+                case CLASS, DEF, LET, FOR, IF, WHILE, PRINT, RETURN -> {
+                    return;
+                }
+            }
+
+            advance();
+        }
     }
 }
