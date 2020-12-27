@@ -24,6 +24,8 @@ class Parser {
     }
 
 
+    /* --- Expression processing methods --- */
+
     private Expr expression() {
         return equality();
     }
@@ -105,7 +107,7 @@ class Parser {
     }
 
 
-
+    /* --- Token traversing methods --- */
 
     private boolean match(TokenType... types) {
         for (TokenType type : types) {
@@ -145,6 +147,7 @@ class Parser {
     private Token previous() {
         return tokens.get(current - 1);
     }
+
 
     /* --- Error handling methods --- */
 
