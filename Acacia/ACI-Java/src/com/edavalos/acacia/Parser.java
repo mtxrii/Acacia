@@ -109,6 +109,7 @@ class Parser {
 
     /* --- Token traversing methods --- */
 
+    // Check if current token is one of any number of specified TokenTypes
     private boolean match(TokenType... types) {
         for (TokenType type : types) {
             if (check(type)) {
@@ -120,30 +121,36 @@ class Parser {
         return false;
     }
 
+    // Check current token, and if it's of specified type, advance to next
     private Token consume(TokenType type, String message) {
         if (check(type)) return advance();
 
         throw error(peek(), message);
     }
 
+    // Check if current token is of a specified TokenType
     private boolean check(TokenType type) {
         if (isAtEnd()) return false;
         return peek().type == type;
     }
 
+    // Go on to next token, provided there is at least one left
     private Token advance() {
         if (!isAtEnd()) current++;
         return previous();
     }
 
+    // Check if current token is last
     private boolean isAtEnd() {
         return peek().type == EOF;
     }
 
+    // Get current token
     private Token peek() {
         return tokens.get(current);
     }
 
+    // Get previous token
     private Token previous() {
         return tokens.get(current - 1);
     }
