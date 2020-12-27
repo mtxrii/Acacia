@@ -5,6 +5,7 @@ import java.util.List;
 import static com.edavalos.acacia.TokenType.*;
 
 class Parser {
+    // Custom exception for parser errors
     private static class ParseError extends RuntimeException {}
 
     private final List<Token> tokens;
@@ -12,6 +13,14 @@ class Parser {
 
     Parser(List<Token> tokens) {
         this.tokens = tokens;
+    }
+
+    Expr parse() {
+        try {
+            return expression();
+        } catch (ParseError error) {
+            return null;
+        }
     }
 
 
