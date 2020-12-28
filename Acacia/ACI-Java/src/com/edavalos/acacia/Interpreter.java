@@ -2,6 +2,16 @@ package com.edavalos.acacia;
 
 class Interpreter implements Expr.Visitor<Object> {
 
+    // Main method to interpret a given expression
+    void interpret(Expr expression) {
+        try {
+            Object value = evaluate(expression);
+            System.out.println(stringify(value));
+        } catch (RuntimeError error) {
+            Acacia.runtimeError(error);
+        }
+    }
+
     /* --- Expressions' visitor methods --- */
 
     @Override
