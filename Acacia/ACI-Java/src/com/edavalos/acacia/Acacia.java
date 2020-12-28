@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public final class Acacia {
+    private static final Interpreter interpreter = new Interpreter();
+
     static String[] fileLines;
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
@@ -76,7 +78,7 @@ public final class Acacia {
         // Stop if there was a syntax error
         if (hadError) return;
 
-        System.out.println(new AstPrinter().print(expression));
+        interpreter.interpret(expression);
     }
 
 
@@ -99,9 +101,6 @@ public final class Acacia {
 
     // For reporting errors given a runtime error object
     static void error(RuntimeError error) {
-        System.err.println(error.getMessage() +
-                "\n[line " + error.token.line + "]");
-
         report(error.token.line, "", error.getMessage(), true);
     }
 
