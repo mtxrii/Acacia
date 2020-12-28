@@ -11,6 +11,7 @@ import java.util.List;
 public final class Acacia {
     static String[] fileLines;
     static boolean hadError = false;
+    static boolean hadRuntimeError = false;
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
@@ -49,6 +50,7 @@ public final class Acacia {
 
         // Indicate an error in the exit code
         if (hadError) System.exit(65);
+        if (hadRuntimeError) System.exit(70);
     }
 
     private static void runPrompt() throws IOException {
@@ -77,36 +79,52 @@ public final class Acacia {
         System.out.println(new AstPrinter().print(expression));
     }
 
+
+    /* --- Error reporting methods --- */
+
     // For reporting errors given only a line and message
     static void error(int line, String message) {
-        report(line, "", message);
+        report(line, "", message, false);
     }
 
     // For reporting errors given a faulty token and message
     static void error(Token token, String message) {
         if (token.type == TokenType.EOF) {
-            report(token.line, " at end", message);
+            report(token.line, " at end", message, false);
         }
         else {
-            report(token.line, " at '" + token.lexeme + "'", message);
+            report(token.line, " at '" + token.lexeme + "'", message, false);
         }
+    }
+
+    // For reporting errors given a runtime error object
+    static void error(RuntimeError error) {
+        System.err.println(error.getMessage() +
+                "\n[line " + error.token.line + "]");
+
+        report(error.token.line, "", error.getMessage(), true);
     }
 
     // For displaying error messages that only include a line
-    private static void report(int line, String where, String message) {
+    private static void report(int line, String where, String message, boolean isRuntimeError) {
         System.err.println("[line " + line + "] Error" + where + ": " + message);
-        hadError = true;
+        if (isRuntimeError) hadRuntimeError = true;
+        else hadError = true;
     }
 
     // For displaying error messages that include a line, column and length
-    private static void report(Token token, String message) {
+    private static void report(Token token, String message, boolean isRuntimeError) {
         System.err.println("[line " + token.line + "] Error at:");
         System.out.println("'" + fileLines[token.line-1] + "'");
         System.err.println(repeat(token.column, " ") + repeat(token.length, "*\n" + message));
-        hadError = true;
+        if (isRuntimeError) hadRuntimeError = true;
+        else hadError = true;
     }
 
-    // Utility method to repeat strings
+
+    /* --- Utility methods --- */
+
+    // Repeats strings
     public static String repeat(int count, String str) {
         return new String(new char[count]).replace("\0", str);
     }

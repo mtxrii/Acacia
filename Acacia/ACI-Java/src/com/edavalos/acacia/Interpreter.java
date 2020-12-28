@@ -8,9 +8,10 @@ class Interpreter implements Expr.Visitor<Object> {
             Object value = evaluate(expression);
             System.out.println(stringify(value));
         } catch (RuntimeError error) {
-            Acacia.runtimeError(error);
+            Acacia.error(error);
         }
     }
+
 
     /* --- Expressions' visitor methods --- */
 
