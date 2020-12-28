@@ -11,7 +11,10 @@ class Interpreter implements Expr.Visitor<Object> {
 
         return switch (expr.operator.type) {
             // If minus, assume both are numbers and return difference (num)
-            case MINUS -> (double)left - (double)right;
+            case MINUS -> {
+                validateNumbers(expr.operator, left, right);
+                yield (double)left - (double)right;
+            }
             // If addition, add numbers together, and concatenate strings
             case PLUS -> {
                 if (left instanceof Double && right instanceof Double) {
@@ -21,12 +24,20 @@ class Interpreter implements Expr.Visitor<Object> {
                 if (left instanceof String || right instanceof String) {
                     yield stringify(left) + stringify(right);
                 }
-                yield null;
+                // If values are neither both numbers or one string, throw error
+                throw new RuntimeError(expr.operator, "Operands must either all be numbers or" +
+                        " at least one must be a string.");
             }
             // If division, assume both are numbers and return quotient (num)
-            case SLASH -> (double)left / (double)right;
+            case SLASH ->  {
+                validateNumbers(expr.operator, left, right);
+                yield (double)left / (double)right;
+            }
             // If multiplication, assume both are numbers and return product (num)
-            case STAR -> (double)left * (double)right;
+            case STAR ->  {
+                validateNumbers(expr.operator, left, right);
+                yield (double)left * (double)right;
+            }
 
             // If greater/less or any variant, compare number sizes, and compare string lengths (bool for both)
             case GREATER -> {
@@ -37,7 +48,8 @@ class Interpreter implements Expr.Visitor<Object> {
                 if (left instanceof String && right instanceof String) {
                     yield ((String)left).length() > ((String)right).length();
                 }
-                yield null;
+                // If values are neither type number or string, throw error
+                throw new RuntimeError(expr.operator, "Operands must both be numbers or strings.");
             }
             case GREATER_EQUAL -> {
                 if (left instanceof Double && right instanceof Double) {
@@ -47,7 +59,8 @@ class Interpreter implements Expr.Visitor<Object> {
                 if (left instanceof String && right instanceof String) {
                     yield ((String)left).length() >= ((String)right).length();
                 }
-                yield null;
+                // If values are neither type number or string, throw error
+                throw new RuntimeError(expr.operator, "Operands must both be numbers or strings.");
             }
             case LESS -> {
                 if (left instanceof Double && right instanceof Double) {
@@ -57,7 +70,8 @@ class Interpreter implements Expr.Visitor<Object> {
                 if (left instanceof String && right instanceof String) {
                     yield ((String)left).length() < ((String)right).length();
                 }
-                yield null;
+                // If values are neither type number or string, throw error
+                throw new RuntimeError(expr.operator, "Operands must both be numbers or strings.");
             }
             case LESS_EQUAL -> {
                 if (left instanceof Double && right instanceof Double) {
@@ -67,7 +81,8 @@ class Interpreter implements Expr.Visitor<Object> {
                 if (left instanceof String && right instanceof String) {
                     yield ((String)left).length() <= ((String)right).length();
                 }
-                yield null;
+                // If values are neither type number or string, throw error
+                throw new RuntimeError(expr.operator, "Operands must both be numbers or strings.");
             }
 
             // If equality comparison, return equality value (bool)
@@ -94,7 +109,10 @@ class Interpreter implements Expr.Visitor<Object> {
 
         return switch (expr.operator.type) {
             // If unary is a minus, assume value is a number and return its negation
-            case MINUS -> -(double)right;
+            case MINUS -> {
+                validateNumbers(expr.operator, right);
+                yield -(double) right;
+            }
 
             // If unary is a not, assess value as bool and return its negation
             case BANG -> !isTruthy(right);
@@ -141,5 +159,15 @@ class Interpreter implements Expr.Visitor<Object> {
         if (a == null) return false;
 
         return a.equals(b);
+    }
+
+    // Ensures given objects are numbers
+    private void validateNumbers(Token operator, Object... objects) {
+        for (Object object : objects) {
+            // If any object of the ones given isn't a number, throw an error
+            if (!(object instanceof Double)) {
+                throw new RuntimeError(operator, "Operand must be a number.");
+            }
+        }
     }
 }
