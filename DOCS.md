@@ -1,4 +1,4 @@
-# Acacia
+# Acacia 🌱
 At first glance, this language looks super similar to javascript. That's because it's designed to feel familiar to the C family, and because dynamic typing is the future.
 
 It shines in its ability to be both object oriented and functional, with a nice class system as well as features like closures and declarative statements.
@@ -7,7 +7,7 @@ It shines in its ability to be both object oriented and functional, with a nice 
 Acacia contains your standard primitive types.
 * Booleans - basic true or false.
 * Strings - text enclosed in double quotes. Access individual chars with `[]`
-* Numbers - all numbers are floats, the decimal is just hidden in ints.
+* Numbers - integers and numbers with decimals are treated the same.
 * Nil - same as null or none.
 
 ```javascript
@@ -67,6 +67,8 @@ true and false; // false
 true or false; // true
 nill and true; // false
 ```
+
+>Aside from false Booleans, the only other things that evaluate to false are nil values and numbers with value 0
 
 ### Grouping
 Parenthesis work as separators for more flexibility on what parts of a statement should be evaluated first.
