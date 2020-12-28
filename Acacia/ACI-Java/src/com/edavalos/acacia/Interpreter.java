@@ -144,8 +144,17 @@ class Interpreter implements Expr.Visitor<Object> {
         // If object is nil, string returned should be 'nil' instead of 'null'
         if (object == null) return "nil";
 
-        // Otherwise, valueOf() should take care of it
-        return String.valueOf(object);
+        // If object is a number, and has a decimal where it doesn't need it, remove it
+        if (object instanceof Double) {
+            String text = object.toString();
+            if (text.endsWith(".0")) {
+                text = text.substring(0, text.length() - 2);
+            }
+            return text;
+        }
+
+        // Otherwise, toString() should take care of it
+        return object.toString();
     }
 
     // Determines whether a given value is considered true
