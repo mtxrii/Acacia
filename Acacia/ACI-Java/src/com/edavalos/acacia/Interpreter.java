@@ -9,7 +9,7 @@ class Interpreter implements Expr.Visitor<Object> {
 
     @Override
     public Object visitGroupingExpr(Expr.Grouping expr) {
-        return expr.expression.accept(this);
+        return evaluate(expr.expression);
     }
 
     @Override
@@ -19,6 +19,18 @@ class Interpreter implements Expr.Visitor<Object> {
 
     @Override
     public Object visitUnaryExpr(Expr.Unary expr) {
+        Object right = evaluate(expr.right);
+
+        switch (expr.operator.type) {
+            // If unary is a minus, assume value is number and return its negation
+            case MINUS:
+                return -(double)right;
+            // If unary is a not, assess value as bool and return its negation
+            case BANG:
+                return !isTruthy(right);
+        }
+
+        // Unreachable
         return null;
     }
 }
