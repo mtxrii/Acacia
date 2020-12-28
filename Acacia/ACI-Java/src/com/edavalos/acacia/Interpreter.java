@@ -9,12 +9,12 @@ class Interpreter implements Expr.Visitor<Object> {
 
     @Override
     public Object visitGroupingExpr(Expr.Grouping expr) {
-        return null;
+        return expr.expression.accept(this);
     }
 
     @Override
     public Object visitLiteralExpr(Expr.Literal expr) {
-        return null;
+        return expr.value;
     }
 
     @Override
