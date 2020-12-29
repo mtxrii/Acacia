@@ -38,8 +38,8 @@ print(sampleList[1]); // prints "2"
 let sampleArray = <9, 8, 7>;
 print(sampleArray<2>); // prints "7"
 
-let ict = [24 : "spongebob", 25: "patrick"];
-print(dict[24]); // prints "spongebob"
+let sampleDict = [24 : "spongebob", 25: "patrick"];
+print(sampleDict[24]); // prints "spongebob"
 ```
 
 > Because of the `match with` statement and the function `isinstance()`, type names are reserved keywords and cannot have variables named the same as them. The full list is:
