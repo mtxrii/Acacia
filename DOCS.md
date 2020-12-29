@@ -185,7 +185,7 @@ for (let i = 0; i < length(letters); i = i + 1) {
 }
 ```
 
-`match with` is a take on the switch statement inspired by OCaml. It can compare equality as well as types.
+`match with` is a take on the switch statement loosely inspired by OCaml. It can compare equality as well as types. When comparing equality, a literal or variable is provided in the parenthesis. When comparing type, a data type or object/class name is given. For objects, anything inheriting it will also be considered a match.
 ```ocaml
 let x = 12;
 
