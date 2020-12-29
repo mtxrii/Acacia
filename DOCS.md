@@ -29,18 +29,21 @@ nil;
 Acacia ~~steals~~ borrows some collections from Python.
 * Lists - built in linked lists. Extend, append, pop & push at will. Use `[]`
 * Arrays - fixed length, contain same type (or null for empty). Use `<>`
-* Dictionaries - built in hashmaps, keys and values can be of any type. Use `{}`
+* Dictionaries - built in hashmaps, keys and values can be of any type. Use `[:]`
 ```python
-let list = [1, 2, 3];
-list.append(4);
-print(list[1]); // prints "2"
+let sampleList = [1, 2, 3];
+sampleList.append(4);
+print(sampleList[1]); // prints "2"
 
-let array = <9, 8, 7>;
-print(array<2>); // prints "7"
+let sampleArray = <9, 8, 7>;
+print(sampleArray<2>); // prints "7"
 
-let dict = {24 : "spongebob", 25: "patrick"};
-print(dict{24}); // prints "spongebob"
+let ict = [24 : "spongebob", 25: "patrick"];
+print(dict[24]); // prints "spongebob"
 ```
+
+> Because of the `match with` statement and the function `isinstance()`, type names are reserved keywords and cannot have variables named the same as them. The full list is:
+> `boolean`, `string`, `number`, `list`, `array`, `dictionary`
 
 # Expressions
 These are sets of variables or literals combined with operators to produce a value.
