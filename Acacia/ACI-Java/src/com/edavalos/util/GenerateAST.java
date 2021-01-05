@@ -14,13 +14,22 @@ public final class GenerateAST {
         }
         String outputDir = args[0];
 
-        List<String> types = Arrays.asList( // All our tree types
+        // All our expression tree types
+        List<String> exprs = Arrays.asList(
                 "Binary   : Expr left, Token operator, Expr right",
                 "Grouping : Expr expression",
                 "Literal  : Object value",
                 "Unary    : Token operator, Expr right"
         );
-        defineAst(outputDir, "Expr", types);
+
+        // All our statement tree types
+        List<String> stmts = Arrays.asList(
+                "Expression : Expr expression",
+                "Print      : Expr expression"
+        );
+
+        defineAst(outputDir, "Expr", exprs);
+        defineAst(outputDir, "Stmt", stmts);
     }
 
     private static void defineAst(String outputDir, String baseName, List<String> types) throws IOException {
