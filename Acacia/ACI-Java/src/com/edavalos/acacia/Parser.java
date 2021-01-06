@@ -38,6 +38,12 @@ class Parser {
         return expressionStatement();
     }
 
+    private Stmt printStatement() {
+        Expr value = expression();
+        consume(SEMICOLON, "Expected ';' after value.");
+        return new Stmt.Print(value);
+    }
+
     private Expr equality() {
         Expr expr = comparison();
 
