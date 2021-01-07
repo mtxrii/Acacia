@@ -1,6 +1,6 @@
 package com.edavalos.acacia;
 
-class Interpreter implements Expr.Visitor<Object> {
+class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     // Main method to interpret a given expression
     void interpret(Expr expression) {
@@ -130,6 +130,22 @@ class Interpreter implements Expr.Visitor<Object> {
 
             default -> null;
         };
+    }
+
+
+    /* --- Statements' visitor methods --- */
+
+    @Override
+    public Void visitExpressionStmt(Stmt.Expression stmt) {
+        evaluate(stmt.expression);
+        return null;
+    }
+
+    @Override
+    public Void visitPrintStmt(Stmt.Print stmt) {
+        Object value = evaluate(stmt.expression);
+        System.out.println(stringify(value));
+        return null;
     }
 
 
