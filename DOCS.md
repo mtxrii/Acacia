@@ -88,7 +88,7 @@ true or false; // true
 nill and true; // false
 ```
 
->Aside from false Booleans, the only other things that evaluate to false are nil values and numbers with value 0
+>Aside from false Booleans, the only other things that evaluate to false are `nil` values and numbers with value `0`
 
 ### Grouping
 Parenthesis work as separators for more flexibility on what parts of a statement should be evaluated first.
