@@ -1,12 +1,15 @@
 package com.edavalos.acacia;
 
+import java.util.List;
+
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
-    // Main method to interpret a given expression
-    void interpret(Expr expression) {
+    // Main method to interpret given statements
+    void interpret(List<Stmt> statements) {
         try {
-            Object value = evaluate(expression);
-            System.out.println(stringify(value));
+            for (Stmt statement : statements) {
+                execute(statement);
+            }
         } catch (RuntimeError error) {
             Acacia.error(error);
         }
