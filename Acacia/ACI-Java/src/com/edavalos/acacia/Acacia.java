@@ -118,7 +118,7 @@ public final class Acacia {
     private static void report(Token token, String message, boolean isRuntimeError) {
         System.err.println("[line " + token.line + "] Error at:");
         System.out.println("'" + fileLines[token.line-1] + "'");
-        System.err.println(repeat(token.column, " ") + repeat(token.length, "*\n" + message));
+        System.err.println(repeat(token.column, " ") + repeat(token.length, "*") + "\n" + message);
         if (isRuntimeError) hadRuntimeError = true;
         else hadError = true;
     }
