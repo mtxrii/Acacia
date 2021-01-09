@@ -7,11 +7,19 @@ class Environment {
     // HashMap that holds all identifier->value bindings
     private final Map<String, Object> variables = new HashMap<>();
 
-    // Checks if variable already exists, and throws error if if does, otherwise saves new variable binding
-    void define(String name, Object value, int line) {
-        if (variables.containsKey(name))
-            Acacia.error(line, "Variable '" + name + "' already exists.");
+    Object get(Token name) {
+        if (variables.containsKey(name.lexeme)) {
+            return variables.get(name.lexeme);
+        }
 
-        else variables.put(name, value);
+        throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
+    }
+
+    void define(Token name, Object value) {
+        if (variables.containsKey(name.lexeme)) {
+            throw new RuntimeError(name, "Variable '" + name.lexeme + "' already exists.");
+        }
+
+        else variables.put(name.lexeme, value);
     }
 }
