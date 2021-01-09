@@ -11,6 +11,7 @@ import java.util.List;
 public final class Acacia {
     private static final Interpreter interpreter = new Interpreter();
 
+    static boolean replMode;
     static String[] fileLines;
     static boolean hadError = false;
     static boolean hadRuntimeError = false;
@@ -21,9 +22,11 @@ public final class Acacia {
             System.exit(64);
 
         } else if (args.length == 1) { // run a script
+            replMode = false;
             runFile(args[0]);
 
         } else { // no script specified, enter interactive runtime
+            replMode = true;
             runPrompt();
         }
     }
@@ -37,10 +40,10 @@ public final class Acacia {
             System.exit(64);
         }
 
-        // checks if filetype is of .aci (really can just be any text document though)
+        // checks if file is of type .aci (really can just be any text document though)
         var parts = path.split("\\.");
         if (!parts[parts.length - 1].equals("aci")) {
-            System.out.println("[Warn]: file '" + path + "' is not of filetype '.aci'");
+            System.err.println("[Warn]: file '" + path + "' is not of filetype '.aci'");
         }
 
         // Compile string from file & safe it
@@ -73,12 +76,12 @@ public final class Acacia {
         List<Token> tokens = scanner.scanTokens();
 
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         // Stop if there was a syntax error
         if (hadError) return;
 
-        interpreter.interpret(expression);
+        interpreter.interpret(statements);
     }
 
 
