@@ -19,7 +19,7 @@ class Parser {
     List<Stmt> parse() {
         List<Stmt> statements = new ArrayList<>();
         while (!isAtEnd()) {
-            statements.add(statement());
+            statements.add(declaration());
         }
 
         return statements;
@@ -32,6 +32,17 @@ class Parser {
         return equality();
     }
 
+    private Stmt declaration() {
+        try {
+            if (match(LET)) return varDeclaration();
+
+            return statement();
+        } catch (ParseError error) {
+            synchronize();
+            return null;
+        }
+    }
+
     private Stmt statement() {
         if (match(PRINT)) return printStatement();
 
@@ -42,6 +53,18 @@ class Parser {
         Expr value = expression();
         consume(SEMICOLON, "Expected ';' after value.");
         return new Stmt.Print(value);
+    }
+
+    private Stmt varDeclaration() {
+        Token name = consume(IDENTIFIER, "Expected variable name.");
+
+        Expr initializer = null;
+        if (match(EQUAL)) {
+            initializer = expression();
+        }
+
+        consume(SEMICOLON, "Expected ';' after variable declaration.");
+        return new Stmt.Var(name, initializer);
     }
 
     private Stmt expressionStatement() {
@@ -141,7 +164,8 @@ class Parser {
         return false;
     }
 
-    // Check current token, and if it's of specified type, advance to next
+    // Check current token, and if it's of specified type, advance to next --
+    // if it's not, report error with the given message
     private Token consume(TokenType type, String message) {
         if (check(type)) return advance();
 
@@ -178,6 +202,7 @@ class Parser {
 
     /* --- Error handling methods --- */
 
+    // Sends error notification to main class
     private ParseError error(Token token, String message) {
         Acacia.error(token, message);
         return new ParseError();
