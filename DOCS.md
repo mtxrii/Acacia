@@ -6,7 +6,7 @@ It shines in its ability to be both object oriented and functional, with a nice 
 # Data Types
 Acacia contains your standard primitive types.
 * Booleans - basic true or false.
-* Strings - text enclosed in double quotes. Access individual chars with `[]`
+* Strings - text enclosed in double quotes. Access individual chars with `<>`
 * Numbers - integers and numbers with decimals are treated the same.
 * Nil - same as null or none.
 
@@ -17,13 +17,33 @@ false;
 
 "A String";
 ""; // an empty string
-"Hello"[1]; // "e"
+"Hello"<1>; // "e"
 
 12;
 92.5;
 
 nil;
 ```
+
+### Sets & Collections
+Acacia ~~steals~~ borrows some collections from Python.
+* Lists - built in linked lists. Extend, append, pop & push at will. Use `[]`
+* Arrays - fixed length, contain same type (or null for empty). Use `<>`
+* Dictionaries - built in hashmaps, keys and values can be of any type. Use `[:]`
+```python
+let sampleList = [1, 2, 3];
+sampleList.append(4);
+print(sampleList[1]); // prints "2"
+
+let sampleArray = <9, 8, 7>;
+print(sampleArray<2>); // prints "7"
+
+let sampleDict = [24 : "spongebob", 25: "patrick"];
+print(sampleDict[24]); // prints "spongebob"
+```
+
+> Because of the `match with` statement and the function `isinstance()`, type names are reserved keywords and cannot have variables named the same as them. The full list is:
+> `boolean`, `string`, `number`, `list`, `array`, `dictionary`
 
 # Expressions
 These are sets of variables or literals combined with operators to produce a value.
@@ -68,12 +88,12 @@ true or false; // true
 nill and true; // false
 ```
 
->Aside from false Booleans, the only other things that evaluate to false are nil values and numbers with value 0
+>Aside from false Booleans, the only other things that evaluate to false are `nil` values and numbers with value `0`
 
 ### Grouping
 Parenthesis work as separators for more flexibility on what parts of a statement should be evaluated first.
 ```javascript
-(val[0] + val[1] + val[2]) / len(val)
+(val<0> + val<1> + val<2>) / len(val)
 ```
 
 # Statements
@@ -155,20 +175,20 @@ let letters = "abcd";
 // You can write a foreach like this:
 foreach (let c; letters; let i) { // syntax: ( initialize iterator; provide iterable; initialize index (optional) )
 
-  print(string(i) + " : " + c);
+  print(string(i) + " : " + c); // 'string(i)' is optional, implicit conversion would happen otherwise.
   
 }
 
 // Behind the scenes it really just converts it into this:
 for (let i = 0; i < length(letters); i = i + 1) {
-  let c = letters[i];
+  let c = letters<i>;
   
   print(string(i) + " : " + c);
   
 }
 ```
 
-`match with` is a take on the switch statement inspired by OCaml. It can compare equality as well as types.
+`match with` is a take on the switch statement loosely inspired by OCaml. It can compare equality as well as types. When comparing equality, a literal or variable is provided in the parenthesis. When comparing type, a data type or object/class name is given. For objects, anything inheriting it will also be considered a match.
 ```ocaml
 let x = 12;
 
