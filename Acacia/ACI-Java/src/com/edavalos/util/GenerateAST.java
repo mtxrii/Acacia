@@ -19,13 +19,15 @@ public final class GenerateAST {
                 "Binary   : Expr left, Token operator, Expr right",
                 "Grouping : Expr expression",
                 "Literal  : Object value",
-                "Unary    : Token operator, Expr right"
+                "Unary    : Token operator, Expr right",
+                "Variable : Token name"
         );
 
         // All our statement tree types
         List<String> stmts = Arrays.asList(
                 "Expression : Expr expression",
-                "Print      : Expr expression"
+                "Print      : Expr expression",
+                "Var        : Token name, Expr initializer"
         );
 
         defineAst(outputDir, "Expr", exprs);
@@ -99,6 +101,6 @@ public final class GenerateAST {
             writer.println("    final " + field + ";");
         }
 
-        writer.println("  }");
+        writer.println("  }\n");
     }
 }
