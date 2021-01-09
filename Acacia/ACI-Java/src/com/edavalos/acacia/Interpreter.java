@@ -154,9 +154,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     /* --- Utility methods --- */
 
-    // Sends the given expression back into the interpreter’s visitor method
+    // Sends a given expression back into the interpreter’s visitor method
     private Object evaluate(Expr expr) {
         return expr.accept(this);
+    }
+
+    // Sends a given statement back into the interpreter's visitor method
+    private void execute(Stmt stmt) {
+        stmt.accept(this);
     }
 
     // Convert a value into a string
