@@ -10,6 +10,16 @@ class Environment {
     // Environment to link global scope to various inner blocks
     final Environment enclosing;
 
+    // Constructor for global scope
+    Environment() {
+        enclosing = null;
+    }
+
+    // Constructor for local scopes that inherit the global
+    Environment(Environment enclosing) {
+        this.enclosing = enclosing;
+    }
+
     // Looks up a variable and returns it, or throws error if it does not exist
     Object get(Token name) {
         if (variables.containsKey(name.lexeme)) {
