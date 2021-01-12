@@ -136,6 +136,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         };
     }
 
+    @Override
+    public Object visitVariableExpr(Expr.Variable expr) {
+        return environment.get(expr.name);
+    }
+
 
     /* --- Statements' visitor methods --- */
 
