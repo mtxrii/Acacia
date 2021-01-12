@@ -175,6 +175,12 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return null;
     }
 
+    @Override
+    public Void visitBlockStmt(Stmt.Block stmt) {
+        executeBlock(stmt.statements, new Environment(environment));
+        return null;
+    }
+
 
     /* --- Utility methods --- */
 
@@ -186,6 +192,20 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     // Sends a given statement back into the interpreter's visitor method
     private void execute(Stmt stmt) {
         stmt.accept(this);
+    }
+
+    // Loops thru a list of statements in a block and executes them, also handles variable scoping
+    void executeBlock(List<Stmt> statements, Environment environment) {
+        Environment previous = this.environment;
+        try {
+            this.environment = environment;
+
+            for (Stmt statement : statements) {
+                execute(statement);
+            }
+        } finally {
+            this.environment = previous;
+        }
     }
 
     // Convert a value into a string
