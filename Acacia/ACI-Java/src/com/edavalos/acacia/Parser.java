@@ -103,16 +103,25 @@ class Parser {
     private Expr assignment() {
         Expr expr = equality();
 
-        if (match(EQUAL)) {
-            Token equals = previous();
-            Expr value = assignment();
+        if (match(EQUAL) || match(DOUBLE_PLUS) || match(DOUBLE_MINUS) ||
+                match(TRIPLE_PLUS) || match(TRIPLE_MINUS)) {
 
-            if (expr instanceof Expr.Variable) {
-                Token name = ((Expr.Variable)expr).name;
+            Token equals = previous();
+            if (!(expr instanceof Expr.Variable))
+                error(equals, "Invalid target to modify.");
+
+            else {
+                Token name = ((Expr.Variable) expr).name;
+                Expr value = switch (equals.type) {
+                    case EQUAL -> assignment();
+                    case DOUBLE_PLUS -> new Expr.Binary(expr, new Token(PLUS, "+"), new Expr.Literal(1.0));
+                    case DOUBLE_MINUS -> new Expr.Binary(expr, new Token(MINUS, "-"), new Expr.Literal(1.0));
+                    case TRIPLE_PLUS -> new Expr.Binary(expr, new Token(STAR, "*"), expr);
+                    case TRIPLE_MINUS -> new Expr.Binary(expr, new Token(SLASH, "/"), expr);
+                    default -> null;
+                };
                 return new Expr.Assign(name, value);
             }
-
-            error(equals, "Invalid assignment target.");
         }
 
         return expr;

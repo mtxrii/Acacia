@@ -65,8 +65,18 @@ class Scanner {
             case '}' -> addToken(RIGHT_BRACE);
             case ',' -> addToken(COMMA);
             case '.' -> addToken(DOT);
-            case '-' -> addToken(MINUS);
-            case '+' -> addToken(PLUS);
+            case '-' -> {
+                if (match('-')) {
+                    addToken(match('-') ? TRIPLE_MINUS : DOUBLE_MINUS);
+                }
+                else addToken(MINUS);
+            }
+            case '+' -> {
+                if (match('+')) {
+                    addToken(match('+') ? TRIPLE_PLUS : DOUBLE_PLUS);
+                }
+                else addToken(PLUS);
+            }
             case ';' -> addToken(SEMICOLON);
             case '*' -> addToken(STAR);
             case '%' -> addToken(MODULO);

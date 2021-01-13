@@ -39,6 +39,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 if (left instanceof String || right instanceof String) {
                     yield stringify(left) + stringify(right);
                 }
+                System.out.println(left.toString() + ", " + right.toString());
                 // If values are neither both numbers or one string, throw error
                 throw new RuntimeError(expr.operator, "Operands must either all be numbers or" +
                         " at least one must be a string.");
