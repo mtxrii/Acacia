@@ -78,7 +78,7 @@ class Scanner {
                 else addToken(PLUS);
             }
             case ';' -> addToken(SEMICOLON);
-            case '*' -> addToken(STAR);
+            case '*' -> addToken(match('*') ? TRIPLE_PLUS : STAR);
             case '%' -> addToken(MODULO);
             case '!' -> addToken(match('=') ? BANG_EQUAL : BANG);
             case '=' -> addToken(match('=') ? EQUAL_EQUAL : EQUAL);
