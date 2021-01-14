@@ -59,10 +59,16 @@ abstract class Expr {
   }
 
   static class Input extends Expr {
+    Input(DataType type) {
+      this.type = type;
+    }
+
     @Override
     <R> R accept(Visitor<R> visitor) {
       return visitor.visitInputExpr(this);
     }
+
+    final DataType type;
   }
 
   static class Literal extends Expr {

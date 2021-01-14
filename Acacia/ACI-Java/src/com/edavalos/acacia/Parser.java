@@ -219,7 +219,7 @@ class Parser {
         }
 
         if (match(INPUT)) {
-            return new Expr.Input();
+            return new Expr.Input(DataType.STRING);
         }
 
         if (match(IDENTIFIER)) {
