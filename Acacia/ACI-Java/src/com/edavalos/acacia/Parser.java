@@ -116,8 +116,8 @@ class Parser {
                     case EQUAL -> assignment();
                     case DOUBLE_PLUS -> new Expr.Binary(expr, new Token(PLUS, "+"), new Expr.Literal(1.0));
                     case DOUBLE_MINUS -> new Expr.Binary(expr, new Token(MINUS, "-"), new Expr.Literal(1.0));
-                    case TRIPLE_PLUS -> new Expr.Binary(expr, new Token(STAR, "*"), expr);
-                    case TRIPLE_MINUS -> new Expr.Binary(expr, new Token(SLASH, "/"), expr);
+                    case TRIPLE_PLUS -> new Expr.Binary(expr, new Token(STAR, "*"), new Expr.Literal(2.0));
+                    case TRIPLE_MINUS -> new Expr.Binary(expr, new Token(SLASH, "/"), new Expr.Literal(2.0));
                     default -> null;
                 };
                 return new Expr.Assign(name, value);
