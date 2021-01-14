@@ -85,7 +85,7 @@ Operators that take in one or two booleans and produce another boolean. If given
 
 true and false; // false
 true or false; // true
-nill and true; // false
+nil and true; // false
 ```
 
 >Aside from false Booleans, the only other things that evaluate to false are `nil` values and numbers with value `0`
@@ -107,8 +107,20 @@ let x; // currently nil
 let y = 30; // holds number 30
 x = 10.5; // replaced nil with number 10.5
 
-var z = "a string"; // no need to specify type
+let z = "a string"; // no need to specify type
 ```
+
+Increments and doubling are also built in.
+```javascript
+let a = 1;
+a++; // 2
+a++; // 3
+a--; // 2
+
+a+++; // 4
+a+++; // 16
+a+++; // 32
+a---; // 16
 
 variables are fully dynamic and can change the type they hold at all times.
 
