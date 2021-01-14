@@ -7,6 +7,7 @@ abstract class Expr {
     R visitAssignExpr(Assign expr);
     R visitBinaryExpr(Binary expr);
     R visitGroupingExpr(Grouping expr);
+    R visitInputExpr(Input expr);
     R visitLiteralExpr(Literal expr);
     R visitLogicalExpr(Logical expr);
     R visitUnaryExpr(Unary expr);
@@ -55,6 +56,13 @@ abstract class Expr {
     }
 
     final Expr expression;
+  }
+
+  static class Input extends Expr {
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitInputExpr(this);
+    }
   }
 
   static class Literal extends Expr {

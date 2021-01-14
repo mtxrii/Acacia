@@ -22,6 +22,7 @@ class Scanner {
         keywords.put("for",      FOR);
         keywords.put("foreach",  FOREACH);
         keywords.put("if",       IF);
+        keywords.put("input",    INPUT);
         keywords.put("let",      LET);
         keywords.put("match",    MATCH);
         keywords.put("nil",      NIL);
