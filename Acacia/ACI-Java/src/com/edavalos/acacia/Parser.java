@@ -101,7 +101,7 @@ class Parser {
     }
 
     private Expr assignment() {
-        Expr expr = equality();
+        Expr expr = or();
 
         if (match(EQUAL) || match(DOUBLE_PLUS) || match(DOUBLE_MINUS) ||
                 match(TRIPLE_PLUS) || match(TRIPLE_MINUS)) {
@@ -122,6 +122,30 @@ class Parser {
                 };
                 return new Expr.Assign(name, value);
             }
+        }
+
+        return expr;
+    }
+
+    private Expr or() {
+        Expr expr = and();
+
+        while (match(OR)) {
+            Token operator = previous();
+            Expr right = and();
+            expr = new Expr.Logical(expr, operator, right);
+        }
+
+        return expr;
+    }
+
+    private Expr and() {
+        Expr expr = equality();
+
+        while (match(AND)) {
+            Token operator = previous();
+            Expr right = equality();
+            expr = new Expr.Logical(expr, operator, right);
         }
 
         return expr;
