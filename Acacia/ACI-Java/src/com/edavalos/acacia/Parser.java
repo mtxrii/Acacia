@@ -107,6 +107,8 @@ class Parser {
     }
 
     private Expr expression() {
+        if (match(LEFT_BRACKET)) return new Expr.Set(set());
+
         return assignment();
     }
 
@@ -233,16 +235,41 @@ class Parser {
         }
 
         if (match(IDENTIFIER)) {
-            return new Expr.Variable(previous());
+            Token varName = previous();
+            if (match(LEFT_BRACKET)) {
+                Expr index = expression();
+                consume(RIGHT_BRACKET, "Expected ']' after index.");
+                return new Expr.Index(varName, index);
+            }
+
+            return new Expr.Variable(varName);
         }
 
         if (match(LEFT_PAREN)) {
             Expr expr = expression();
-            consume(RIGHT_PAREN, "Expect ')' after expression.");
+            consume(RIGHT_PAREN, "Expected ')' after expression.");
             return new Expr.Grouping(expr);
         }
 
         throw error(peek(), "Expected expression.");
+    }
+
+    private List<Expr> set() {
+        List<Expr> values = new ArrayList<>();
+
+        boolean last = false;
+        while (!check(RIGHT_BRACKET) && !isAtEnd()) {
+            if (!last) {
+                values.add(expression());
+                last = true;
+            }
+            if (match(COMMA)) {
+                last = false;
+            }
+        }
+
+        consume(RIGHT_BRACKET, "Expected ']' at end of set.");
+        return values;
     }
 
 

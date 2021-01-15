@@ -1,5 +1,6 @@
 package com.edavalos.acacia;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
@@ -119,8 +120,30 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitIndexExpr(Expr.Index expr) {
+        Object idx = evaluate(expr.location);
+        if ((!(idx instanceof Double)) || (((Double) idx) != Math.floor((Double) idx))) {
+            throw new RuntimeError(expr.setName, "Set index must be a whole number.");
+        }
+        Object set = environment.get(expr.setName);
+        if (!(set instanceof List)) {
+            throw new RuntimeError(expr.setName, "Failed to index. Only sets and strings can be indexed.");
+        }
+        return ((List) set).get(((int) Math.round(((Double) idx))));
+    }
+
+    @Override
     public Object visitLiteralExpr(Expr.Literal expr) {
         return expr.value;
+    }
+
+    @Override
+    public Object visitSetExpr(Expr.Set expr) {
+        List<Object> contents = new ArrayList<>();
+        for (Expr e : expr.values) {
+            contents.add(evaluate(e));
+        }
+        return contents;
     }
 
     @Override

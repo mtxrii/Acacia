@@ -19,10 +19,10 @@ public final class GenerateAST {
                 "Assign   : Token name, Expr value",
                 "Binary   : Expr left, Token operator, Expr right",
                 "Grouping : Expr expression",
-                "Index    : Set set, Expr location",
+                "Index    : Token setName, Expr location",
                 "Input    : DataType type",
                 "Literal  : Object value",
-                "Set      : List<Object> values",
+                "Set      : List<Expr> values",
                 "Logical  : Expr left, Token operator, Expr right",
                 "Unary    : Token operator, Expr right",
                 "Variable : Token name"

@@ -61,8 +61,8 @@ abstract class Expr {
   }
 
   static class Index extends Expr {
-    Index(Set set, Expr location) {
-      this.set = set;
+    Index(Token setName, Expr location) {
+      this.setName = setName;
       this.location = location;
     }
 
@@ -71,7 +71,7 @@ abstract class Expr {
       return visitor.visitIndexExpr(this);
     }
 
-    final Set set;
+    final Token setName;
     final Expr location;
   }
 
@@ -102,7 +102,7 @@ abstract class Expr {
   }
 
   static class Set extends Expr {
-    Set(List<Object> values) {
+    Set(List<Expr> values) {
       this.values = values;
     }
 
@@ -111,7 +111,7 @@ abstract class Expr {
       return visitor.visitSetExpr(this);
     }
 
-    final List<Object> values;
+    final List<Expr> values;
   }
 
   static class Logical extends Expr {
