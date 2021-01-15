@@ -7,8 +7,10 @@ abstract class Expr {
     R visitAssignExpr(Assign expr);
     R visitBinaryExpr(Binary expr);
     R visitGroupingExpr(Grouping expr);
+    R visitIndexExpr(Index expr);
     R visitInputExpr(Input expr);
     R visitLiteralExpr(Literal expr);
+    R visitSetExpr(Set expr);
     R visitLogicalExpr(Logical expr);
     R visitUnaryExpr(Unary expr);
     R visitVariableExpr(Variable expr);
@@ -58,6 +60,21 @@ abstract class Expr {
     final Expr expression;
   }
 
+  static class Index extends Expr {
+    Index(Set set, Expr location) {
+      this.set = set;
+      this.location = location;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitIndexExpr(this);
+    }
+
+    final Set set;
+    final Expr location;
+  }
+
   static class Input extends Expr {
     Input(DataType type) {
       this.type = type;
@@ -82,6 +99,19 @@ abstract class Expr {
     }
 
     final Object value;
+  }
+
+  static class Set extends Expr {
+    Set(List<Object> values) {
+      this.values = values;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitSetExpr(this);
+    }
+
+    final List<Object> values;
   }
 
   static class Logical extends Expr {
