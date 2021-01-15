@@ -6,8 +6,9 @@ It shines in its ability to be both object oriented and functional, with a nice 
 # Data Types
 Acacia contains your standard primitive types.
 * Booleans - basic true or false.
-* Strings - text enclosed in double quotes. Access individual chars with `<>`
-* Numbers - integers and numbers with decimals are treated the same.
+* Strings - text enclosed in double quotes. Access individual chars with `[]`
+* Numbers - ints and doubles are treated the same.
+* Sets - lists with any number of items of any type. Variants include `frozenSet` and `uniqueSet`
 * Nil - same as null or none.
 
 ```javascript
@@ -22,28 +23,10 @@ false;
 12;
 92.5;
 
+[1, 2, "3", false]; // [1] yields 2 and [2] yields "3"
+
 nil;
 ```
-
-### Sets & Collections
-Acacia ~~steals~~ borrows some collections from Python.
-* Lists - built in linked lists. Extend, append, pop & push at will. Use `[]`
-* Arrays - fixed length, contain same type (or null for empty). Use `<>`
-* Dictionaries - built in hashmaps, keys and values can be of any type. Use `[:]`
-```python
-let sampleList = [1, 2, 3];
-sampleList.append(4);
-print(sampleList[1]); // prints "2"
-
-let sampleArray = <9, 8, 7>;
-print(sampleArray<2>); // prints "7"
-
-let sampleDict = [24 : "spongebob", 25: "patrick"];
-print(sampleDict[24]); // prints "spongebob"
-```
-
-> Because of the `match with` statement and the function `isinstance()`, type names are reserved keywords and cannot have variables named the same as them. The full list is:
-> `boolean`, `string`, `number`, `list`, `array`, `dictionary`
 
 # Expressions
 These are sets of variables or literals combined with operators to produce a value.
@@ -93,7 +76,7 @@ nil and true; // false
 ### Grouping
 Parenthesis work as separators for more flexibility on what parts of a statement should be evaluated first.
 ```javascript
-(val<0> + val<1> + val<2>) / len(val)
+(val[0] + val[1] + val[2]) / len(val)
 ```
 
 # Statements
@@ -156,8 +139,6 @@ Acacia includes your standard C style control flow statements...
 ...as well as some others:
 * foreach
 * match / with
-* when (not implemented yet)
-* hold (not implemented yet)
 
 `if`, `for` and `while` are the same as in c.
 ```javascript
@@ -169,18 +150,18 @@ else {
   print("thing is nil.");
 }
 
-for (let i = 1; i < 10; i = i + 1) {
+for (let i = 1; i < 10; i++) {
   print(i);
 }
 
 let j = 10;
 while (j > 0) {
   print(j);
-  j = j - 1;
+  j--;
 }
 ```
 
-`foreach` is syntactic sugar for array or string iteration.
+`foreach` is syntactic sugar for set or string iteration.
 ```javascript
 let letters = "abcd";
 
@@ -192,8 +173,8 @@ foreach (let c; letters; let i) { // syntax: ( initialize iterator; provide iter
 }
 
 // Behind the scenes it really just converts it into this:
-for (let i = 0; i < length(letters); i = i + 1) {
-  let c = letters<i>;
+for (let i = 0; i < length(letters); i++) {
+  let c = letters[i];
   
   print(string(i) + " : " + c);
   
