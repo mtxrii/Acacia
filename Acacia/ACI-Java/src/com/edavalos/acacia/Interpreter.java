@@ -129,7 +129,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (!(set instanceof List)) {
             throw new RuntimeError(expr.setName, "Failed to index. Only sets and strings can be indexed.");
         }
-        return ((List) set).get(((int) Math.round(((Double) idx))));
+        int index = (int) Math.round(((Double) idx));
+        int length = ((List) set).size() ;
+
+        if (index >= 0) return ((List) set).get(index % length);
+        else return ((List) set).get(index + length);
     }
 
     @Override
