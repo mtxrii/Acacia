@@ -123,17 +123,29 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Object visitIndexExpr(Expr.Index expr) {
         Object idx = evaluate(expr.location);
         if ((!(idx instanceof Double)) || (((Double) idx) != Math.floor((Double) idx))) {
-            throw new RuntimeError(expr.setName, "Set index must be a whole number.");
-        }
-        Object set = environment.get(expr.setName);
-        if (!(set instanceof List)) {
-            throw new RuntimeError(expr.setName, "Failed to index. Only sets and strings can be indexed.");
+            throw new RuntimeError(expr.setName, "Index must be a whole number.");
         }
         int index = (int) Math.round(((Double) idx));
-        int length = ((List) set).size() ;
 
-        if (index >= 0) return ((List) set).get(index % length);
-        else return ((List) set).get(index + length);
+        Object set = environment.get(expr.setName);
+        if (set instanceof List) {
+            int length = ((List) set).size();
+
+            if (index >= 0) return ((List) set).get(index % length);
+            else return ((List) set).get(index + length);
+        }
+
+        else if (set instanceof String) {
+            int length = ((String) set).length();
+
+            if (index >= 0) return ((String) set).charAt(index % length);
+            else return ((String) set).charAt(index + length);
+        }
+
+        else {
+            throw new RuntimeError(expr.setName, "Failed to index. Only sets and strings can be indexed.");
+        }
+
     }
 
     @Override
@@ -290,6 +302,16 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 text = text.substring(0, text.length() - 2);
             }
             return text;
+        }
+
+        // If object is a set, stringify each element inside
+        if (object instanceof List) {
+            StringBuilder text = new StringBuilder("[");
+            for (Object o : ((List) object)) {
+                text.append(stringify(o)).append(", ");
+            }
+            text.append("]");
+            return text.toString().replace(", ]", "]");
         }
 
         // Otherwise, toString() should take care of it
