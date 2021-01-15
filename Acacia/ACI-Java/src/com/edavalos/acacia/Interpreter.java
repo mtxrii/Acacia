@@ -127,7 +127,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
         int index = (int) Math.round(((Double) idx));
 
-        Object set = environment.get(expr.setName);
+        Object set;
+        if (expr.setName.type == TokenType.STRING) {
+            set = expr.setName.literal;
+        }
+        else {
+            set = environment.get(expr.setName);
+        }
+
         if (set instanceof List) {
             int length = ((List) set).size();
 

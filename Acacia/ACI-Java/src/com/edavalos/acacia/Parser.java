@@ -226,12 +226,23 @@ class Parser {
         if (match(TRUE)) return new Expr.Literal(true);
         if (match(NIL)) return new Expr.Literal(null);
 
-        if (match(NUMBER, STRING)) {
+        if (match(NUMBER)) {
             return new Expr.Literal(previous().literal);
         }
 
         if (match(INPUT)) {
             return new Expr.Input(DataType.STRING);
+        }
+
+        if (match(STRING)) {
+            Token string = previous();
+            if (match(LEFT_BRACKET)) {
+                Expr index = expression();
+                consume(RIGHT_BRACKET, "Expected ']' after index.");
+                return new Expr.Index(string, index);
+            }
+
+            return new Expr.Literal(string.literal);
         }
 
         if (match(IDENTIFIER)) {
