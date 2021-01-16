@@ -203,7 +203,12 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitInputExpr(Expr.Input expr) {
         java.util.Scanner input = new java.util.Scanner(System.in);
-        return input.nextLine();
+        String given =  input.nextLine();
+        try {
+            return Double.parseDouble(given);
+        } catch (NumberFormatException e) {
+            return given;
+        }
     }
 
     @Override
@@ -241,7 +246,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
         Object value = evaluate(stmt.expression);
-        System.out.print(stringify(value));
+        System.out.print(stringify(value).replaceAll("\\\\n", "\n"));
         return null;
     }
 
