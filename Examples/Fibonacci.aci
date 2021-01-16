@@ -4,7 +4,7 @@ let a = 0;
 let temp;
 
 for (let b = 1; a < 10000; b = b + temp) {
-    print(a);
+    print(a + " ");
     temp = a;
     a = b;
 }

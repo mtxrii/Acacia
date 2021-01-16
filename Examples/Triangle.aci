@@ -1,0 +1,26 @@
+// Prints a triangle of a given height with incrementing numbers inside.
+
+print("Enter the height of the triangle (must be greater than 0): ");
+let size = input();
+
+let counter = 1;
+let number = 1;
+for (; size > 0; size--) {
+
+    for (let i = 0; i < size - 1; i++) {
+        print("     ");
+    }
+
+    for (let j = 1; j <= counter; j++) {
+        print number;
+        number ++;
+
+        if (j != counter) {
+            print("    *    ");
+        }
+    }
+
+    print("\n");
+
+    counter ++;
+}
