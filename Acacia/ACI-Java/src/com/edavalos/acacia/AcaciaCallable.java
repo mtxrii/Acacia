@@ -7,6 +7,12 @@ import java.util.List;
  */
 interface AcaciaCallable {
     /**
+     * Gets the number of arguments this callable expects. i.e. its arity.
+     * @return number of arguments expected.
+     */
+    int arity();
+
+    /**
      * Invokes this callable object. i.e. tells it to evaluate itself and provide a value.
      * @param interpreter The instance where the call is being interpreted.
      * @param arguments The arguments to pass to it.
