@@ -18,6 +18,7 @@ public final class GenerateAST {
         List<String> exprs = Arrays.asList(
                 "Assign   : Token name, Expr value",
                 "Binary   : Expr left, Token operator, Expr right",
+                "Call     : Expr callee, Token paren, List<Expr> arguments",
                 "Grouping : Expr expression",
                 "Index    : Token setName, Expr location",
                 "Input    : DataType type",
