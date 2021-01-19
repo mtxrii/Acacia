@@ -130,4 +130,32 @@ public final class Acacia {
     public static String repeat(int count, String str) {
         return new String(new char[count]).replace("\0", str);
     }
+
+    // Creates a string representation of any Acacia data type
+    public static String stringify(Object object) {
+        // If object is nil, string returned should be 'nil' instead of 'null'
+        if (object == null) return "nil";
+
+        // If object is a number, and has a decimal where it doesn't need it, remove it
+        if (object instanceof Double) {
+            String text = object.toString();
+            if (text.endsWith(".0")) {
+                text = text.substring(0, text.length() - 2);
+            }
+            return text;
+        }
+
+        // If object is a set, stringify each element inside
+        if (object instanceof List) {
+            StringBuilder text = new StringBuilder("[");
+            for (Object o : ((List) object)) {
+                text.append(stringify(o)).append(", ");
+            }
+            text.append("]");
+            return text.toString().replace(", ]", "]");
+        }
+
+        // Otherwise, toString() should take care of it
+        return object.toString();
+    }
 }

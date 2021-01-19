@@ -19,4 +19,10 @@ interface AcaciaCallable {
      * @return The value evaluated by the call.
      */
     Object call(Interpreter interpreter, List<Object> arguments);
+
+    /**
+     * Gets this callable's identifier. Usually same as the variable name in the environment.
+     * @return name used to call
+     */
+    String name();
 }

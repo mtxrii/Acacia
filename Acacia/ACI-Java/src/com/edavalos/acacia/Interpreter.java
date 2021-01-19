@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
-    private Environment environment = new Environment();
+    final Environment globals = new Environment();
+    private Environment environment = globals;
+
+    // When the interpreter is fired up, add all the built in functions to the environment
+    Interpreter() {
+        for (AcaciaCallable nativeFunction : Natives.functions) {
+            globals.hardDefine(nativeFunction.name(), nativeFunction);
+        }
+    }
 
     // Main method to interpret given statements
     void interpret(List<Stmt> statements) {
@@ -38,7 +46,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 }
 
                 if (left instanceof String || right instanceof String) {
-                    yield stringify(left) + stringify(right);
+                    yield Acacia.stringify(left) + Acacia.stringify(right);
                 }
                 // If values are neither both numbers or one string, throw error
                 throw new RuntimeError(expr.operator, "Operands must either all be numbers or" +
@@ -128,10 +136,10 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
 
         AcaciaCallable function = (AcaciaCallable)callee;
-        if (arguments.size() != function.arity()) {
+        if ((function.arity() != -1) && (arguments.size() != function.arity())) {
             throw new RuntimeError(expr.paren, "Expected " +
                     function.arity() + " arguments but got " +
-                    arguments.size() + ".");
+                    arguments.size() + " (in '" + Acacia.stringify(callee) + "').");
         }
 
         return function.call(this, arguments);
@@ -269,7 +277,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
         Object value = evaluate(stmt.expression);
-        System.out.print(stringify(value).replaceAll("\\\\n", "\n"));
+        System.out.print(Acacia.stringify(value).replaceAll("\\\\n", "\n"));
         return null;
     }
 
@@ -323,34 +331,6 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         } finally {
             this.environment = previous;
         }
-    }
-
-    // Convert a value into a string
-    private String stringify(Object object) {
-        // If object is nil, string returned should be 'nil' instead of 'null'
-        if (object == null) return "nil";
-
-        // If object is a number, and has a decimal where it doesn't need it, remove it
-        if (object instanceof Double) {
-            String text = object.toString();
-            if (text.endsWith(".0")) {
-                text = text.substring(0, text.length() - 2);
-            }
-            return text;
-        }
-
-        // If object is a set, stringify each element inside
-        if (object instanceof List) {
-            StringBuilder text = new StringBuilder("[");
-            for (Object o : ((List) object)) {
-                text.append(stringify(o)).append(", ");
-            }
-            text.append("]");
-            return text.toString().replace(", ]", "]");
-        }
-
-        // Otherwise, toString() should take care of it
-        return object.toString();
     }
 
     // Determines whether a given value is considered true

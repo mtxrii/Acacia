@@ -56,4 +56,9 @@ class Environment {
 
         else variables.put(name.lexeme, value);
     }
+
+    // Hardcodes a variable in the mapping
+    void hardDefine(String name, Object value) {
+        variables.put(name, value);
+    }
 }
