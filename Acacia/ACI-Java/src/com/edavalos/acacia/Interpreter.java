@@ -283,6 +283,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitNextStmt(Stmt.Next stmt) {
+        throw new Next();
+    }
+
+    @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
         Object value = evaluate(stmt.expression);
         System.out.print(Acacia.stringify(value).replaceAll("\\\\n", "\n"));
@@ -311,7 +316,13 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitWhileStmt(Stmt.While stmt) {
         while (isTruthy(evaluate(stmt.condition))) {
-            execute(stmt.body);
+            try {
+                execute(stmt.body);
+            } catch (Exit x) {
+                break;
+            } catch (Next x) {
+                continue;
+            }
         }
         return null;
     }
@@ -320,6 +331,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Void visitBlockStmt(Stmt.Block stmt) {
         executeBlock(stmt.statements, new Environment(environment));
         return null;
+    }
+
+    @Override
+    public Void visitExitStmt(Stmt.Exit stmt) {
+        throw new Exit();
     }
 
 
@@ -335,7 +351,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         stmt.accept(this);
     }
 
-    // Loops thru a list of statements in a block and executes them, also handles variable scoping
+    // Loops thru a list of statements in a block and executes them, also handles variable scoping and returns (breaks)
     void executeBlock(List<Stmt> statements, Environment environment) {
         Environment previous = this.environment;
         try {

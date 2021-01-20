@@ -42,14 +42,24 @@ class Parser {
     }
 
     private Stmt statement() {
+        if (match(EXIT)) return exitStatement(false);
         if (match(FOR)) return forStatement();
         if (match(IF)) return ifStatement();
+        if (match(NEXT)) return exitStatement(true);
         if (match(PRINT)) return printStatement();
         if (match(RETURN)) return returnStatement();
         if (match(WHILE)) return whileStatement();
+
         if (match(LEFT_BRACE)) return new Stmt.Block(block());
 
         return expressionStatement();
+    }
+
+    private Stmt exitStatement(boolean cont) {
+        Token keyword = previous();
+        consume(SEMICOLON, "Expected ';' after statement.");
+
+        return cont ? new Stmt.Next(keyword) : new Stmt.Exit(keyword);
     }
 
     private Stmt forStatement() {

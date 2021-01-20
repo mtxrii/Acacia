@@ -1,0 +1,30 @@
+let x = 4;
+
+def fib(n) {
+    if (n <= 1) return n;
+    return fib(n - 2) + fib(n - 1);
+}
+
+for (let i = 0; i < 30; i++) {
+    if (i >= 20) exit;
+    println(fib(i));
+}
+
+println("------");
+
+while(x < 10) {
+    println(x);
+    x++;
+
+    if (x == 7) {
+        next;
+    }
+
+    if (x == 8) {
+        println("Reached end");
+        exit;
+    }
+    print("yay");
+}
+
+println("finally");

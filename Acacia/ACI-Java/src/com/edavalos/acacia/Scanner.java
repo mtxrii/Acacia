@@ -13,9 +13,9 @@ class Scanner {
     static {
         keywords = new HashMap<>();
         keywords.put("and",      AND);
-        keywords.put("break",    BREAK);
+        keywords.put("exit",     EXIT);
         keywords.put("class",    CLASS);
-        keywords.put("continue", CONTINUE);
+        keywords.put("next",     NEXT);
         keywords.put("def",      DEF);
         keywords.put("else",     ELSE);
         keywords.put("false",    FALSE);
