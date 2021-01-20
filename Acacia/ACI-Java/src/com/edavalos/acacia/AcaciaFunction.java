@@ -21,7 +21,11 @@ class AcaciaFunction implements AcaciaCallable {
             innerEnvironment.define(declaration.params.get(i), arguments.get(i));
         }
 
-        interpreter.executeBlock(declaration.body, innerEnvironment);
+        try {
+            interpreter.executeBlock(declaration.body, innerEnvironment);
+        } catch (Return returnValue) {
+            return returnValue.value;
+        }
         return null;
     }
 

@@ -1,5 +1,5 @@
 package com.edavalos.acacia;
 
 enum DataType {
-    BOOLEAN, STRING, NUMBER
+    BOOLEAN, STRING, NUMBER, NIL, SET
 }
