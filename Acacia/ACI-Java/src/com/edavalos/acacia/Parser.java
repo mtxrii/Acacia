@@ -31,7 +31,7 @@ class Parser {
 
     private Stmt declaration() {
         try {
-//            if (match(DEF)) return function("function");
+            if (match(DEF)) return function("function");
             if (match(LET)) return varDeclaration();
 
             return statement();
@@ -149,9 +149,21 @@ class Parser {
         return new Stmt.Expression(expr);
     }
 
-//    private Stmt.Function function(String kind) {
-//        Token name = consume(IDENTIFIER, "Expect " + kind + " name.");
-//    }
+    private Stmt.Function function(String kind) {
+        Token name = consume(IDENTIFIER, "Expected " + kind + " name.");
+        consume(LEFT_PAREN, "Expected '(' after " + kind + " name.");
+        List<Token> parameters = new ArrayList<>();
+        if (!check(RIGHT_PAREN)) {
+            do {
+                parameters.add(consume(IDENTIFIER, "Expected parameter name."));
+            } while (match(COMMA));
+        }
+        consume(RIGHT_PAREN, "Expected ')' after parameters.");
+
+        consume(LEFT_BRACE, "Expected '{' before " + kind + " body.");
+        List<Stmt> body = block();
+        return new Stmt.Function(name, parameters, body);
+    }
 
     private List<Stmt> block() {
         List<Stmt> statements = new ArrayList<>();
