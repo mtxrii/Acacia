@@ -31,6 +31,7 @@ class Parser {
 
     private Stmt declaration() {
         try {
+//            if (match(DEF)) return function("function");
             if (match(LET)) return varDeclaration();
 
             return statement();
@@ -147,6 +148,10 @@ class Parser {
         consume(SEMICOLON, "Expected ';' after expression.");
         return new Stmt.Expression(expr);
     }
+
+//    private Stmt.Function function(String kind) {
+//        Token name = consume(IDENTIFIER, "Expect " + kind + " name.");
+//    }
 
     private List<Stmt> block() {
         List<Stmt> statements = new ArrayList<>();
