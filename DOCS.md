@@ -18,12 +18,12 @@ false;
 
 "A String";
 ""; // an empty string
-"Hello"<1>; // "e"
+"Hello"[1]; // "e"
 
 12;
 92.5;
 
-[1, 2, "3", false]; // [1] yields 2 and [2] yields "3"
+[1, 2, "3", false]; // index [1] yields 2 and [2] yields "3"
 
 nil;
 ```
@@ -155,11 +155,16 @@ for (let i = 1; i < 10; i++) {
 }
 
 let j = 10;
-while (j > 0) {
-  print(j);
+while (j > 0) { // prints from 9 to 1, skipping 3
   j--;
+  if (j == 3) {
+    next;
+  }
+  
+  print(j);
 }
 ```
+>`exit` and `next` are the equivalent of C's `break` and `continue`.
 
 `foreach` is syntactic sugar for set or string iteration.
 ```javascript
