@@ -32,11 +32,13 @@ public final class GenerateAST {
         // All our statement tree types
         List<String> stmts = Arrays.asList(
                 "Block      : List<Stmt> statements",
+                "Exit       : Token keyword",
                 "Expression : Expr expression",
                 "Function   : Token name, List<Token> params," +
                             " List<Stmt> body",
                 "If         : Expr condition, Stmt thenBranch," +
                             " Stmt elseBranch",
+                "Next       : Token keyword",
                 "Print      : Expr expression",
                 "Return     : Token keyword, Expr value",
                 "Var        : Token name, Expr initializer",

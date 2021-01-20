@@ -5,9 +5,11 @@ import java.util.List;
 abstract class Stmt {
   interface Visitor<R> {
     R visitBlockStmt(Block stmt);
+    R visitExitStmt(Exit stmt);
     R visitExpressionStmt(Expression stmt);
     R visitFunctionStmt(Function stmt);
     R visitIfStmt(If stmt);
+    R visitNextStmt(Next stmt);
     R visitPrintStmt(Print stmt);
     R visitReturnStmt(Return stmt);
     R visitVarStmt(Var stmt);
@@ -24,6 +26,19 @@ abstract class Stmt {
     }
 
     final List<Stmt> statements;
+  }
+
+  static class Exit extends Stmt {
+    Exit(Token keyword) {
+      this.keyword = keyword;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitExitStmt(this);
+    }
+
+    final Token keyword;
   }
 
   static class Expression extends Stmt {
@@ -71,6 +86,19 @@ abstract class Stmt {
     final Expr condition;
     final Stmt thenBranch;
     final Stmt elseBranch;
+  }
+
+  static class Next extends Stmt {
+    Next(Token keyword) {
+      this.keyword = keyword;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitNextStmt(this);
+    }
+
+    final Token keyword;
   }
 
   static class Print extends Stmt {
