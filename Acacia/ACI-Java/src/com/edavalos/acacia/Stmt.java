@@ -56,9 +56,10 @@ abstract class Stmt {
   }
 
   static class Foreach extends Stmt {
-    Foreach(Stmt iterator, Expr iterable, Stmt index, Stmt body) {
+    Foreach(Token iterator, Expr iterable, Token iterableName, Token index, Stmt body) {
       this.iterator = iterator;
       this.iterable = iterable;
+      this.iterableName = iterableName;
       this.index = index;
       this.body = body;
     }
@@ -68,9 +69,10 @@ abstract class Stmt {
       return visitor.visitForeachStmt(this);
     }
 
-    final Stmt iterator;
+    final Token iterator;
     final Expr iterable;
-    final Stmt index;
+    final Token iterableName;
+    final Token index;
     final Stmt body;
   }
 

@@ -254,6 +254,33 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitForeachStmt(Stmt.Foreach stmt) {
+        environment.define(stmt.iterator, null);
+
+        boolean logIndex = false;
+        if (stmt.index != null) {
+            environment.define(stmt.index, null);
+            logIndex = true;
+        }
+
+        Object iterable = evaluate(stmt.iterable);
+//        if (!(iterable instanceof String) && !(iterable instanceof List)) {
+//            throw new RuntimeError(stmt.iterator, "'" + Acacia.stringify())
+//        }
+//
+//        while (isTruthy(evaluate(stmt.condition))) {
+//            try {
+//                execute(stmt.body);
+//            } catch (Exit x) {
+//                break;
+//            } catch (Next x) {
+//                continue;
+//            }
+//        }
+        return null;
+    }
+
+    @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
         AcaciaFunction function = new AcaciaFunction(stmt, environment);
         environment.define(stmt.name, function);
