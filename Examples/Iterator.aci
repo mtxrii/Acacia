@@ -1,0 +1,23 @@
+// Creates a function to iterate over any set or string.
+
+def iterate(setOrString) {
+    let size = len(setOrString);
+    let i = 0;
+    def nextVal() {
+        if (i >= size) {
+            return nil;
+        }
+        let value = setOrString[i];
+        i++;
+        return value;
+    }
+
+    return nextVal;
+}
+
+let x = [3, 5, 7];
+
+let iterator = iterate(x);
+for (let j = 0; j < len(x); j++) {
+    println(iterator());
+}

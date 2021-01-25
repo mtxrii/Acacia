@@ -265,3 +265,23 @@ To create a new subroutine / procedure / function, use the keyword `def`.
 def getAvg(total, sum) {
   return sum / total;
 }
+
+Functions are 1st class objects, and nestable, allowing for functions to have environments like classes. For example:
+```javascript
+
+def makeCounter() {
+  let i = 0;
+  def count() {
+    i ++;
+    print i;
+  }
+
+  return count;
+}
+
+let counter = makeCounter();
+counter(); // "1".
+counter(); // "2".
+counter(); // "3".
+
+```
