@@ -349,10 +349,6 @@ class Parser {
             return new Expr.Literal(previous().literal);
         }
 
-        if (match(INPUT)) {
-            return new Expr.Input(DataType.STRING);
-        }
-
         if (match(STRING)) {
             Token string = previous();
             if (match(LEFT_BRACKET)) {

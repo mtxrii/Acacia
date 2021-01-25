@@ -9,7 +9,6 @@ abstract class Expr {
     R visitCallExpr(Call expr);
     R visitGroupingExpr(Grouping expr);
     R visitIndexExpr(Index expr);
-    R visitInputExpr(Input expr);
     R visitLiteralExpr(Literal expr);
     R visitSetExpr(Set expr);
     R visitLogicalExpr(Logical expr);
@@ -91,19 +90,6 @@ abstract class Expr {
 
     final Token setName;
     final Expr location;
-  }
-
-  static class Input extends Expr {
-    Input(DataType type) {
-      this.type = type;
-    }
-
-    @Override
-    <R> R accept(Visitor<R> visitor) {
-      return visitor.visitInputExpr(this);
-    }
-
-    final DataType type;
   }
 
   static class Literal extends Expr {

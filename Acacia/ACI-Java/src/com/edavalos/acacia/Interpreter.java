@@ -232,17 +232,6 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
-    public Object visitInputExpr(Expr.Input expr) {
-        java.util.Scanner input = new java.util.Scanner(System.in);
-        String given =  input.nextLine();
-        try {
-            return Double.parseDouble(given);
-        } catch (NumberFormatException e) {
-            return given;
-        }
-    }
-
-    @Override
     public Object visitVariableExpr(Expr.Variable expr) {
         return environment.get(expr.name);
     }

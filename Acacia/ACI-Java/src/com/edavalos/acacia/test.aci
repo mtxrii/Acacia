@@ -1,18 +1,21 @@
-def makeCounter() {
+def iterate(setOrString) {
+    let size = len(setOrString);
     let i = 0;
-    def count() {
+    def nextVal() {
+        if (i >= size) {
+            return nil;
+        }
+        let value = setOrString[i];
         i++;
-        println(i);
+        return value;
     }
 
-    return count;
+    return nextVal;
 }
 
-let counter = makeCounter();
-counter(); // "1".
-counter(); // "2".
-
 let x = [3, 5, 7];
-let y = "Test";
 
-println(len(x), len(y));
+let iterator = iterate(x);
+for (let j = 0; j < len(x); j++) {
+    println(iterator());
+}

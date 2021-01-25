@@ -21,7 +21,6 @@ public final class GenerateAST {
                 "Call     : Expr callee, Token paren, List<Expr> arguments",
                 "Grouping : Expr expression",
                 "Index    : Token setName, Expr location",
-                "Input    : DataType type",
                 "Literal  : Object value",
                 "Set      : List<Expr> values",
                 "Logical  : Expr left, Token operator, Expr right",

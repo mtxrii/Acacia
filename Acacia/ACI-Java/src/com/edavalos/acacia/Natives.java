@@ -116,8 +116,82 @@ public final class Natives {
                     }
                     else {
                         throw new RuntimeError(location, "Function '" + name + "' expected" +
-                                "set or string as argument");
+                                " set or string as argument");
                     }
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
+            },
+
+            // 'input(type)' - gets input from user in console, takes in optional string specifying input type
+            new AcaciaCallable() {
+                final String name = "input";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return -1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    String[] validTypes = {"boolean", "bool", "string", "number", "any"};
+                    if (arguments.size() > 1) {
+                        throw new RuntimeError(location, "Expected 0 or 1 arguments but got " +
+                                arguments.size() + " (in '" + name + "').");
+                    }
+                    String arg = "any";
+                    if (arguments.size() == 1) {
+                        arg = Acacia.stringify(arguments.get(0)).toLowerCase();
+                        if (!Arrays.asList(validTypes).contains(arg)) {
+                            throw new RuntimeError(location, "'" + arg + "' is not a valid type " +
+                                    "to convert to. Must be: 'boolean', 'string', 'number' or 'any'.");
+                        }
+                    }
+
+                    java.util.Scanner input = new java.util.Scanner(System.in);
+                    String given =  input.nextLine();
+                    return switch (arg) {
+                        case "boolean", "bool" -> {
+                            if (Arrays.asList("t", "true", "yes", "1").contains(given.toLowerCase())) {
+                                yield true;
+                            }
+                            else if (Arrays.asList("f", "false", "no", "0").contains(given.toLowerCase())) {
+                                yield false;
+                            }
+                            throw new RuntimeError(location, "Cannot convert '" + given +
+                                    "' to boolean.");
+                        }
+                        case "string" -> given;
+                        case "number" -> {
+                            try {
+                                yield Double.parseDouble(given);
+                            } catch (NumberFormatException e) {
+                                throw new RuntimeError(location, "Cannot convert '" + given +
+                                        "' to number.");
+                            }
+                        }
+                        default -> {
+                            if (Arrays.asList("t", "true", "yes", "1").contains(given.toLowerCase())) {
+                                yield true;
+                            }
+                            else if (Arrays.asList("f", "false", "no", "0").contains(given.toLowerCase())) {
+                                yield false;
+                            }
+                            try {
+                                yield Double.parseDouble(given);
+                            } catch (NumberFormatException e) {
+                                yield given;
+                            }
+                        }
+                    };
                 }
 
                 @Override
