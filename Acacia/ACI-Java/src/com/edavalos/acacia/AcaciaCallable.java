@@ -16,9 +16,10 @@ interface AcaciaCallable {
      * Invokes this callable object. i.e. tells it to evaluate itself and provide a value.
      * @param interpreter The instance where the call is being interpreted.
      * @param arguments The arguments to pass to it.
+     * @param location The token where it was called, for error handling.
      * @return The value evaluated by the call.
      */
-    Object call(Interpreter interpreter, List<Object> arguments);
+    Object call(Interpreter interpreter, List<Object> arguments, Token location);
 
     /**
      * Gets this callable's identifier. Usually same as the variable name in the environment.

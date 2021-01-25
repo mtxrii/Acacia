@@ -11,3 +11,8 @@ def makeCounter() {
 let counter = makeCounter();
 counter(); // "1".
 counter(); // "2".
+
+let x = [3, 5, 7];
+let y = "Test";
+
+println(len(x), len(y));

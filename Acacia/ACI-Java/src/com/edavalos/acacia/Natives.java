@@ -21,7 +21,7 @@ public final class Natives {
                 }
 
                 @Override
-                public Object call(Interpreter interpreter, List<Object> arguments) {
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
                     return (double)System.currentTimeMillis() / 1000.0;
                 }
 
@@ -46,7 +46,7 @@ public final class Natives {
                 }
 
                 @Override
-                public Object call(Interpreter interpreter, List<Object> arguments) {
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
                     StringBuilder printer = new StringBuilder();
                     for (Object arg : arguments) {
                         printer.append(Acacia.stringify(arg)).append(" ");
@@ -76,13 +76,48 @@ public final class Natives {
                 }
 
                 @Override
-                public Object call(Interpreter interpreter, List<Object> arguments) {
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
                     StringBuilder printer = new StringBuilder();
                     for (Object arg : arguments) {
                         printer.append(Acacia.stringify(arg)).append(" ");
                     }
                     System.out.println(printer.toString().trim());
                     return null;
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
+            },
+
+            // 'len(set|string)' - returns number of elements in something
+            new AcaciaCallable() {
+                final String name = "len";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    Object arg = arguments.get(0);
+                    if (arg instanceof List) {
+                        return (double)(((List) arg).size());
+                    }
+                    else if (arg instanceof String) {
+                        return (double)(((String) arg).length());
+                    }
+                    else {
+                        throw new RuntimeError(location, "Function '" + name + "' expected" +
+                                "set or string as argument");
+                    }
                 }
 
                 @Override

@@ -142,7 +142,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     arguments.size() + " (in '" + Acacia.stringify(callee) + "').");
         }
 
-        return function.call(this, arguments);
+        return function.call(this, arguments, expr.paren);
     }
 
     @Override
