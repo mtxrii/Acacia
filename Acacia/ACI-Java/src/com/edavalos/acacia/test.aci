@@ -1,17 +1,6 @@
-let x = "testing";
-foreach (let c; x;) {
-    if (c == "i") next;
-    print(c);
-}
-println();
-
-def y() {
-    let i = 0;
-    let i = 4;
+def x() {
+    exit;
+    return 7;
 }
 
-{
-    let g = [1, 3, x];
-
-    print(g);
-}
+println(x());
