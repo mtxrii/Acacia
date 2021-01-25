@@ -182,17 +182,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Object visitIndexExpr(Expr.Index expr) {
         Object idx = evaluate(expr.location);
         if ((!(idx instanceof Double)) || (((Double) idx) != Math.floor((Double) idx))) {
-            throw new RuntimeError(expr.setName, "Index must be a whole number.");
+            throw new RuntimeError(expr.bracket, "Index must be a whole number.");
         }
         int index = (int) Math.round(((Double) idx));
 
-        Object set;
-        if (expr.setName.type == TokenType.STRING) {
-            set = expr.setName.literal;
-        }
-        else {
-            set = environment.get(expr.setName);
-        }
+        Object set = evaluate(expr.set);
 
         if (set instanceof List) {
             int length = ((List) set).size();
@@ -209,7 +203,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
 
         else {
-            throw new RuntimeError(expr.setName, "Failed to index. Only sets and strings can be indexed.");
+            throw new RuntimeError(expr.bracket, "Failed to index. Only sets and strings can be indexed.");
         }
 
     }

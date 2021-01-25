@@ -1,40 +1,7 @@
-def x() {
-    for (let i = 0; i < 30; i++) {
-        if (i == 3) {
-            next;
-        }
-        println(i);
+let m = [[1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1]];
 
-        if (i == 6) {
-            return i;
-        }
-    }
-}
+m[0][0]++;
 
-let u = 3;
-println(u++);
-
-println("check", x());
-println();
-
-let m = [3, 4, u++];
-foreach (let c; m; let j) {
-    if (c == 3) {
-        println("three", j);
-        next;
-    }
-    println(c);
-}
-
-let matrix = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
-foreach (let inner; matrix;) {
-    foreach (let elem; inner;) {
-        print(elem + " ");
-    }
-    println();
-}
-
-m[0]++;
-matrix[0][2]++;
-
-println(m, matrix);
+println(m[0][0]);

@@ -125,7 +125,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitIndexExpr(Expr.Index expr) {
-        resolve(new Expr.Variable(expr.setName));
+        resolve(expr.set);
         resolve(expr.location);
         return null;
     }

@@ -94,8 +94,9 @@ abstract class Expr {
   }
 
   static class Index extends Expr {
-    Index(Token setName, Expr location) {
-      this.setName = setName;
+    Index(Expr set, Token bracket, Expr location) {
+      this.set = set;
+      this.bracket = bracket;
       this.location = location;
     }
 
@@ -104,7 +105,8 @@ abstract class Expr {
       return visitor.visitIndexExpr(this);
     }
 
-    final Token setName;
+    final Expr set;
+    final Token bracket;
     final Expr location;
   }
 

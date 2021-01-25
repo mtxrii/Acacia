@@ -356,11 +356,27 @@ class Parser {
     }
 
     private Expr call() {
-        Expr expr = primary();
+        Expr expr = index();
 
         while (true) {
             if (match(LEFT_PAREN)) {
                 expr = finishCall(expr);
+            } else {
+                break;
+            }
+        }
+
+        return expr;
+    }
+
+    private Expr index() {
+        Expr expr = primary();
+
+        while (true) {
+            if (match(LEFT_BRACKET)) {
+                Expr index = expression();
+                Token bracket = consume(RIGHT_BRACKET, "Expected ']' after index.");
+                expr = new Expr.Index(expr, bracket, index);
             } else {
                 break;
             }
@@ -379,25 +395,11 @@ class Parser {
         }
 
         if (match(STRING)) {
-            Token string = previous();
-            if (match(LEFT_BRACKET)) {
-                Expr index = expression();
-                consume(RIGHT_BRACKET, "Expected ']' after index.");
-                return new Expr.Index(string, index);
-            }
-
-            return new Expr.Literal(string.literal);
+            return new Expr.Literal(previous().literal);
         }
 
         if (match(IDENTIFIER)) {
-            Token varName = previous();
-            if (match(LEFT_BRACKET)) {
-                Expr index = expression();
-                consume(RIGHT_BRACKET, "Expected ']' after index.");
-                return new Expr.Index(varName, index);
-            }
-
-            return new Expr.Variable(varName);
+            return new Expr.Variable(previous());
         }
 
         if (match(LEFT_PAREN)) {
