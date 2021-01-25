@@ -57,6 +57,26 @@ class Environment {
         else variables.put(name.lexeme, value);
     }
 
+    // Looks up a variable in a specific enclosing scope
+    Object getAt(int distance, String name) {
+        return ancestor(distance).variables.get(name);
+    }
+
+    // Places a variable in a specified enclosing scope
+    void assignAt(int distance, Token name, Object value) {
+        ancestor(distance).variables.put(name.lexeme, value);
+    }
+
+    // Reaches up through a specified number of enclosing scopes and returns it
+    Environment ancestor(int distance) {
+        Environment environment = this;
+        for (int i = 0; i < distance; i++) {
+            environment = environment.enclosing;
+        }
+
+        return environment;
+    }
+
     // Hardcodes a variable in the mapping
     void hardDefine(String name, Object value) {
         variables.put(name, value);
