@@ -4,9 +4,11 @@ import java.util.List;
 
 class AcaciaFunction implements AcaciaCallable {
     private final Stmt.Function declaration;
+    private final Environment closure;
 
-    AcaciaFunction(Stmt.Function declaration) {
+    AcaciaFunction(Stmt.Function declaration, Environment closure) {
         this.declaration = declaration;
+        this.closure = closure;
     }
 
     @Override
@@ -16,7 +18,7 @@ class AcaciaFunction implements AcaciaCallable {
 
     @Override
     public Object call(Interpreter interpreter, List<Object> arguments) {
-        Environment innerEnvironment = new Environment(interpreter.globals);
+        Environment innerEnvironment = new Environment(closure);
         for (int i = 0; i < declaration.params.size(); i++) {
             innerEnvironment.define(declaration.params.get(i), arguments.get(i));
         }

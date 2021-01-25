@@ -87,7 +87,7 @@ public final class Natives {
 
                 @Override
                 public String toString() {
-                    return "<native fn:" + name + ">";
+                    return "<native fn " + name + ">";
                 }
             }
     );

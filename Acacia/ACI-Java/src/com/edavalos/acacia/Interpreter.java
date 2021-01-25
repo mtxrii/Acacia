@@ -266,7 +266,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
-        AcaciaFunction function = new AcaciaFunction(stmt);
+        AcaciaFunction function = new AcaciaFunction(stmt, environment);
         environment.define(stmt.name, function);
         return null;
     }
