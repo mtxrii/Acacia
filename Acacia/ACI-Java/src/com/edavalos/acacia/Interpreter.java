@@ -293,11 +293,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 break;
             } catch (Next x) {
                 continue;
+            } finally {
+                index++;
+                if (logIndex)
+                    environment.assign(stmt.index, index);
             }
-
-            index++;
-            if (logIndex)
-                environment.assign(stmt.index, index);
         }
         return null;
     }
