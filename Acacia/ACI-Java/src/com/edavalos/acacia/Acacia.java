@@ -108,18 +108,19 @@ public final class Acacia {
     // For reporting errors given a runtime error object
     static void error(RuntimeError error) {
         report(error.token.line, "", error.getMessage(), true);
+//        report(error.token, error.getMessage(), true);
     }
 
     // For displaying error messages that only include a line
     private static void report(int line, String where, String message, boolean isRuntimeError) {
-        System.err.println("[line " + line + "] Error" + where + ": " + message);
+        System.err.println("\n[line " + line + "] Error" + where + ": " + message);
         if (isRuntimeError) hadRuntimeError = true;
         else hadError = true;
     }
 
     // For displaying error messages that include a line, column and length
     private static void report(Token token, String message, boolean isRuntimeError) {
-        System.err.println("[line " + token.line + "] Error at:");
+        System.err.println("\n[line " + token.line + "] Error at:");
         System.out.println("'" + fileLines[token.line-1] + "'");
         System.err.println(repeat(token.column, " ") + repeat(token.length, "*") + "\n" + message);
         if (isRuntimeError) hadRuntimeError = true;
