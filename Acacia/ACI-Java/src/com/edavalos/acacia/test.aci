@@ -1,21 +1,6 @@
-def iterate(setOrString) {
-    let size = len(setOrString);
-    let i = 0;
-    def nextVal() {
-        if (i >= size) {
-            return nil;
-        }
-        let value = setOrString[i];
-        i++;
-        return value;
-    }
+let x = "[1, 3, 7, 2]";
+let y;
 
-    return nextVal;
-}
-
-let x = [3, 5, 7];
-
-let iterator = iterate(x);
-for (let j = 0; j < len(x); j++) {
-    println(iterator());
+foreach (let c; x; let i) {
+    println(i + " : " + c);
 }

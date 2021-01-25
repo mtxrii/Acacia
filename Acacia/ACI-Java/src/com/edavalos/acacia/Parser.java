@@ -44,6 +44,7 @@ class Parser {
     private Stmt statement() {
         if (match(EXIT)) return exitStatement(false);
         if (match(FOR)) return forStatement();
+        if (match(FOREACH)) return foreachStatement();
         if (match(IF)) return ifStatement();
         if (match(NEXT)) return exitStatement(true);
         if (match(PRINT)) return printStatement();
@@ -111,6 +112,35 @@ class Parser {
         }
 
         return body;
+    }
+
+    private Stmt foreachStatement() {
+        consume(LEFT_PAREN, "Expected '(' after 'foreach'.");
+
+        Token iterator;
+        if (match(LET) && match(IDENTIFIER)) {
+            iterator = previous();
+        }
+        else {
+            throw new RuntimeError(peek(), "Expected variable initializer (for iterator)");
+        }
+        consume(SEMICOLON, "Expected ';' after variable initializer.");
+
+        Token iterableName = peek();
+        Expr iterable = expression();
+
+        consume(SEMICOLON, "Expected ';' after iterable.");
+
+        Token index = null;
+        if (!check(RIGHT_PAREN)) {
+            if (match(LET) && match(IDENTIFIER)) {
+                index = previous();
+            }
+        }
+        consume(RIGHT_PAREN, "Expected ')' after foreach clauses.");
+        Stmt body = statement();
+
+        return new Stmt.Foreach(iterator, iterable, iterableName, index, body);
     }
 
     private Stmt ifStatement() {

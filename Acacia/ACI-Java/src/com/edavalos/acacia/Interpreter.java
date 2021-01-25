@@ -176,8 +176,8 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         else if (set instanceof String) {
             int length = ((String) set).length();
 
-            if (index >= 0) return ((String) set).charAt(index % length);
-            else return ((String) set).charAt(index + length);
+            if (index >= 0) return ((String) set).charAt(index % length) + "";
+            else return ((String) set).charAt(index + length) + "";
         }
 
         else {
@@ -259,24 +259,46 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         boolean logIndex = false;
         if (stmt.index != null) {
-            environment.define(stmt.index, null);
+            environment.define(stmt.index, 0);
             logIndex = true;
         }
 
         Object iterable = evaluate(stmt.iterable);
-//        if (!(iterable instanceof String) && !(iterable instanceof List)) {
-//            throw new RuntimeError(stmt.iterator, "'" + Acacia.stringify())
-//        }
-//
-//        while (isTruthy(evaluate(stmt.condition))) {
-//            try {
-//                execute(stmt.body);
-//            } catch (Exit x) {
-//                break;
-//            } catch (Next x) {
-//                continue;
-//            }
-//        }
+        if (!(iterable instanceof String) && !(iterable instanceof List)) {
+            throw new RuntimeError(stmt.iterableName, "'" + stmt.iterableName.lexeme + "' is not a set " +
+                    "or a string, and therefore not iterable.");
+        }
+
+        int size;
+        int index = 0;
+        boolean isSet;
+        if (iterable instanceof String) {
+            size = ((String) iterable).length();
+            isSet = false;
+        } else {
+            size = ((List) iterable).size();
+            isSet = true;
+        }
+
+        while (index < size) {
+            if (isSet) {
+                environment.assign(stmt.iterator, ((List) iterable).get(index));
+            } else {
+                environment.assign(stmt.iterator, ((String) iterable).charAt(index) + "");
+            }
+
+            try {
+                execute(stmt.body);
+            } catch (Exit x) {
+                break;
+            } catch (Next x) {
+                continue;
+            }
+
+            index++;
+            if (logIndex)
+                environment.assign(stmt.index, index);
+        }
         return null;
     }
 
