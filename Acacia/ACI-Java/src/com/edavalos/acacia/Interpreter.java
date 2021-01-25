@@ -369,6 +369,8 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             } catch (Exit x) {
                 break;
             } catch (Next x) {
+                List<Stmt> stmts = ((Stmt.Block) stmt.body).statements;
+                execute(stmts.get(stmts.size() - 1));
                 continue;
             }
         }

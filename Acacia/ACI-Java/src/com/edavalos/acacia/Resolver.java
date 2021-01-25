@@ -8,7 +8,7 @@ import java.util.Stack;
 class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
     private final Interpreter interpreter;
     private final Stack<Map<String, Boolean>> scopes = new Stack<>();
-    private BlockType currentBlockType = BlockType.NONE;
+    private final Stack<BlockType> nestedBlocks = new Stack<>();
 
     private enum BlockType {
         NONE,
@@ -19,6 +19,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     Resolver(Interpreter interpreter) {
         this.interpreter = interpreter;
+        this.nestedBlocks.push(BlockType.NONE);
     }
 
     void resolve(List<Stmt> statements) {
@@ -36,8 +37,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
     }
 
     private void resolveFunction(Stmt.Function function, BlockType type) {
-        BlockType enclosingBlock = currentBlockType;
-        currentBlockType = type;
+        nestedBlocks.push(type);
 
         beginScope();
         for (Token param : function.params) {
@@ -47,7 +47,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
         resolve(function.body);
         endScope();
 
-        currentBlockType = enclosingBlock;
+        nestedBlocks.pop();
     }
 
     private void beginScope() {
@@ -170,6 +170,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitExitStmt(Stmt.Exit stmt) {
+        BlockType currentBlockType = nestedBlocks.peek();
         if (currentBlockType == BlockType.NONE || currentBlockType == BlockType.FUNCTION) {
             Acacia.error(stmt.keyword, "'Exit' can only be used inside loops.");
         }
@@ -184,11 +185,15 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitForeachStmt(Stmt.Foreach stmt) {
+        nestedBlocks.push(BlockType.LOOP);
+
         resolve(new Stmt.Var(stmt.iterator, null));
         if (stmt.index != null) {
             resolve(new Stmt.Var(stmt.index, new Expr.Literal(0.0)));
         }
         resolve(stmt.body);
+
+        nestedBlocks.pop();
         return null;
     }
 
@@ -211,6 +216,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitNextStmt(Stmt.Next stmt) {
+        BlockType currentBlockType = nestedBlocks.peek();
         if (currentBlockType == BlockType.NONE || currentBlockType == BlockType.FUNCTION) {
             Acacia.error(stmt.keyword, "'Next' can only be used inside loops.");
         }
@@ -225,7 +231,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitReturnStmt(Stmt.Return stmt) {
-        if (currentBlockType == BlockType.NONE) {
+        if (!nestedBlocks.contains(BlockType.FUNCTION)) {
             Acacia.error(stmt.keyword, "Can't return outside functions.");
         }
 
@@ -248,8 +254,12 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitWhileStmt(Stmt.While stmt) {
+        nestedBlocks.push(BlockType.LOOP);
+
         resolve(stmt.condition);
         resolve(stmt.body);
+
+        nestedBlocks.pop();
         return null;
     }
 }
