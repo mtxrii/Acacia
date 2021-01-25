@@ -7,6 +7,7 @@ abstract class Stmt {
     R visitBlockStmt(Block stmt);
     R visitExitStmt(Exit stmt);
     R visitExpressionStmt(Expression stmt);
+    R visitForeachStmt(Foreach stmt);
     R visitFunctionStmt(Function stmt);
     R visitIfStmt(If stmt);
     R visitNextStmt(Next stmt);
@@ -52,6 +53,25 @@ abstract class Stmt {
     }
 
     final Expr expression;
+  }
+
+  static class Foreach extends Stmt {
+    Foreach(Stmt iterator, Expr iterable, Stmt index, Stmt body) {
+      this.iterator = iterator;
+      this.iterable = iterable;
+      this.index = index;
+      this.body = body;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitForeachStmt(this);
+    }
+
+    final Stmt iterator;
+    final Expr iterable;
+    final Stmt index;
+    final Stmt body;
   }
 
   static class Function extends Stmt {

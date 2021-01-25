@@ -33,6 +33,8 @@ public final class GenerateAST {
                 "Block      : List<Stmt> statements",
                 "Exit       : Token keyword",
                 "Expression : Expr expression",
+                "Foreach    : Stmt iterator, Expr iterable," +
+                            " Stmt index, Stmt body",
                 "Function   : Token name, List<Token> params," +
                             " List<Stmt> body",
                 "If         : Expr condition, Stmt thenBranch," +
