@@ -90,17 +90,8 @@ class Parser {
         consume(RIGHT_PAREN, "Expected ')' after for clauses.");
         Stmt body = statement();
 
-        if (increment != null) {
-            body = new Stmt.Block(
-                    Arrays.asList(
-                            body,
-                            new Stmt.Expression(increment)
-                    )
-            );
-        }
-
         if (condition == null) condition = new Expr.Literal(true);
-        body = new Stmt.While(condition, body);
+        body = new Stmt.While(condition, body, increment);
 
         if (initializer != null) {
             body = new Stmt.Block(
@@ -192,7 +183,7 @@ class Parser {
         consume(RIGHT_PAREN, "Expected ')' after condition.");
         Stmt body = statement();
 
-        return new Stmt.While(condition, body);
+        return new Stmt.While(condition, body, null);
     }
 
     private Stmt expressionStatement() {
@@ -231,31 +222,39 @@ class Parser {
     private Expr expression() {
         if (match(LEFT_BRACKET)) return new Expr.Set(set());
 
-        return assignment();
+        return increment();
+    }
+
+    private Expr increment() {
+        Expr expr = assignment();
+        if (match(DOUBLE_PLUS) || match(DOUBLE_MINUS) ||
+            match(TRIPLE_PLUS) || match(TRIPLE_MINUS)) {
+            Token type = previous();
+
+            if (expr instanceof Expr.Variable) {
+                Token name = ((Expr.Variable) expr).name;
+                return new Expr.Increment(name, type);
+            }
+
+            error(type, "Invalid increment target.");
+        }
+
+        return expr;
     }
 
     private Expr assignment() {
         Expr expr = or();
 
-        if (match(EQUAL) || match(DOUBLE_PLUS) || match(DOUBLE_MINUS) ||
-                match(TRIPLE_PLUS) || match(TRIPLE_MINUS)) {
-
+        if (match(EQUAL)) {
             Token equals = previous();
-            if (!(expr instanceof Expr.Variable))
-                error(equals, "Invalid target to modify.");
+            Expr value = expression();
 
-            else {
+            if (expr instanceof Expr.Variable) {
                 Token name = ((Expr.Variable) expr).name;
-                Expr value = switch (equals.type) {
-                    case EQUAL -> assignment();
-                    case DOUBLE_PLUS -> new Expr.Binary(expr, new Token(PLUS, "+"), new Expr.Literal(1.0));
-                    case DOUBLE_MINUS -> new Expr.Binary(expr, new Token(MINUS, "-"), new Expr.Literal(1.0));
-                    case TRIPLE_PLUS -> new Expr.Binary(expr, new Token(STAR, "*"), new Expr.Literal(2.0));
-                    case TRIPLE_MINUS -> new Expr.Binary(expr, new Token(SLASH, "/"), new Expr.Literal(2.0));
-                    default -> null;
-                };
                 return new Expr.Assign(name, value);
             }
+
+            error(equals, "Invalid assignment target.");
         }
 
         return expr;

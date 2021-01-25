@@ -154,6 +154,31 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitIncrementExpr(Expr.Increment expr) {
+        Object currentValue = lookUpVariable(expr.var, expr);
+        if (!(currentValue instanceof Double)) {
+            throw new RuntimeError(expr.type, "Invalid increment target.");
+        }
+
+        Double newValue = switch (expr.type.type) {
+            case DOUBLE_PLUS -> ((Double) currentValue) + 1.0;
+            case DOUBLE_MINUS -> ((Double) currentValue) - 1.0;
+            case TRIPLE_PLUS -> ((Double) currentValue) * 2.0;
+            case TRIPLE_MINUS -> ((Double) currentValue) / 2.0;
+            default -> null;
+        };
+
+        Integer distance = locals.get(expr);
+        if (distance != null) {
+            environment.assignAt(distance, expr.var, newValue);
+        } else {
+            globals.assign(expr.var, newValue);
+        }
+
+        return newValue;
+    }
+
+    @Override
     public Object visitIndexExpr(Expr.Index expr) {
         Object idx = evaluate(expr.location);
         if ((!(idx instanceof Double)) || (((Double) idx) != Math.floor((Double) idx))) {
@@ -369,9 +394,9 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             } catch (Exit x) {
                 break;
             } catch (Next x) {
-                List<Stmt> stmts = ((Stmt.Block) stmt.body).statements;
-                execute(stmts.get(stmts.size() - 1));
                 continue;
+            } finally {
+                evaluate(stmt.increment);
             }
         }
         return null;

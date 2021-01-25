@@ -8,6 +8,7 @@ abstract class Expr {
     R visitBinaryExpr(Binary expr);
     R visitCallExpr(Call expr);
     R visitGroupingExpr(Grouping expr);
+    R visitIncrementExpr(Increment expr);
     R visitIndexExpr(Index expr);
     R visitLiteralExpr(Literal expr);
     R visitSetExpr(Set expr);
@@ -75,6 +76,21 @@ abstract class Expr {
     }
 
     final Expr expression;
+  }
+
+  static class Increment extends Expr {
+    Increment(Token var, Token type) {
+      this.var = var;
+      this.type = type;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitIncrementExpr(this);
+    }
+
+    final Token var;
+    final Token type;
   }
 
   static class Index extends Expr {

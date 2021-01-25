@@ -20,6 +20,7 @@ public final class GenerateAST {
                 "Binary   : Expr left, Token operator, Expr right",
                 "Call     : Expr callee, Token paren, List<Expr> arguments",
                 "Grouping : Expr expression",
+                "Increment: Token var, Token type",
                 "Index    : Token setName, Expr location",
                 "Literal  : Object value",
                 "Set      : List<Expr> values",
@@ -43,7 +44,7 @@ public final class GenerateAST {
                 "Print      : Expr expression",
                 "Return     : Token keyword, Expr value",
                 "Var        : Token name, Expr initializer",
-                "While      : Expr condition, Stmt body"
+                "While      : Expr condition, Stmt body, Expr increment"
         );
 
         defineAst(outputDir, "Expr", exprs);

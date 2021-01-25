@@ -167,9 +167,10 @@ abstract class Stmt {
   }
 
   static class While extends Stmt {
-    While(Expr condition, Stmt body) {
+    While(Expr condition, Stmt body, Expr increment) {
       this.condition = condition;
       this.body = body;
+      this.increment = increment;
     }
 
     @Override
@@ -179,6 +180,7 @@ abstract class Stmt {
 
     final Expr condition;
     final Stmt body;
+    final Expr increment;
   }
 
 

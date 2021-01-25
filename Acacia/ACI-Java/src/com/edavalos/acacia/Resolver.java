@@ -118,6 +118,12 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
     }
 
     @Override
+    public Void visitIncrementExpr(Expr.Increment expr) {
+        resolveLocal(expr, expr.var);
+        return null;
+    }
+
+    @Override
     public Void visitIndexExpr(Expr.Index expr) {
         resolve(new Expr.Variable(expr.setName));
         resolve(expr.location);
@@ -257,6 +263,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
         nestedBlocks.push(BlockType.LOOP);
 
         resolve(stmt.condition);
+        resolve(stmt.increment);
         resolve(stmt.body);
 
         nestedBlocks.pop();
