@@ -27,8 +27,9 @@ public final class GenerateAST {
                 "Index    : Expr set, Token name, Token bracket," +
                           " Expr location",
                 "Literal  : Object value",
-                "Set      : List<Expr> values",
                 "Logical  : Expr left, Token operator, Expr right",
+                "Set      : List<Expr> values",
+                "Put      : Expr object, Token name, Expr value",
                 "Unary    : Token operator, Expr right",
                 "Variable : Token name"
         );
@@ -63,6 +64,7 @@ public final class GenerateAST {
         writer.println("package com.edavalos.acacia;");
         writer.println();
         writer.println("import java.util.List;");
+        writer.println("import java.util.Stack;");
         writer.println();
         writer.println("abstract class " + baseName + " {");
 

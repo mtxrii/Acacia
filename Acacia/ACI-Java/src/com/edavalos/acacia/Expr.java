@@ -1,6 +1,7 @@
 package com.edavalos.acacia;
 
 import java.util.List;
+import java.util.Stack;
 
 abstract class Expr {
   interface Visitor<R> {
@@ -14,8 +15,9 @@ abstract class Expr {
     R visitIncSetExpr(IncSet expr);
     R visitIndexExpr(Index expr);
     R visitLiteralExpr(Literal expr);
-    R visitSetExpr(Set expr);
     R visitLogicalExpr(Logical expr);
+    R visitSetExpr(Set expr);
+    R visitPutExpr(Put expr);
     R visitUnaryExpr(Unary expr);
     R visitVariableExpr(Variable expr);
   }
@@ -177,19 +179,6 @@ abstract class Expr {
     final Object value;
   }
 
-  static class Set extends Expr {
-    Set(List<Expr> values) {
-      this.values = values;
-    }
-
-    @Override
-    <R> R accept(Visitor<R> visitor) {
-      return visitor.visitSetExpr(this);
-    }
-
-    final List<Expr> values;
-  }
-
   static class Logical extends Expr {
     Logical(Expr left, Token operator, Expr right) {
       this.left = left;
@@ -205,6 +194,36 @@ abstract class Expr {
     final Expr left;
     final Token operator;
     final Expr right;
+  }
+
+  static class Set extends Expr {
+    Set(List<Expr> values) {
+      this.values = values;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitSetExpr(this);
+    }
+
+    final List<Expr> values;
+  }
+
+  static class Put extends Expr {
+    Put(Expr object, Token name, Expr value) {
+      this.object = object;
+      this.name = name;
+      this.value = value;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitPutExpr(this);
+    }
+
+    final Expr object;
+    final Token name;
+    final Expr value;
   }
 
   static class Unary extends Expr {
