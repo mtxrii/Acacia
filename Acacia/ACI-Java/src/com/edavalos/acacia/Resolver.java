@@ -112,6 +112,13 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
     }
 
     @Override
+    public Void visitEditSetExpr(Expr.EditSet expr) {
+        resolve(expr.value);
+        resolveLocal(expr, expr.name);
+        return null;
+    }
+
+    @Override
     public Void visitGroupingExpr(Expr.Grouping expr) {
         resolve(expr.expression);
         return null;
@@ -120,6 +127,12 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
     @Override
     public Void visitIncrementExpr(Expr.Increment expr) {
         resolveLocal(expr, expr.var);
+        return null;
+    }
+
+    @Override
+    public Void visitIncSetExpr(Expr.IncSet expr) {
+        resolveLocal(expr, expr.name);
         return null;
     }
 

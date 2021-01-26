@@ -1,14 +1,17 @@
 package com.edavalos.acacia;
 
 import java.util.List;
+import java.util.Stack;
 
 abstract class Expr {
   interface Visitor<R> {
     R visitAssignExpr(Assign expr);
     R visitBinaryExpr(Binary expr);
     R visitCallExpr(Call expr);
+    R visitEditSetExpr(EditSet expr);
     R visitGroupingExpr(Grouping expr);
     R visitIncrementExpr(Increment expr);
+    R visitIncSetExpr(IncSet expr);
     R visitIndexExpr(Index expr);
     R visitLiteralExpr(Literal expr);
     R visitSetExpr(Set expr);
@@ -65,6 +68,23 @@ abstract class Expr {
     final List<Expr> arguments;
   }
 
+  static class EditSet extends Expr {
+    EditSet(Token name, Stack<Expr> depth, Expr value) {
+      this.name = name;
+      this.depth = depth;
+      this.value = value;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitEditSetExpr(this);
+    }
+
+    final Token name;
+    final Stack<Expr> depth;
+    final Expr value;
+  }
+
   static class Grouping extends Expr {
     Grouping(Expr expression) {
       this.expression = expression;
@@ -93,9 +113,27 @@ abstract class Expr {
     final Token type;
   }
 
+  static class IncSet extends Expr {
+    IncSet(Token name, Stack<Expr> depth, Token type) {
+      this.name = name;
+      this.depth = depth;
+      this.type = type;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitIncSetExpr(this);
+    }
+
+    final Token name;
+    final Stack<Expr> depth;
+    final Token type;
+  }
+
   static class Index extends Expr {
-    Index(Expr set, Token bracket, Expr location) {
+    Index(Expr set, Token name, Token bracket, Expr location) {
       this.set = set;
+      this.name = name;
       this.bracket = bracket;
       this.location = location;
     }
@@ -106,6 +144,7 @@ abstract class Expr {
     }
 
     final Expr set;
+    final Token name;
     final Token bracket;
     final Expr location;
   }

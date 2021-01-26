@@ -1,9 +1,6 @@
 package com.edavalos.acacia;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     final Environment globals = new Environment();
@@ -149,6 +146,26 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitEditSetExpr(Expr.EditSet expr) {
+        Object value = evaluate(expr.value);
+        Stack<Integer> indices = new Stack<>();
+        while (expr.depth.size() > 0) {
+            Object idx = evaluate(expr.depth.pop());
+            if ((!(idx instanceof Double)) || (((Double) idx) != Math.floor((Double) idx))) {
+                throw new RuntimeError(expr.name, "Index must be a whole number.");
+            }
+            indices.push((int) Math.round((Double) idx));
+        }
+        Stack<Integer> indices_rev = new Stack<>();
+        while (indices.size() > 0) {
+            indices_rev.push(indices.pop());
+        }
+
+        environment.assign(expr.name, value, indices_rev);
+        return value;
+    }
+
+    @Override
     public Object visitGroupingExpr(Expr.Grouping expr) {
         return evaluate(expr.expression);
     }
@@ -176,6 +193,25 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
 
         return newValue;
+    }
+
+    @Override
+    public Object visitIncSetExpr(Expr.IncSet expr) {
+        Token type = expr.type;
+        Stack<Integer> indices = new Stack<>();
+        while (expr.depth.size() > 0) {
+            Object idx = evaluate(expr.depth.pop());
+            if ((!(idx instanceof Double)) || (((Double) idx) != Math.floor((Double) idx))) {
+                throw new RuntimeError(expr.name, "Index must be a whole number.");
+            }
+            indices.push((int) Math.round((Double) idx));
+        }
+        Stack<Integer> indices_rev = new Stack<>();
+        while (indices.size() > 0) {
+            indices_rev.push(indices.pop());
+        }
+
+        return environment.increment(expr.name, type, indices_rev);
     }
 
     @Override

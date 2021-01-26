@@ -3,6 +3,7 @@ package com.edavalos.acacia;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 import static com.edavalos.acacia.TokenType.*;
 
@@ -236,6 +237,18 @@ class Parser {
                 return new Expr.Increment(name, type);
             }
 
+            if (expr instanceof Expr.Index) {
+                Stack<Expr> depth = new Stack<>();
+
+                Expr.Index current = ((Expr.Index) expr);
+                depth.push(current.location);
+                while (current.set instanceof Expr.Index) {
+                    current = ((Expr.Index) current.set);
+                    depth.push(current.location);
+                }
+                return new Expr.IncSet(((Expr.Index) expr).name, depth, type);
+            }
+
             error(type, "Invalid increment target.");
         }
 
@@ -252,6 +265,19 @@ class Parser {
             if (expr instanceof Expr.Variable) {
                 Token name = ((Expr.Variable) expr).name;
                 return new Expr.Assign(name, value);
+            }
+
+            if (expr instanceof Expr.Index) {
+                Stack<Expr> depth = new Stack<>();
+
+                Expr.Index current = ((Expr.Index) expr);
+                depth.push(current.location);
+                while (current.set instanceof Expr.Index) {
+                    current = ((Expr.Index) current.set);
+                    depth.push(current.location);
+                }
+                return new Expr.EditSet(((Expr.Index) expr).name, depth, value);
+
             }
 
             error(equals, "Invalid assignment target.");
@@ -371,12 +397,17 @@ class Parser {
 
     private Expr index() {
         Expr expr = primary();
+        Token varName = null;
+
+        if (expr instanceof Expr.Variable) {
+            varName = ((Expr.Variable) expr).name;
+        }
 
         while (true) {
             if (match(LEFT_BRACKET)) {
                 Expr index = expression();
                 Token bracket = consume(RIGHT_BRACKET, "Expected ']' after index.");
-                expr = new Expr.Index(expr, bracket, index);
+                expr = new Expr.Index(expr, varName, bracket, index);
             } else {
                 break;
             }
