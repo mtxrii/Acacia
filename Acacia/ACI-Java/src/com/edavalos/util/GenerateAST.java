@@ -35,6 +35,7 @@ public final class GenerateAST {
         // All our statement tree types
         List<String> stmts = Arrays.asList(
                 "Block      : List<Stmt> statements",
+                "Class      : Token name, List<Stmt.Function> methods",
                 "Exit       : Token keyword",
                 "Expression : Expr expression",
                 "Foreach    : Token iterator, Expr iterable," +
