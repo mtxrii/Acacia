@@ -1,17 +1,6 @@
-let m = [[1, 0, 0],
-        [0, 1, 0],
-        [0, 0, 1]];
 
-m[0][2]++; // Add support for this
-println(m[0][2]);
+class Bagel {
 
-m[2][0] = 1; // And this
-println(m[2][0]);
-
-println();
-foreach (let i; m;) {
-    foreach (let j; i;) {
-        print(j + " ");
-    }
-    println();
 }
+let bagel = Bagel();
+println(bagel);

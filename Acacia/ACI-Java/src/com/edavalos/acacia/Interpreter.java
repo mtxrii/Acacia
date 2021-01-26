@@ -439,6 +439,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitClassStmt(Stmt.Class stmt) {
+        environment.define(stmt.name, null);
+        AcaciaClass klass = new AcaciaClass(stmt.name.lexeme);
+        environment.assign(stmt.name, klass);
+        return null;
+    }
+
+    @Override
     public Void visitExitStmt(Stmt.Exit stmt) {
         throw new Exit();
     }
