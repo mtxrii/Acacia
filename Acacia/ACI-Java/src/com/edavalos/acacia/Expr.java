@@ -1,7 +1,6 @@
 package com.edavalos.acacia;
 
 import java.util.List;
-import java.util.Stack;
 
 abstract class Expr {
   interface Visitor<R> {
@@ -9,6 +8,7 @@ abstract class Expr {
     R visitBinaryExpr(Binary expr);
     R visitCallExpr(Call expr);
     R visitEditSetExpr(EditSet expr);
+    R visitGetExpr(Get expr);
     R visitGroupingExpr(Grouping expr);
     R visitIncrementExpr(Increment expr);
     R visitIncSetExpr(IncSet expr);
@@ -83,6 +83,21 @@ abstract class Expr {
     final Token name;
     final Stack<Expr> depth;
     final Expr value;
+  }
+
+  static class Get extends Expr {
+    Get(Expr object, Token name) {
+      this.object = object;
+      this.name = name;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitGetExpr(this);
+    }
+
+    final Expr object;
+    final Token name;
   }
 
   static class Grouping extends Expr {

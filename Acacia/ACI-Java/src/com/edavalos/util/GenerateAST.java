@@ -20,6 +20,7 @@ public final class GenerateAST {
                 "Binary   : Expr left, Token operator, Expr right",
                 "Call     : Expr callee, Token paren, List<Expr> arguments",
                 "EditSet  : Token name, Stack<Expr> depth, Expr value",
+                "Get      : Expr object, Token name",
                 "Grouping : Expr expression",
                 "Increment: Token var, Token type",
                 "IncSet   : Token name, Stack<Expr> depth, Token type",
