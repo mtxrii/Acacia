@@ -166,6 +166,16 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitGetExpr(Expr.Get expr) {
+        Object object = evaluate(expr.object);
+        if (object instanceof AcaciaInstance) {
+            return ((AcaciaInstance) object).get(expr.name);
+        }
+
+        throw new RuntimeError(expr.name, "Only instances have properties.");
+    }
+
+    @Override
     public Object visitGroupingExpr(Expr.Grouping expr) {
         return evaluate(expr.expression);
     }
@@ -256,6 +266,19 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             contents.add(evaluate(e));
         }
         return contents;
+    }
+
+    @Override
+    public Object visitPutExpr(Expr.Put expr) {
+        Object object = evaluate(expr.object);
+
+        if (!(object instanceof AcaciaInstance)) {
+            throw new RuntimeError(expr.name, "Only instances have fields.");
+        }
+
+        Object value = evaluate(expr.value);
+        ((AcaciaInstance) object).put(expr.name, value);
+        return value;
     }
 
     @Override

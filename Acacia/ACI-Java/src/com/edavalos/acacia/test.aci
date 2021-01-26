@@ -4,3 +4,7 @@ class Bagel {
 }
 let bagel = Bagel();
 println(bagel);
+
+bagel.topping = "cream cheese";
+
+println(bagel.topping);

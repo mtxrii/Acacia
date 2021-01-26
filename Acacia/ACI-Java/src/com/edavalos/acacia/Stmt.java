@@ -1,6 +1,7 @@
 package com.edavalos.acacia;
 
 import java.util.List;
+import java.util.Stack;
 
 abstract class Stmt {
   interface Visitor<R> {

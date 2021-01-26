@@ -282,6 +282,11 @@ class Parser {
                 return new Expr.Assign(name, value);
             }
 
+            if (expr instanceof Expr.Get) {
+                Expr.Get get = (Expr.Get) expr;
+                return new Expr.Put(get.object, get.name, value);
+            }
+
             if (expr instanceof Expr.Index) {
                 Stack<Expr> depth = new Stack<>();
 
@@ -402,7 +407,10 @@ class Parser {
         while (true) {
             if (match(LEFT_PAREN)) {
                 expr = finishCall(expr);
-            } else {
+            } else if (match(DOT)) {
+                Token name = consume(IDENTIFIER, "Expected property name after '.'.");
+                expr = new Expr.Get(expr, name);
+            } else{
                 break;
             }
         }
