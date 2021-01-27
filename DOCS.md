@@ -285,3 +285,31 @@ counter(); // "2".
 counter(); // "3".
 
 ```
+
+# Classes
+Classes hold methods accessible by any instance. Individual instances can hold any number of unique fields / variables.
+```javascript
+class Truck {
+  drive() {
+    println("vroom!");
+  }
+  
+  backup() {
+    println("beep beep beep!");
+  }
+  
+  getType() {
+  return "This " + this.make + " is a " + this.model;
+  }
+}
+
+let semi = Truck();
+semi.drive(); // prints "vroom!"
+
+semi.make = "Volvo";
+semi.model = "VNR";
+semi.electric = true;
+
+semi.getType(); // "This Volvo is a VNR"
+```
+>Methods inside classes are defined like functions except without the `def` keyword.
