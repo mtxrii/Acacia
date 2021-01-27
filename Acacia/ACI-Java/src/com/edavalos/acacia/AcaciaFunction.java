@@ -5,16 +5,18 @@ import java.util.List;
 class AcaciaFunction implements AcaciaCallable {
     private final Stmt.Function declaration;
     private final Environment closure;
+    private final boolean isInitializer;
 
-    AcaciaFunction(Stmt.Function declaration, Environment closure) {
+    AcaciaFunction(Stmt.Function declaration, Environment closure, boolean isInitializer) {
         this.declaration = declaration;
         this.closure = closure;
+        this.isInitializer = isInitializer;
     }
 
     AcaciaFunction bind(AcaciaInstance instance) {
         Environment environment = new Environment(closure);
         environment.hardDefine("this", instance);
-        return new AcaciaFunction(declaration, environment);
+        return new AcaciaFunction(declaration, environment, isInitializer);
     }
 
     @Override
@@ -32,8 +34,11 @@ class AcaciaFunction implements AcaciaCallable {
         try {
             interpreter.executeBlock(declaration.body, innerEnvironment);
         } catch (Return returnValue) {
-            return returnValue.value;
+            if (isInitializer) return closure.getAt(0, "this");
+            else return returnValue.value;
         }
+
+        if (isInitializer) return closure.getAt(0, "this");
         return null;
     }
 

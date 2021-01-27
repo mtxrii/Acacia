@@ -1,22 +1,8 @@
-class Thing {
-    getCallback() {
-        def localFunction() {
-            println(this);
-        }
-
-        return localFunction;
+def do(int) {
+    for (let i = 0; i < int; i++) {
+        println(i);
+        if (i == 8) return i;
     }
 }
 
-let callback = Thing().getCallback();
-callback();
-
-class Cake {
-    taste(adjective) {
-        println("The " + this.flavor + " cake is " + adjective + "!");
-    }
-}
-
-let cake = Cake();
-cake.flavor = "German chocolate";
-cake.taste("delicious");
+println("returned: ", do(10));

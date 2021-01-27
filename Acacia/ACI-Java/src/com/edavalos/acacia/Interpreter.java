@@ -397,7 +397,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
-        AcaciaFunction function = new AcaciaFunction(stmt, environment);
+        AcaciaFunction function = new AcaciaFunction(stmt, environment, false);
         environment.define(stmt.name, function);
         return null;
     }
@@ -472,7 +472,8 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         Map<String, AcaciaFunction> methods = new HashMap<>();
         for (Stmt.Function method : stmt.methods) {
-            AcaciaFunction function = new AcaciaFunction(method, environment);
+            AcaciaFunction function = new AcaciaFunction(method, environment,
+                                                         method.name.lexeme.equals("init"));
             methods.put(method.name.lexeme, function);
         }
 

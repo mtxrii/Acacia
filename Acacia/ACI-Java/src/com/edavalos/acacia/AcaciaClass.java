@@ -27,12 +27,19 @@ class AcaciaClass implements AcaciaCallable {
 
     @Override
     public int arity() {
-        return 0;
+        AcaciaFunction initializer = findMethod("init");
+        if (initializer == null) return 0;
+        else return initializer.arity();
     }
 
     @Override
     public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
         AcaciaInstance instance = new AcaciaInstance(this);
+        AcaciaFunction initializer = findMethod("init");
+        if (initializer != null) {
+            initializer.bind(instance).call(interpreter, arguments, location);
+        }
+
         return instance;
     }
 

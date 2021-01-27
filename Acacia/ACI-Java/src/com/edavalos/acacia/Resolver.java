@@ -14,9 +14,10 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     private enum BlockType {
         NONE,
+        LOOP,
         FUNCTION,
         METHOD,
-        LOOP
+        INITIALIZER
     }
 
     private enum ClassType {
@@ -236,6 +237,10 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
         for (Stmt.Function method : stmt.methods) {
             BlockType declaration = BlockType.METHOD;
+            if (method.name.lexeme.equals("init")) {
+                declaration = BlockType.INITIALIZER;
+            }
+
             resolveFunction(method, declaration);
         }
 
@@ -314,6 +319,11 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
         }
 
         if (stmt.value != null) {
+            if (nestedBlocks.contains(BlockType.INITIALIZER)) {
+                Acacia.error(stmt.keyword, "Can't return a value from an initializer.");
+                return null;
+            }
+
             resolve(stmt.value);
         }
 
