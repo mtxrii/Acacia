@@ -297,13 +297,19 @@ class Truck {
   backup() {
     println("beep beep beep!");
   }
+  
+  getType() {
+  return "This " + this.make + " is a " + this.model;
+  }
 }
 
 let semi = Truck();
-semi.drive(); // vroom!
+semi.drive(); // prints "vroom!"
 
 semi.make = "Volvo";
 semi.model = "VNR";
 semi.electric = true;
+
+semi.getType(); // "This Volvo is a VNR"
 ```
 >Methods inside classes are defined like functions except without the `def` keyword.
