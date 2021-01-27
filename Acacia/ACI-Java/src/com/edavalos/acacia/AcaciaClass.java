@@ -1,12 +1,23 @@
 package com.edavalos.acacia;
 
 import java.util.List;
+import java.util.Map;
 
 class AcaciaClass implements AcaciaCallable {
     final String name;
+    private final Map<String, AcaciaFunction> methods;
 
-    AcaciaClass(String name) {
+    AcaciaClass(String name, Map<String, AcaciaFunction> methods) {
         this.name = name;
+        this.methods = methods;
+    }
+
+    AcaciaFunction findMethod(String name) {
+        if (methods.containsKey(name)) {
+            return methods.get(name);
+        }
+
+        return null;
     }
 
     @Override

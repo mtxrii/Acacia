@@ -1,10 +1,17 @@
 
 class Bagel {
+    eat() {
+        println("monch!");
+    }
 
+    spread(topping) {
+        println("Added " + topping);
+    }
 }
 let bagel = Bagel();
 println(bagel);
 
 bagel.topping = "cream cheese";
 
-println(bagel.topping);
+bagel.eat();
+bagel.spread(bagel.topping);

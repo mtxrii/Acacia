@@ -204,6 +204,12 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
     public Void visitClassStmt(Stmt.Class stmt) {
         declare(stmt.name);
         define(stmt.name);
+
+        for (Stmt.Function method : stmt.methods) {
+            BlockType declaration = BlockType.METHOD;
+            resolveFunction(method, declaration);
+        }
+
         return null;
     }
 
@@ -270,8 +276,8 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitReturnStmt(Stmt.Return stmt) {
-        if (!nestedBlocks.contains(BlockType.FUNCTION)) {
-            Acacia.error(stmt.keyword, "Can't return outside functions.");
+        if (!nestedBlocks.contains(BlockType.FUNCTION) && !nestedBlocks.contains(BlockType.METHOD)) {
+            Acacia.error(stmt.keyword, "Can't return outside methods or functions.");
         }
 
         if (stmt.value != null) {

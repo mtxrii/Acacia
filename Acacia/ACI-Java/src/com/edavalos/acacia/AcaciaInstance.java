@@ -16,6 +16,9 @@ class AcaciaInstance {
             return fields.get(name.lexeme);
         }
 
+        AcaciaFunction method = klass.findMethod(name.lexeme);
+        if (method != null) return method;
+
         throw new RuntimeError(name, "Undefined property '" + name.lexeme + "'.");
     }
 
