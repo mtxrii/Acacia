@@ -332,5 +332,5 @@ class Yerba {
 let drink = Yerba("Mango", 12); // prints "You've purchased a 12 oz yerba."
 
 let oz = drink.getFlavor();
-println(oz);
-``` // prints "Mango"
+println(oz); // prints "Mango"
+```
