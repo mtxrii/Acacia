@@ -1,17 +1,22 @@
+class Thing {
+    getCallback() {
+        def localFunction() {
+            println(this);
+        }
 
-class Bagel {
-    eat() {
-        println("monch!");
-    }
-
-    spread(topping) {
-        println("Added " + topping);
+        return localFunction;
     }
 }
-let bagel = Bagel();
-println(bagel);
 
-bagel.topping = "cream cheese";
+let callback = Thing().getCallback();
+callback();
 
-bagel.eat();
-bagel.spread(bagel.topping);
+class Cake {
+    taste(adjective) {
+        println("The " + this.flavor + " cake is " + adjective + "!");
+    }
+}
+
+let cake = Cake();
+cake.flavor = "German chocolate";
+cake.taste("delicious");

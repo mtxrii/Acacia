@@ -11,6 +11,12 @@ class AcaciaFunction implements AcaciaCallable {
         this.closure = closure;
     }
 
+    AcaciaFunction bind(AcaciaInstance instance) {
+        Environment environment = new Environment(closure);
+        environment.hardDefine("this", instance);
+        return new AcaciaFunction(declaration, environment);
+    }
+
     @Override
     public int arity() {
         return declaration.params.size();

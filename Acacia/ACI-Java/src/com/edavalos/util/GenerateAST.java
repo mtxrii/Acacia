@@ -28,8 +28,9 @@ public final class GenerateAST {
                           " Expr location",
                 "Literal  : Object value",
                 "Logical  : Expr left, Token operator, Expr right",
-                "Set      : List<Expr> values",
                 "Put      : Expr object, Token name, Expr value",
+                "Set      : List<Expr> values",
+                "This     : Token keyword",
                 "Unary    : Token operator, Expr right",
                 "Variable : Token name"
         );
