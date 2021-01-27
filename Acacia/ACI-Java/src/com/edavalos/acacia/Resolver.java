@@ -10,11 +10,18 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
     private final Stack<Map<String, Boolean>> scopes = new Stack<>();
     private final Stack<BlockType> nestedBlocks = new Stack<>();
 
+    private ClassType currentClass = ClassType.NONE;
+
     private enum BlockType {
         NONE,
         FUNCTION,
         METHOD,
         LOOP
+    }
+
+    private enum ClassType {
+        NONE,
+        CLASS
     }
 
     Resolver(Interpreter interpreter) {
@@ -164,6 +171,11 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitThisExpr(Expr.This expr) {
+        if (currentClass == ClassType.NONE) {
+            Acacia.error(expr.keyword, "Can't use 'this' outside of a class.");
+            return null;
+        }
+
         resolveLocal(expr, expr.keyword);
         return null;
     }
@@ -208,6 +220,14 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitClassStmt(Stmt.Class stmt) {
+        if (nestedBlocks.size() > 1) {
+            Acacia.error(stmt.name, "Classes can only be declared at top level");
+            return null;
+        }
+
+        ClassType enclosingClass = currentClass;
+        currentClass = ClassType.CLASS;
+
         declare(stmt.name);
         define(stmt.name);
 
@@ -220,6 +240,8 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
         }
 
         endScope();
+
+        currentClass = enclosingClass;
         return null;
     }
 
@@ -288,6 +310,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
     public Void visitReturnStmt(Stmt.Return stmt) {
         if (!nestedBlocks.contains(BlockType.FUNCTION) && !nestedBlocks.contains(BlockType.METHOD)) {
             Acacia.error(stmt.keyword, "Can't return outside methods or functions.");
+            return null;
         }
 
         if (stmt.value != null) {
