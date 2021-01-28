@@ -10,7 +10,4 @@ class Yerba {
 }
 
 let drink = Yerba("Mango", "12");
-
-let oz = drink.getFlavor();
-println(oz);
 println(drink.flavor);

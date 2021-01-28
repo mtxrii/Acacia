@@ -232,6 +232,15 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
         declare(stmt.name);
         define(stmt.name);
 
+        if (stmt.superclass != null) {
+            if (stmt.name.lexeme.equals(stmt.superclass.name.lexeme)) {
+                Acacia.error(stmt.superclass.name, "A class can't inherit itself.");
+                return null;
+            }
+
+            resolve(stmt.superclass);
+        }
+
         beginScope();
         scopes.peek().put("this", true);
 

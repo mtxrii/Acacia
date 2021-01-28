@@ -468,6 +468,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitClassStmt(Stmt.Class stmt) {
+        Object superclass = null;
+        if (stmt.superclass != null) {
+            superclass = evaluate(stmt.superclass);
+            if (!(superclass instanceof AcaciaClass)) {
+                throw new RuntimeError(stmt.superclass.name, "Superclass must be a class.");
+            }
+        }
+
         environment.define(stmt.name, null);
 
         Map<String, AcaciaFunction> methods = new HashMap<>();
@@ -477,7 +485,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             methods.put(method.name.lexeme, function);
         }
 
-        AcaciaClass klass = new AcaciaClass(stmt.name.lexeme, methods);
+        AcaciaClass klass = new AcaciaClass(stmt.name.lexeme, (AcaciaClass) superclass, methods);
 
         environment.assign(stmt.name, klass);
         return null;
