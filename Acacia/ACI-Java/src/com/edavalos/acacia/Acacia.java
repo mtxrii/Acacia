@@ -165,4 +165,27 @@ public final class Acacia {
         // Otherwise, toString() should take care of it
         return object.toString();
     }
+
+    // Determines an object's "weight", or precedence based on size / length / order, etc
+    public static double weight(Object object) {
+        if (object == null) {
+            return -999999999;
+        }
+        else if (object instanceof Double) {
+            return ((Double) object);
+        }
+        else if (object instanceof String) {
+            String s = ((String) object);
+            if (s.length() == 0) return 0;
+            else return ((int) s.charAt(0));
+        }
+        else if (object instanceof Boolean) {
+            Boolean b = ((Boolean) object);
+            return b ? 1 : 0;
+        }
+        else if (object instanceof List) {
+            return ((List) object).size();
+        }
+        else return 0;
+    }
 }

@@ -1,7 +1,6 @@
 package com.edavalos.acacia;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 // This class holds every native function of Acacia
 public final class Natives {
@@ -220,7 +219,27 @@ public final class Natives {
 
                 @Override
                 public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
-                    return arguments.get(0);
+                    if (!(arguments.get(0) instanceof List)) return null;
+                    List set = ((List) arguments.get(0));
+
+                    set.sort(new Comparator<Object>() {
+                        @Override
+                        public int compare(Object o1, Object o2) {
+                            if (o1 instanceof AcaciaClass ||
+                                o1 instanceof AcaciaInstance ||
+                                o1 instanceof AcaciaFunction) {
+                                    throw new RuntimeError(location, "Can't sort functions or classes.");
+                            }
+                            if (o2 instanceof AcaciaClass ||
+                                o2 instanceof AcaciaInstance ||
+                                o2 instanceof AcaciaFunction) {
+                                    throw new RuntimeError(location, "Can't sort functions or classes.");
+                            }
+
+                            return Double.compare(Acacia.weight(o1), Acacia.weight(o2));
+                        }
+                    });
+                    return set;
                 }
 
                 @Override
