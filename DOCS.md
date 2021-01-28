@@ -1,7 +1,7 @@
 # Acacia 🌱
 At first glance, this language looks super similar to javascript. That's because it's designed to feel familiar to the C family, and because dynamic typing is the future.
 
-It shines in its ability to be both object oriented and functional, with a nice class system as well as features like closures and declarative statements.
+It shines in its ability to be both object oriented and fully dynamic, with a nice class system as well as features like closures and declarative statements.
 
 # Data Types
 Acacia contains your standard primitive types.
@@ -313,3 +313,37 @@ semi.electric = true;
 semi.getType(); // "This Volvo is a VNR"
 ```
 >Methods inside classes are defined like functions except without the `def` keyword.
+
+### Init & This
+You can instantly define variables for a class & access them (as well as any later defined ones) with `this`.
+```javascript
+class Yerba {
+  init (flavor, size) {
+    this.flavor = flavor;
+    println("You've purchased a " + size + "oz yerba.");
+  }
+
+  getFlavor() {
+    return this.flavor;
+  }
+}
+
+let drink = Yerba("Mango", 12); // prints "You've purchased a 12 oz yerba."
+
+let flav = drink.getFlavor();
+println(flav); // prints "Mango"
+```
+
+### Inheritance
+Classes can inherit properties from other classes.
+```javascript
+class Guayaki < Yerba {
+  init (flavor, size, color) {
+    super.init(flavor, size);
+    println("Also it's " + color);
+  }
+}
+
+let fancyYerba = Guayaki("Peach", 9, "orange"); // prints "You've purchased a 9 oz yerba. Also it's orange"
+println(fancyYerba.getFlavor()); // prints "Peach"
+```
