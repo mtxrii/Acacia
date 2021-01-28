@@ -30,6 +30,7 @@ public final class GenerateAST {
                 "Logical  : Expr left, Token operator, Expr right",
                 "Put      : Expr object, Token name, Expr value",
                 "Set      : List<Expr> values",
+                "Super    : Token keyword, Token method",
                 "This     : Token keyword",
                 "Unary    : Token operator, Expr right",
                 "Variable : Token name"

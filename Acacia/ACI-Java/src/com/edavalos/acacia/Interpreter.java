@@ -269,6 +269,19 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitSuperExpr(Expr.Super expr) {
+        int distance = locals.get(expr);
+        AcaciaClass superclass = (AcaciaClass) environment.getAt(distance, "super");
+        AcaciaInstance object = (AcaciaInstance) environment.getAt(distance - 1, "this");
+        AcaciaFunction method = superclass.findMethod(expr.method.lexeme);
+
+        if (method == null) {
+            throw new RuntimeError(expr.method, "Undefined property '" + expr.method.lexeme + "'.");
+        }
+        else return method.bind(object);
+    }
+
+    @Override
     public Object visitThisExpr(Expr.This expr) {
         return lookUpVariable(expr.keyword, expr);
     }
@@ -478,6 +491,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         environment.define(stmt.name, null);
 
+        if (stmt.superclass != null) {
+            environment = new Environment(environment);
+            environment.hardDefine("super", superclass);
+        }
+
         Map<String, AcaciaFunction> methods = new HashMap<>();
         for (Stmt.Function method : stmt.methods) {
             AcaciaFunction function = new AcaciaFunction(method, environment,
@@ -486,6 +504,10 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
 
         AcaciaClass klass = new AcaciaClass(stmt.name.lexeme, (AcaciaClass) superclass, methods);
+
+        if (superclass != null) {
+            environment = environment.enclosing;
+        }
 
         environment.assign(stmt.name, klass);
         return null;

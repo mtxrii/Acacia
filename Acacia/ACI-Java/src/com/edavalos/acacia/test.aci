@@ -10,4 +10,13 @@ class Yerba {
 }
 
 let drink = Yerba("Mango", "12");
-println(drink.flavor);
+println(drink.getFlavor());
+
+class Guayaki < Yerba {
+    init (flavor, size, color) {
+        super.init(flavor, size);
+        println("Also it's " + color);
+    }
+}
+let fancyYerba = Guayaki("Peach", 9, "orange");
+println(fancyYerba.getFlavor());
