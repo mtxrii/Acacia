@@ -125,7 +125,7 @@ public final class Natives {
                 }
             },
 
-            // 'input(type)' - gets input from user in console, takes in optional string specifying input type
+            // 'input(string)' - gets input from user in console, takes in optional string specifying input type
             new AcaciaCallable() {
                 final String name = "input";
 
@@ -191,6 +191,39 @@ public final class Natives {
                             }
                         }
                     };
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
+            },
+
+            // 'sleep(number)' - pauses thread, takes in number of milliseconds to wait
+            new AcaciaCallable() {
+                final String name = "sleep";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof Double)) {
+                        throw new RuntimeError(location, "Function '" + name + "' expected" +
+                                " number as argument");
+                    }
+                    try {
+                        Thread.sleep(((Double) arguments.get(0)).longValue());
+                    } catch (InterruptedException ignore) {}
+
+                    return null;
                 }
 
                 @Override
