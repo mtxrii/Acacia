@@ -315,8 +315,7 @@ semi.getType(); // "This Volvo is a VNR"
 >Methods inside classes are defined like functions except without the `def` keyword.
 
 ### Init & This
-
-You can instantly define variables for a class & access them (as well as any later defined ones) with `this`
+You can instantly define variables for a class & access them (as well as any later defined ones) with `this`.
 ```javascript
 class Yerba {
   init (flavor, size) {
@@ -333,4 +332,18 @@ let drink = Yerba("Mango", 12); // prints "You've purchased a 12 oz yerba."
 
 let flav = drink.getFlavor();
 println(flav); // prints "Mango"
+```
+
+### Inheritance
+Classes can inherit properties from other classes.
+```javascript
+class Guayaki < Yerba {
+  init (flavor, size, color) {
+    super.init(flavor, size);
+    println("Also it's " + color);
+  }
+}
+
+let fancyYerba = Guayaki("Peach", 9, "orange"); // prints "You've purchased a 9 oz yerba. Also it's orange"
+println(fancyYerba.getFlavor()); // prints "Peach"
 ```
