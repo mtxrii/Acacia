@@ -1,22 +1,3 @@
-class Yerba {
-    init (flavor, size) {
-        this.flavor = flavor;
-        println("You've purchased a " + size + "oz yerba.");
-    }
+let x = [2, 3, 4].sort();
 
-    getFlavor() {
-        return this.flavor;
-    }
-}
-
-let drink = Yerba("Mango", "12");
-println(drink.getFlavor());
-
-class Guayaki < Yerba {
-    init (flavor, size, color) {
-        super.init(flavor, size);
-        println("Also it's " + color);
-    }
-}
-let fancyYerba = Guayaki("Peach", 9, "orange");
-println(fancyYerba.getFlavor());
+print(x);

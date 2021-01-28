@@ -3,8 +3,8 @@ package com.edavalos.acacia;
 import java.util.Arrays;
 import java.util.List;
 
+// This class holds every native function of Acacia
 public final class Natives {
-    // This list (and entire file) holds every native function of Acacia
     static final List<AcaciaCallable> functions = Arrays.asList(
             // 'clock()' - returns current system time in seconds
             new AcaciaCallable() {
@@ -27,7 +27,7 @@ public final class Natives {
 
                 @Override
                 public String toString() {
-                    return "<native fn:" + name + ">";
+                    return "<native fn " + name + ">";
                 }
             },
 
@@ -57,7 +57,7 @@ public final class Natives {
 
                 @Override
                 public String toString() {
-                    return "<native fn:" + name + ">";
+                    return "<native fn " + name + ">";
                 }
             },
 
@@ -197,6 +197,35 @@ public final class Natives {
                 @Override
                 public String toString() {
                     return "<native fn " + name + ">";
+                }
+            }
+    );
+
+
+
+    static final List<AcaciaCallable> setMethods = Arrays.asList(
+            // '.sort()' - sorts a set and returns it
+            new AcaciaCallable() {
+                public final String name = "sort";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 0;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    return arguments.get(0);
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
                 }
             }
     );

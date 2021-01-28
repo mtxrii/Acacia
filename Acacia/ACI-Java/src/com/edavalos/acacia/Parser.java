@@ -243,8 +243,6 @@ class Parser {
     }
 
     private Expr expression() {
-        if (match(LEFT_BRACKET)) return new Expr.Set(set());
-
         return increment();
     }
 
@@ -473,6 +471,8 @@ class Parser {
         if (match(IDENTIFIER)) {
             return new Expr.Variable(previous());
         }
+
+        if (match(LEFT_BRACKET)) return new Expr.Set(set());
 
         if (match(LEFT_PAREN)) {
             Expr expr = expression();

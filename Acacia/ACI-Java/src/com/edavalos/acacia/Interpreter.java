@@ -7,10 +7,17 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     private Environment environment = globals;
     private final Map<Expr, Integer> locals = new HashMap<>();
 
+    private Object temporaryVariable = null;
+
     // When the interpreter is fired up, add all the built in functions to the environment
     Interpreter() {
+        // Native functions
         for (AcaciaCallable nativeFunction : Natives.functions) {
             globals.hardDefine(nativeFunction.name(), nativeFunction);
+        }
+        // Set methods
+        for (AcaciaCallable setMethod : Natives.setMethods) {
+            globals.hardDefine(setMethod.name(), setMethod);
         }
     }
 
@@ -142,6 +149,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     arguments.size() + " (in '" + Acacia.stringify(callee) + "').");
         }
 
+        if (temporaryVariable != null) {
+            arguments.add(temporaryVariable);
+            temporaryVariable = null;
+        }
+
         return function.call(this, arguments, expr.paren);
     }
 
@@ -170,6 +182,15 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object object = evaluate(expr.object);
         if (object instanceof AcaciaInstance) {
             return ((AcaciaInstance) object).get(expr.name);
+        }
+
+        if (object instanceof List) {
+            Object method = globals.get(expr.name);
+            if (!(method instanceof AcaciaCallable)) {
+                throw new RuntimeError(expr.name, "Undefined set method '" + expr.name.lexeme + "'.");
+            }
+            temporaryVariable = object;
+            return method;
         }
 
         throw new RuntimeError(expr.name, "Only instances have properties.");
