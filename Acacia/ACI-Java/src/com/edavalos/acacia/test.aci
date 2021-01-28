@@ -1,8 +1,16 @@
-def do(int) {
-    for (let i = 0; i < int; i++) {
-        println(i);
-        if (i == 8) return i;
+class Yerba {
+    init (flavor, size) {
+        this.flavor = flavor;
+        println("You've purchased a " + size + "oz yerba.");
+    }
+
+    getFlavor() {
+        return this.flavor;
     }
 }
 
-println("returned: ", do(10));
+let drink = Yerba("Mango", "12");
+
+let oz = drink.getFlavor();
+println(oz);
+println(drink.flavor);
