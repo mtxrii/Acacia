@@ -15,10 +15,6 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         for (AcaciaCallable nativeFunction : Natives.functions) {
             globals.hardDefine(nativeFunction.name(), nativeFunction);
         }
-        // Set methods
-        for (AcaciaCallable setMethod : Natives.setMethods) {
-            globals.hardDefine(setMethod.name(), setMethod);
-        }
     }
 
     // Main method to interpret given statements
@@ -173,7 +169,8 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             indices_rev.push(indices.pop());
         }
 
-        environment.assign(expr.name, value, indices_rev);
+//        environment.assign(expr.name, value, indices_rev);
+
         return value;
     }
 
@@ -255,11 +252,8 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
         Object set = evaluate(expr.set);
 
-        if (set instanceof List) {
-            int length = ((List) set).size();
-
-            if (index >= 0) return ((List) set).get(index % length);
-            else return ((List) set).get(index + length);
+        if (set instanceof AcaciaSet) {
+            return ((AcaciaSet) set).get(index);
         }
 
         else if (set instanceof String) {
@@ -286,7 +280,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         for (Expr e : expr.values) {
             contents.add(evaluate(e));
         }
-        return contents;
+        return new AcaciaSet(contents);
     }
 
     @Override

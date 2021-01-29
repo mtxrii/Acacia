@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class AcaciaInstance {
-    private AcaciaClass klass;
+    private final AcaciaClass klass;
     private final Map<String, Object> fields = new HashMap<>();
 
     AcaciaInstance(AcaciaClass klass) {
