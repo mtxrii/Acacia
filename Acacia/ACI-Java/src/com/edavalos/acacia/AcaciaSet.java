@@ -26,6 +26,10 @@ class AcaciaSet extends AcaciaInstance {
         contents.set(convertIndex(index), value);
     }
 
+    int cSize() {
+        return contents.size();
+    }
+
     @Override
     public String toString() {
         return Acacia.stringify(contents);

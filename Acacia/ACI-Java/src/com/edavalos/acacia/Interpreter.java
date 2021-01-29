@@ -158,7 +158,9 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object value = evaluate(expr.value);
 
         Object var = environment.get(expr.name);
-        assert var instanceof AcaciaSet;
+        if (!(var instanceof AcaciaSet)) {
+            throw new RuntimeError(expr.name, "Failed to index. Only sets can be indexed and modified.");
+        }
         AcaciaSet set = ((AcaciaSet) var);
         int ctr = 1;
 
@@ -395,7 +397,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
 
         Object iterable = evaluate(stmt.iterable);
-        if (!(iterable instanceof String) && !(iterable instanceof List)) {
+        if (!(iterable instanceof String) && !(iterable instanceof AcaciaSet)) {
             throw new RuntimeError(stmt.iterableName, "'" + stmt.iterableName.lexeme + "' is not a set " +
                     "or a string, and therefore not iterable.");
         }
@@ -407,13 +409,13 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             size = ((String) iterable).length();
             isSet = false;
         } else {
-            size = ((List) iterable).size();
+            size = ((AcaciaSet) iterable).cSize();
             isSet = true;
         }
 
         while (index < size) {
             if (isSet) {
-                environment.assign(stmt.iterator, ((List) iterable).get(index));
+                environment.assign(stmt.iterator, ((AcaciaSet) iterable).get(index));
             } else {
                 environment.assign(stmt.iterator, ((String) iterable).charAt(index) + "");
             }
