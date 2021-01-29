@@ -156,20 +156,30 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitEditSetExpr(Expr.EditSet expr) {
         Object value = evaluate(expr.value);
-        Stack<Integer> indices = new Stack<>();
-        while (expr.depth.size() > 0) {
+
+        Object var = environment.get(expr.name);
+        assert var instanceof AcaciaSet;
+        AcaciaSet set = ((AcaciaSet) var);
+        int ctr = 1;
+
+        while (expr.depth.size() > 1) {
             Object idx = evaluate(expr.depth.pop());
             if ((!(idx instanceof Double)) || (((Double) idx) != Math.floor((Double) idx))) {
                 throw new RuntimeError(expr.name, "Index must be a whole number.");
             }
-            indices.push((int) Math.round((Double) idx));
-        }
-        Stack<Integer> indices_rev = new Stack<>();
-        while (indices.size() > 0) {
-            indices_rev.push(indices.pop());
+            Object inner = set.get((int) Math.round((Double) idx));
+            if (!(inner instanceof AcaciaSet)) {
+                throw new RuntimeError(expr.name, "Cannot index deeper than " + ctr + ".");
+            }
+            set = ((AcaciaSet) inner);
+            ctr++;
         }
 
-//        environment.assign(expr.name, value, indices_rev);
+        Object idx = evaluate(expr.depth.pop());
+        if ((!(idx instanceof Double)) || (((Double) idx) != Math.floor((Double) idx))) {
+            throw new RuntimeError(expr.name, "Index must be a whole number.");
+        }
+        set.put((int) Math.round((Double) idx), value);
 
         return value;
     }
@@ -449,7 +459,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
         Object value = evaluate(stmt.expression);
-        System.out.print(Acacia.stringify(value).replaceAll("\\\\n", "\n"));
+        System.out.println(Acacia.stringify(value).replaceAll("\\\\n", "\n"));
         return null;
     }
 
