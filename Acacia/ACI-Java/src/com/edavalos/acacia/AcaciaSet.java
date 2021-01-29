@@ -26,6 +26,24 @@ class AcaciaSet extends AcaciaInstance {
         contents.set(convertIndex(index), value);
     }
 
+    double inc(int index, Token increment) {
+        Object priorVal = get(index);
+        if (!(priorVal instanceof Double)) {
+            throw new RuntimeError(increment, "Invalid increment target.");
+        }
+
+        double newVal = ((Double) priorVal) + switch (increment.type) {
+            case DOUBLE_PLUS -> 1.0;
+            case DOUBLE_MINUS -> -1.0;
+            case TRIPLE_PLUS -> ((Double) priorVal);
+            case TRIPLE_MINUS -> -(((Double) priorVal) / 2);
+            default -> 0.0;
+        };
+
+        put(index, newVal);
+        return newVal;
+    }
+
     int cSize() {
         return contents.size();
     }
