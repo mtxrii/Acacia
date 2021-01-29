@@ -2,9 +2,9 @@
 
 #### Standard
 * print() - prints to console. Takes in anything. 
-* println() - prints to console with a newline. Takes in anything. 
-* input() - gets console/user input. Takes in a type to convert input to. 
-* sleep() - pauses thread. Takes in a number of seconds to sleep.
+* println() - prints to console with a newline. Takes in as many of anything. 
+* input() - gets console/user input. Takes in a type (as a string) to convert input to. 
+* sleep() - pauses thread. Takes in a number of milliseconds to sleep.
 * type() - gets something's type. Takes in anything. 
 * convert() - returns something of a new type. Takes in anything to convert, and new type for it.
 * callable() - returns true if a given object is callable. Takes in anything. 
@@ -28,10 +28,11 @@
 * Math.abs() - returns absolute value. Takes in a number.
 
 ### Sets
-* Set.sort() - returns a sorted set. Takes in a set to sort.
-* Set.filter() - returns a filtered set. Takes in a set, and a function to apply to every element of the set.
-* Set.find() - returns an index of an element. Takes in a set, and an object to find.
-* Set.push() - adds an element to the end of a list. Takes in a set, and new object to add. 
-* Set.pop() - removes the last element of a set, and returns it. Takes in a set.
-* Set.clear() - empties a set. Takes in a set to clear
-* Set.insert() - adds an element to a set at the given index. Takes in a set, an object to add, and an index to put it at.
+* Set.sort() - sorts a set. Takes in no arguments.
+* Set.filter() - filters a set. Takes in a function to apply to every element of the set.
+* Set.find() - returns an index of an element. Takes in an object to look for.
+* Set.get() - returns an object in a set. Takes in an index.
+* Set.push() - adds an element to the end of a list. Takes in a new object to add.
+* Set.pop() - removes the last element of a set, and returns it. Takes in no arguments.
+* Set.clear() - empties a set.
+* Set.insert() - adds an element to a set at the given index. Takes in an object to add, and an index to put it at.
