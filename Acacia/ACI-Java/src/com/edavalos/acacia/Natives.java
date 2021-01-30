@@ -279,6 +279,46 @@ public final class Natives {
                 public String toString() {
                     return "<set method " + name + ">";
                 }
+            },
+
+            // '.join(str) - returns a string from elements in a set with delimiter provided'
+            new AcaciaCallable() {
+                public final String name = "join";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet)) return null;
+                    List<Object> set = ((AcaciaSet) arguments.get(0)).getAll();
+
+                    if (!(arguments.get(1) instanceof String)) {
+                        throw new RuntimeError(location, "Expected string as argument.");
+                    }
+                    String delim = ((String) arguments.get(1));
+                    List<String> elems = new ArrayList<>();
+                    for (Object elem : set) {
+                        if (elem instanceof String) {
+                            elems.add(((String) elem));
+                        } else {
+                            elems.add(Acacia.stringify(elem));
+                        }
+                    }
+                    return String.join(delim, elems);
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
             }
     );
 
@@ -326,5 +366,10 @@ public final class Natives {
                     return "<string method " + name + ">";
                 }
             }
+
+            // '.strip() - removes whitespaces from the beginning and end of a string'
+
+            // '.replace(str, str) - replaces given string with another given string inside a string'
+
     );
 }
