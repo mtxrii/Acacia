@@ -14,10 +14,20 @@
 * write() - writes a string to a file. Takes in a string representing the file path, and a string to write.
 
 #### String
-* strip() - removes spaces from beginning and end. Takes in a string
-* replace() - replaces given string with another. Takes in a string to edit, string to find, and string to replace with.
-* split() - returns a set from a string. Takes in string to split, and string to use as splitter. Default is one space.
-* join() - returns a newly joined string. Takes in a set of strings to combine.
+* String.strip() - removes spaces from beginning and end. Takes in a string
+* String.replace() - replaces given string with another. Takes in a string to edit, string to find, and string to replace with.
+* String.split() - returns a set from a string. Takes in string to use as splitter. Default is one space.
+* String.join() - returns a newly joined string. Takes in a set of strings to combine.
+
+#### Set
+* Set.sort() - sorts a set. Takes in no arguments.
+* Set.find() - returns an index of an element. Takes in an object to look for.
+* Set.get() - returns an object in a set. Takes in an index.
+* Set.push() - adds an element to the end of a list. Takes in a new object to add.
+* Set.pop() - removes the last element of a set, and returns it. Takes in no arguments.
+* Set.clear() - empties a set. Takes in no arguments.
+* Set.copy() - returns a copy of a set. Takes in no arguments.
+* Set.add() - adds an element to a set at the given index, shifting everything after it to the right by one. Takes in an object to add, and an index to put it at.
 
 #### Time
 * Time.now() - gets system time.
@@ -26,13 +36,3 @@
 #### Math
 * Math.random() - gets random number between 0 and 1.
 * Math.abs() - returns absolute value. Takes in a number.
-
-### Sets
-* Set.sort() - sorts a set. Takes in no arguments.
-* Set.filter() - filters a set. Takes in a function to apply to every element of the set.
-* Set.find() - returns an index of an element. Takes in an object to look for.
-* Set.get() - returns an object in a set. Takes in an index.
-* Set.push() - adds an element to the end of a list. Takes in a new object to add.
-* Set.pop() - removes the last element of a set, and returns it. Takes in no arguments.
-* Set.clear() - empties a set.
-* Set.insert() - adds an element to a set at the given index. Takes in an object to add, and an index to put it at.
