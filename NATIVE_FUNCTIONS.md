@@ -17,7 +17,6 @@
 * String.strip() - removes spaces from beginning and end. Takes in a string
 * String.replace() - replaces given string with another. Takes in a string to edit, string to find, and string to replace with.
 * String.split() - returns a set from a string. Takes in string to use as splitter. Default is one space.
-* String.join() - returns a newly joined string. Takes in a set of strings to combine.
 
 #### Set
 * Set.sort() - sorts a set. Takes in no arguments.
@@ -28,6 +27,7 @@
 * Set.clear() - empties a set. Takes in no arguments.
 * Set.copy() - returns a copy of a set. Takes in no arguments.
 * Set.add() - adds an element to a set at the given index, shifting everything after it to the right by one. Takes in an object to add, and an index to put it at.
+* Set.join() - returns a newly joined string. Takes in a delimiter to put between elements of set.
 
 #### Time
 * Time.now() - gets system time.
