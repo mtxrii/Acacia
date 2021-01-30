@@ -252,8 +252,8 @@ public final class Natives {
 
                 @Override
                 public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
-                    if (!(arguments.get(0) instanceof List)) return null;
-                    List set = ((List) arguments.get(0));
+                    if (!(arguments.get(0) instanceof AcaciaSet)) return null;
+                    List<Object> set = ((AcaciaSet) arguments.get(0)).getAll();
 
                     set.sort(new Comparator<Object>() {
                         @Override
@@ -278,6 +278,52 @@ public final class Natives {
                 @Override
                 public String toString() {
                     return "<set method " + name + ">";
+                }
+            }
+    );
+
+
+
+    static final List<AcaciaCallable> stringMethods = Arrays.asList(
+            // '.split(str)' - splits a string at the delimiter provided and returns a set
+            new AcaciaCallable() {
+                public final String name = "split";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return -1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof String)) return null;
+                    String str = ((String) arguments.get(0));
+
+                    if (arguments.size() > 2) {
+                        throw new RuntimeError(location, "Expected 0 or 1 arguments but got " +
+                                (arguments.size()-1) + " (in '" + name + "').");
+                    }
+
+                    String delim = " ";
+                    if (arguments.size() == 2) {
+                        if (!(arguments.get(1) instanceof String)) {
+                            throw new RuntimeError(location, "Expected string as argument.");
+                        }
+                        delim = ((String) arguments.get(1));
+                    }
+
+                    List<Object> split = Arrays.asList(((Object[]) str.split(delim)));
+                    return new AcaciaSet(split);
+                }
+
+                @Override
+                public String toString() {
+                    return "<string method " + name + ">";
                 }
             }
     );

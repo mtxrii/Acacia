@@ -1,7 +1,8 @@
-let x = [[2,2,2],[2,2,2],[2,2,2]];
+let x = [3,5,8,5,2,1,0,8,9,4];
+let y = "one or two words";
 
-print x[0][0]++ ;
-print x[1][1]-- ;
-print x[2][2]+++ ;
+x.sort();
+println(x);
 
-print x;
+println(y.split());
+println(y.split("o"));

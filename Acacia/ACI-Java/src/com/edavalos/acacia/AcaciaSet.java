@@ -22,6 +22,10 @@ class AcaciaSet extends AcaciaInstance {
         return contents.get(convertIndex(index));
     }
 
+    List<Object> getAll() {
+        return contents;
+    }
+
     void put(int index, Object value) {
         contents.set(convertIndex(index), value);
     }
@@ -46,6 +50,13 @@ class AcaciaSet extends AcaciaInstance {
 
     int cSize() {
         return contents.size();
+    }
+
+    AcaciaCallable findMethod(Token name) {
+        if (!methods.containsKey(name.lexeme)) {
+            throw new RuntimeError(name, "Undefined set method '" + name.lexeme + "'.");
+        }
+        return methods.get(name.lexeme);
     }
 
     @Override

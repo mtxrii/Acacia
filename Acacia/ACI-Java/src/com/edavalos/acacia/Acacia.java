@@ -152,6 +152,11 @@ public final class Acacia {
             return text;
         }
 
+        // If object is a string, preserve quotes
+        if (object instanceof String) {
+            return "\"" + object + "\"";
+        }
+
         // If object is a set, stringify each element inside
         if (object instanceof List) {
             StringBuilder text = new StringBuilder("[");

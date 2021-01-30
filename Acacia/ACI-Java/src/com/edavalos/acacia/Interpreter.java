@@ -7,12 +7,17 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     private Environment environment = globals;
     private final Map<Expr, Integer> locals = new HashMap<>();
 
-    private Object temporaryVariable = null;
+    private String tempStr = null;
+    private AcaciaSet tempSet = null;
 
     // When the interpreter is fired up, add all the built in functions to the environment
     Interpreter() {
         // Native functions
         for (AcaciaCallable nativeFunction : Natives.functions) {
+            globals.hardDefine(nativeFunction.name(), nativeFunction);
+        }
+        // String methods
+        for (AcaciaCallable nativeFunction : Natives.stringMethods) {
             globals.hardDefine(nativeFunction.name(), nativeFunction);
         }
     }
@@ -145,10 +150,20 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     arguments.size() + " (in '" + Acacia.stringify(callee) + "').");
         }
 
-        if (temporaryVariable != null) {
-            arguments.add(temporaryVariable);
-            temporaryVariable = null;
+        if (Natives.setMethods.contains(function)) {
+            if (tempSet == null) throw new RuntimeError(expr.paren, "Set method could not find set to preform on.");
+            arguments.add(0, tempSet);
+            tempSet = null;
         }
+
+        else if (Natives.stringMethods.contains(function)) {
+            if (tempStr == null)  throw new RuntimeError(expr.paren, "String method could not find string to preform on.");
+            arguments.add(0, tempStr);
+            tempStr = null;
+
+        }
+
+
 
         return function.call(this, arguments, expr.paren);
     }
@@ -189,16 +204,22 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitGetExpr(Expr.Get expr) {
         Object object = evaluate(expr.object);
+
+        if (object instanceof AcaciaSet) {
+            tempSet = ((AcaciaSet) object);
+            return ((AcaciaSet) object).findMethod(expr.name);
+        }
+
         if (object instanceof AcaciaInstance) {
             return ((AcaciaInstance) object).get(expr.name);
         }
 
-        if (object instanceof List) {
+        if (object instanceof String) {
             Object method = globals.get(expr.name);
             if (!(method instanceof AcaciaCallable)) {
-                throw new RuntimeError(expr.name, "Undefined set method '" + expr.name.lexeme + "'.");
+                throw new RuntimeError(expr.name, "Undefined string method '" + expr.name.lexeme + "'.");
             }
-            temporaryVariable = object;
+            tempStr = ((String) object);
             return method;
         }
 
