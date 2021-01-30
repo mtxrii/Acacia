@@ -14,9 +14,9 @@
 * write() - writes a string to a file. Takes in a string representing the file path, and a string to write.
 
 #### String
-* String.strip() - removes spaces from beginning and end. Takes in a string
 * String.replace() - replaces given string with another. Takes in a string to edit, string to find, and string to replace with.
 * String.split() - returns a set from a string. Takes in string to use as splitter. Default is one space.
+* String.strip() - removes spaces from beginning and end. Takes in a string
 
 #### Set
 * Set.sort() - sorts a set. Takes in no arguments.
