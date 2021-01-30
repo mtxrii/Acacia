@@ -393,9 +393,39 @@ public final class Natives {
                 public String toString() {
                     return "<string method " + name + ">";
                 }
-            }
+            },
 
             // '.replace(str, str) - replaces given string with another given string inside a string'
+            new AcaciaCallable() {
+                public final String name = "replace";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 2;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof String)) return null;
+                    String str = ((String) arguments.get(0));
+
+                    if (!(arguments.get(1) instanceof String) ||!(arguments.get(2) instanceof String) ) {
+                        throw new RuntimeError(location, "Expected strings as argument.");
+                    }
+
+                    return str.replaceAll(((String) arguments.get(1)), ((String) arguments.get(2)));
+                }
+
+                @Override
+                public String toString() {
+                    return "<string method " + name + ">";
+                }
+            }
 
     );
 }
