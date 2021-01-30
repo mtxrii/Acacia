@@ -54,7 +54,8 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 }
 
                 if (left instanceof String || right instanceof String) {
-                    yield Acacia.stringify(left) + Acacia.stringify(right);
+                    yield Acacia.stringify(left).replaceAll("\"", "") +
+                            Acacia.stringify(right).replaceAll("\"", "");
                 }
                 // If values are neither both numbers or one string, throw error
                 throw new RuntimeError(expr.operator, "Operands must either all be numbers or" +

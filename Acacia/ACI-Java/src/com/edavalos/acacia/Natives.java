@@ -365,9 +365,35 @@ public final class Natives {
                 public String toString() {
                     return "<string method " + name + ">";
                 }
-            }
+            },
 
             // '.strip() - removes whitespaces from the beginning and end of a string'
+            new AcaciaCallable() {
+                public final String name = "strip";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 0;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof String)) return null;
+                    String str = ((String) arguments.get(0));
+
+                    return str.trim();
+                }
+
+                @Override
+                public String toString() {
+                    return "<string method " + name + ">";
+                }
+            }
 
             // '.replace(str, str) - replaces given string with another given string inside a string'
 
