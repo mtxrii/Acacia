@@ -1,14 +1,12 @@
 # Acacia 🌱
-At first glance, this language looks super similar to javascript. That's because it's designed to feel familiar to the C family, and because dynamic typing is the future.
-
-It shines in its ability to be both object oriented and fully dynamic, with a nice class system as well as features like closures and declarative statements.
+At a glance, Acacia feels a lot like JavaScript. That's intentional, as it's designed to not only feel familiar, but be even more intuitive than your average dynamically typed c-style scripting language.
 
 # Data Types
-Acacia contains your standard primitive types.
-* Booleans - basic true or false.
-* Strings - text enclosed in double quotes. Access individual chars with `[]`
+Acacia contains our typical primitive types.
+* Booleans - true or false.
+* Strings - text enclosed in double quotes. Access individual chars with `[]`.
 * Numbers - ints and doubles are treated the same.
-* Sets - lists with any number of items of any type. Variants include `frozenSet` and `uniqueSet`
+* Sets - lists with any number of items of any type. Access elements with `[]`.
 * Nil - same as null or none.
 
 ```javascript
@@ -43,9 +41,10 @@ Operators that take in one or two numbers and produce another number. Addition o
 
 44 % 2;
 ```
+>In addition to false Booleans, `nil` values and numbers with value `0` are also evaluated to false when tested for truthiness.
 
 ### Comparison
-Operators that take in two numbers and produce another boolean. If given a string, its length is used. Equality comparisons can also compare any two of the same data types, including objects.
+Operators that take in two numbers and produce another boolean. If strings are given, their positions alphabetically are used. Equality comparisons can also compare any two of the same data types, including objects.
 * less than / greater than - `<` & `>`
 * less than / greater than or equal to - `<=` & `>=`
 * equal / not equal - `==` & `!=`
@@ -57,7 +56,7 @@ Operators that take in two numbers and produce another boolean. If given a strin
 ```
 
 ### Logical
-Operators that take in one or two booleans and produce another boolean. If given a non bool value, it will be replaced with whether or not that value is nil. For `and` and `or`, if the first value determines the result, the second won't be evaluated.
+Operators that take in one or two values, determine their truthiness, and returns a value of equivalent truthiness. In the case of `or`, if the first value is evaluated to true, it is returned and the second is never evaluated. Likewise, if the first value is evaluated to false in an `and`, it is returned and the second isn't evaluated. The value returned need not be a boolean, as any type can evaulate to true or false.
 * negation - `!`
 * both true - `and`
 * either true - `or`
@@ -68,10 +67,12 @@ Operators that take in one or two booleans and produce another boolean. If given
 
 true and false; // false
 true or false; // true
-nil and true; // false
-```
+nil and true; // nil (equates to false)
+1 or true; // 1 (equates to true)
+false or "Yes" // "Yes" (equates to true)
 
->Aside from false Booleans, the only other things that evaluate to false are `nil` values and numbers with value `0`
+(x + 4) / (i or 3) // Would probably evaluate to ( (x + 4) / i ), but if i is nil (or zero), then 3 is used instead. ( (x + 4) / 3 )
+```
 
 ### Grouping
 Parenthesis work as separators for more flexibility on what parts of a statement should be evaluated first.
@@ -115,7 +116,7 @@ x = x / y; // error
 ```
 
 ### Blocks & Scope
-There are many instances to group together statements, and they're grouped by brackets. Variables defined inside a scope are only accessible inside that scope or inner scopes.
+There are many reasons to group statements together, and they're grouped by brackets. Variables defined inside a scope are only accessible inside that scope or inner scopes.
 ```javascript
 let a = "Hello, ";
 {
@@ -166,27 +167,23 @@ while (j > 0) { // prints from 9 to 1, skipping 3
 ```
 >`exit` and `next` are the equivalent of C's `break` and `continue`.
 
-`foreach` is syntactic sugar for set or string iteration.
+`foreach` allows for set and string iteration.
 ```javascript
 let letters = "abcd";
 
 // You can write a foreach like this:
 foreach (let c; letters; let i) { // syntax: ( initialize iterator; provide iterable; initialize index (optional) )
 
-  print(string(i) + " : " + c); // 'string(i)' is optional, implicit conversion would happen otherwise.
-  
+  print(i + " : " + c); 
 }
-
-// Behind the scenes it really just converts it into this:
-for (let i = 0; i < length(letters); i++) {
-  let c = letters[i];
-  
-  print(string(i) + " : " + c);
-  
-}
+// Prints:
+// 0 : a
+// 1 : b
+// 2 : c
+// 3 : d
 ```
 
-`match with` is a take on the switch statement loosely inspired by OCaml. It can compare equality as well as types. When comparing equality, a literal or variable is provided in the parenthesis. When comparing type, a data type or object/class name is given. For objects, anything inheriting it will also be considered a match.
+`match with` is a take on the switch statement loosely inspired by OCaml. It can compare equality as well as types. When comparing equality, a literal or variable is provided in the parenthesis. When comparing type, a data type or object/class name (as a string) is given. For objects, anything inheriting it will also be considered a match.
 ```ocaml
 let x = 12;
 
@@ -206,7 +203,7 @@ match x with {
     break;
   }
   
-  (number) {
+  ("number") {
     print("yes, however a match has already been found (12) and so this wont be printed");
     break;
   }
@@ -217,18 +214,18 @@ match x with {
 
 let y = true;
 
-match x with {
-  (string) {
+match y with {
+  ("string") {
     print("nope, not a string");
     break;
   }
   
-  (number) {
+  ("number") {
     print("also not a number");
     break;
   }
   
-  (bool) {
+  ("bool") {
     print("yup, its a boolean");
     break;
   }
@@ -237,43 +234,31 @@ match x with {
 ```
 
 # Functions
-Functions are called the same way as in most C style languages.
+Functions are declared with the keyword `def`.
 ```javascript
-// arguments
-sendTranscript(idNumber, date);
-
-// or no arguments
-sendOranscript(); // it's all dynamicly typed so there's no difference with runtime.
+def sendTranscript(idNumber, date) {
+  // ...something
+}
 ```
 
-The parenthesis are required, because they are needed to call a function. Without them, it instead references the function. Arguments already defined can stay however.
-
-You can also define some arguments of a function to partially ready a procedure or program.
-
+They're called the same way as in most C style languages.
 ```javascript
-let someDate = Date("2020-12-22");
-def sendTranscript(idNumber) someDate {
-  print("It's been " + (Time.now() - someDate);
-}
-
-sendTranscript(100234); // (for example)
+sendTranscript(100234, Time.now());
 ```
 
-### Defining New Functons
-To create a new subroutine / procedure / function, use the keyword `def`.
+The parenthesis are required, because they are needed to call a function. Without them, it instead references the function.
 ```javascript
-def getAvg(total, sum) {
-  return sum / total;
-}
+let send = sendTranscript;
+send(100234, Time.now()); // Same thing as above
+```
 
-Functions are 1st class objects, and nestable, allowing for functions to have environments like classes. For example:
+Functions are first class objects with full support for nested functions and closures.
 ```javascript
-
 def makeCounter() {
   let i = 0;
   def count() {
     i ++;
-    print i;
+    println(i);
   }
 
   return count;
@@ -283,7 +268,6 @@ let counter = makeCounter();
 counter(); // "1".
 counter(); // "2".
 counter(); // "3".
-
 ```
 
 # Classes
