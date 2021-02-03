@@ -236,7 +236,7 @@ public final class Natives {
 
 
     static final List<AcaciaCallable> setMethods = Arrays.asList(
-            // '.sort()' - sorts a set and returns it
+            // '.sort()' - sorts a set.
             new AcaciaCallable() {
                 public final String name = "sort";
 
@@ -272,7 +272,7 @@ public final class Natives {
                             return Double.compare(Acacia.weight(o1), Acacia.weight(o2));
                         }
                     });
-                    return set;
+                    return null;
                 }
 
                 @Override
