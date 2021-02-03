@@ -71,7 +71,8 @@ nil and true; // nil (equates to false)
 1 or true; // 1 (equates to true)
 false or "Yes" // "Yes" (equates to true)
 
-(x + 4) / (i or 3) // Would probably evaluate to ( (x + 4) / i ), but if i is nil (or zero), then 3 is used instead. ( (x + 4) / 3 )
+(x + 4) / (i or 3) // Would probably evaluate to ( (x + 4) / i ),
+                   // but if i is nil (or zero), then 3 is used instead. ( (x + 4) / 3 )
 ```
 
 ### Grouping
