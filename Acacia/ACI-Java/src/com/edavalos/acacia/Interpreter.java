@@ -492,6 +492,21 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitOpenStmt(Stmt.Open stmt) {
+        Object value = evaluate(stmt.file);
+        if (!(value instanceof String)) {
+            throw new RuntimeError(stmt.keyword, "File names must be strings.");
+        }
+        String file = ((String) value);
+        var parts = file.split("\\.");
+        if (!parts[parts.length - 1].equals("aci")) {
+            file += ".aci";
+        }
+        Acacia.runFile(file);
+        return null;
+    }
+
+    @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
         Object value = evaluate(stmt.expression);
         System.out.println(Acacia.stringify(value).replaceAll("\\\\n", "\n"));

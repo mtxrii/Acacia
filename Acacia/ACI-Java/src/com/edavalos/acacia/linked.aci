@@ -1,0 +1,2 @@
+println("Opened linked.aci!");
+let x = "one word, two words";

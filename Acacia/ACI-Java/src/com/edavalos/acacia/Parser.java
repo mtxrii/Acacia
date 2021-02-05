@@ -71,6 +71,7 @@ class Parser {
         if (match(IF)) return ifStatement();
         if (match(NEXT)) return exitStatement(true);
         if (match(PRINT)) return printStatement();
+        if (match(OPEN)) return openStatement();
         if (match(RETURN)) return returnStatement();
         if (match(WHILE)) return whileStatement();
 
@@ -175,6 +176,13 @@ class Parser {
         Expr value = expression();
         consume(SEMICOLON, "Expected ';' after value.");
         return new Stmt.Print(value);
+    }
+
+    private Stmt openStatement() {
+        Token keyword = previous();
+        Expr value = expression();
+        consume(SEMICOLON, "Expected ';' after value.");
+        return new Stmt.Open(keyword, value);
     }
 
     private Stmt returnStatement() {

@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public final class Acacia {
+    static String path;
+
     private static final Interpreter interpreter = new Interpreter();
 
     static boolean replMode;
@@ -31,7 +33,8 @@ public final class Acacia {
         }
     }
 
-    private static void runFile(String path) {
+    protected static void runFile(String file) {
+        String path = Acacia.path + file;
         byte[] bytes = null;
         try {
             bytes = Files.readAllBytes(Paths.get(path));
