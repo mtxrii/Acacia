@@ -155,19 +155,15 @@ public final class Acacia {
             return text;
         }
 
-        // If object is a string, preserve quotes
-        if (object instanceof String) {
-            return "\"" + object + "\"";
-        }
-
         // If object is a set, stringify each element inside
         if (object instanceof List) {
             StringBuilder text = new StringBuilder("[");
             for (Object o : ((List) object)) {
-                text.append(stringify(o)).append(", ");
+                if (o instanceof String) text.append("\"").append(o).append("\"").append(", ");
+                else text.append(stringify(o)).append(", ");
             }
-            text.append("]");
-            return text.toString().replace(", ]", "]");
+            text.append("|**]**|");
+            return text.toString().replace(", |**]**|", "]");
         }
 
         // Otherwise, toString() should take care of it
