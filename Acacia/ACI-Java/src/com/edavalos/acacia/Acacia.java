@@ -9,7 +9,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public final class Acacia {
-    static String path;
+    static final String path;
+    static String currentFile = "";
 
     private static final Interpreter interpreter = new Interpreter();
 
@@ -54,7 +55,9 @@ public final class Acacia {
         fileLines = rawText.split("\\\\r?\\\\n");
 
         // Send compiled string to runner method
+        currentFile = "'" + file + "' ";
         run(rawText);
+        currentFile = "";
 
         // Indicate an error in the exit code
         if (hadError) System.exit(65);
@@ -119,7 +122,7 @@ public final class Acacia {
 
     // For displaying error messages that only include a line
     private static void report(int line, String where, String message, boolean isRuntimeError) {
-        System.err.println("\n[line " + line + "] Error" + where + ": " + message);
+        System.err.println("\n[" + currentFile + "line " + line + "] Error" + where + ": " + message);
         if (isRuntimeError) hadRuntimeError = true;
         else hadError = true;
     }

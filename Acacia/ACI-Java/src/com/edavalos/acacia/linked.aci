@@ -1,2 +1,14 @@
-println("Opened linked.aci!");
-let x = "one word, two words";
+class LinkedListNode {
+    init(contents) {
+        this.contents = contents;
+    }
+}
+
+class LinkedList {
+    init() {
+        this.head = nil;
+        this.size = 0;
+    }
+
+    return
+}

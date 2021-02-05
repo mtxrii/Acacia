@@ -1,5 +1,2 @@
-// let x = "one word, two words";
-
 open "linked.aci";
 
-println(x.replace("word", "sentence"));
