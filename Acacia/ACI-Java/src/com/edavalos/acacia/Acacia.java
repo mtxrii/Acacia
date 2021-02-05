@@ -10,6 +10,7 @@ import java.util.List;
 
 public final class Acacia {
     static final String path = System.getProperty("user.dir") + "\\";
+    static String sysArgs = null;
     static String currentFile = "";
 
     private static final Interpreter interpreter = new Interpreter();
@@ -20,11 +21,15 @@ public final class Acacia {
     static boolean hadRuntimeError = false;
 
     public static void main(String[] args) throws IOException {
-        if (args.length > 1) {
-            System.out.println("[Usage]: acacia [file.aci]");
+        if (args.length > 2) {
+            System.out.println("[Usage]: acacia [file.aci] [args]");
             System.exit(64);
 
-        } else if (args.length == 1) { // run a script
+        } else if (args.length >= 1) { // run a script
+            if (args.length == 2) {
+                sysArgs = args[1];
+            }
+
             replMode = false;
             runFile(args[0]);
 

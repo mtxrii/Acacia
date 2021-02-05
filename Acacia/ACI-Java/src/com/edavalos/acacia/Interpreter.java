@@ -12,10 +12,16 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     // When the interpreter is fired up, add all the built in functions to the environment
     Interpreter() {
+        // Program arguments
+        if (Acacia.sysArgs != null) {
+            globals.hardDefine("args", new AcaciaSet(Arrays.asList(Acacia.sysArgs.split(" "))));
+        }
+
         // Native functions
         for (AcaciaCallable nativeFunction : Natives.functions) {
             globals.hardDefine(nativeFunction.name(), nativeFunction);
         }
+
         // String methods
         for (AcaciaCallable nativeFunction : Natives.stringMethods) {
             globals.hardDefine(nativeFunction.name(), nativeFunction);
