@@ -25,6 +25,7 @@ class Scanner {
         keywords.put("let",      LET);
         keywords.put("match",    MATCH);
         keywords.put("nil",      NIL);
+        keywords.put("open",     OPEN);
         keywords.put("or",       OR);
         keywords.put("print",    PRINT);
         keywords.put("return",   RETURN);
