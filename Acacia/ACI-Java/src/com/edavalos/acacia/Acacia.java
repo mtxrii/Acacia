@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public final class Acacia {
-    static final String path;
+    static final String path = System.getProperty("user.dir") + "\\";
     static String currentFile = "";
 
     private static final Interpreter interpreter = new Interpreter();
@@ -129,7 +129,7 @@ public final class Acacia {
 
     // For displaying error messages that include a line, column and length
     private static void report(Token token, String message, boolean isRuntimeError) {
-        System.err.println("\n[line " + token.line + "] Error at:");
+        System.err.println("\n[\" + currentFile + \"line " + token.line + "] Error at:");
         System.out.println("'" + fileLines[token.line-1] + "'");
         System.err.println(repeat(token.column, " ") + repeat(token.length, "*") + "\n" + message);
         if (isRuntimeError) hadRuntimeError = true;

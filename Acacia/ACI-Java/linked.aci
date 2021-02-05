@@ -1,0 +1,41 @@
+class LinkedListNode {
+    init(contents, nextNode) {
+        this.contents = contents;
+        this.nextNode = nextNode;
+    }
+}
+
+class LinkedList {
+    init() {
+        this.head = nil;
+        this.size = 0;
+    }
+
+    // Adds an element to the end of the list.
+    push(elem) {
+        this.head = LinkedListNode(elem, this.head);
+        this.size = this.size + 1;
+    }
+
+    // Removes whatever element is at the end of the list and returns it.
+    pop() {
+        if (this.size == 0) return nil;
+
+        let contents = this.head.contents;
+        this.head = this.head.nextNode;
+        this.size = this.size - 1;
+        return contents;
+    }
+
+    // Looks for an element in the list and returns its index if found.
+    find(elem) {
+        let x = this.head;
+        for (let i = this.size-1; i >= 0; i--) {
+            let c = x.contents;
+            if (elem == c) return i;
+            x = x.nextNode;
+        }
+        return -1;
+    }
+
+}

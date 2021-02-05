@@ -1,0 +1,15 @@
+open "linked.aci";
+
+let list = LinkedList();
+
+list.push(10);
+list.push(20);
+list.push(30);
+
+println(list.find(30));
+
+for (let i = 0; i < 3; i++) {
+    println(list.size, list.pop());
+}
+
+println(list.size);
