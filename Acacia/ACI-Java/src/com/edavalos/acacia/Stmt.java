@@ -13,6 +13,7 @@ abstract class Stmt {
     R visitFunctionStmt(Function stmt);
     R visitIfStmt(If stmt);
     R visitNextStmt(Next stmt);
+    R visitOpenStmt(Open stmt);
     R visitPrintStmt(Print stmt);
     R visitReturnStmt(Return stmt);
     R visitVarStmt(Var stmt);
@@ -140,6 +141,21 @@ abstract class Stmt {
     }
 
     final Token keyword;
+  }
+
+  static class Open extends Stmt {
+    Open(Token keyword, Expr file) {
+      this.keyword = keyword;
+      this.file = file;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitOpenStmt(this);
+    }
+
+    final Token keyword;
+    final Expr file;
   }
 
   static class Print extends Stmt {

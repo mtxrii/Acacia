@@ -50,6 +50,7 @@ public final class GenerateAST {
                 "If         : Expr condition, Stmt thenBranch," +
                             " Stmt elseBranch",
                 "Next       : Token keyword",
+                "Open       : Token keyword, Expr file",
                 "Print      : Expr expression",
                 "Return     : Token keyword, Expr value",
                 "Var        : Token name, Expr initializer",
