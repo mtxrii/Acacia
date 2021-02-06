@@ -547,7 +547,9 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             } catch (Next x) {
                 continue;
             } finally {
-                evaluate(stmt.increment);
+                if (stmt.increment != null) {
+                    evaluate(stmt.increment);
+                }
             }
         }
         return null;

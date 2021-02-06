@@ -382,7 +382,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
         nestedBlocks.push(BlockType.LOOP);
 
         resolve(stmt.condition);
-        resolve(stmt.increment);
+        if (stmt.increment != null) resolve(stmt.increment);
         resolve(stmt.body);
 
         nestedBlocks.pop();
