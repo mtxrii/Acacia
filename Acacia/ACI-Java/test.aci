@@ -1,5 +1,12 @@
 open "math";
 
 println(Math.e);
+
+// Formula for e. x can be any arbitrarily large number
+let x = 99999999999;
+println((1 + (1/x))^x);
+
 println(Math.pi);
 println(Math.abs(3-4));
+
+println(3^4);

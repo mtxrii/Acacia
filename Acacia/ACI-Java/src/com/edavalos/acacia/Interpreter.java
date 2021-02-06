@@ -81,6 +81,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 validateNumbers(expr.operator, left, right);
                 yield (double)left % (double)right;
             }
+            // If caret, assume both are numbers and return remainder (num)
+            case CARET ->  {
+                validateNumbers(expr.operator, left, right);
+                yield Math.pow((double)left, (double)right);
+            }
 
             // If greater/less or any variant, compare number sizes, and compare string lengths (bool for both)
             case GREATER -> {
