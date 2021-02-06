@@ -1,0 +1,75 @@
+// Acacia implementation of a simple linked list.
+// Do 'open "LinkedList"' if you'd like to use this object in your code.
+
+class LinkedListNode {
+    init(contents, nextNode) {
+        this.contents = contents;
+        this.nextNode = nextNode;
+    }
+}
+
+class LinkedList {
+    init() {
+        this.head = nil;
+        this.size = 0;
+    }
+
+    // Adds an element to the end of the list.
+    push(elem) {
+        this.head = LinkedListNode(elem, this.head);
+        this.size = this.size + 1;
+    }
+
+    // Removes whatever element is at the end of the list and returns it.
+    pop() {
+        if (this.size == 0) return nil;
+
+        let contents = this.head.contents;
+        this.head = this.head.nextNode;
+        this.size = this.size - 1;
+        return contents;
+    }
+
+    // Looks for an element in the list and returns its index if found, -1 otherwise.
+    find(elem) {
+        let x = this.head;
+        for (let i = this.size-1; i >= 0; i--) {
+            let c = x.contents;
+            if (elem == c) return i;
+            x = x.nextNode;
+        }
+        return -1;
+    }
+
+    // Looks for an element in the list with a given index and returns it if found.
+    get(index) {
+        if (index >= this.size or index < 0) return nil;
+
+        let x = this.head;
+        for (let i = this.size-1; i > index; i--) {
+            x = x.nextNode;
+        }
+        return x.contents;
+    }
+
+    // Puts a new element at given index and shifts everything after over one.
+    // Returns 0 if successful, -1 otherwise.
+    add(index, element) {
+        if (index > this.size or index < 0) return -1;
+
+        let x = this.head;
+        let temp = LinkedList();
+        temp.push(x.contents);
+        for (let i = this.size-1; i > index; i--) {
+            x = x.nextNode;
+            temp.push(x.contents);
+        }
+
+        x.contents = element;
+        this.head = x;
+        for (let j = 0; j < temp.size; j++) {
+            this.push(temp.pop());
+        }
+        return 0;
+    }
+}
