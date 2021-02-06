@@ -332,3 +332,18 @@ class Guayaki < Yerba {
 let fancyYerba = Guayaki("Peach", 9, "orange"); // prints "You've purchased a 9 oz yerba. Also it's orange"
 println(fancyYerba.getFlavor()); // prints "Peach"
 ```
+
+# Multiple Files & Packages
+Acacia's import system slightly takes inspiration from [Npm](https://docs.npmjs.com/downloading-and-installing-packages-locally), in the sense that external packages and multiple user files are treated the same. Like how `index.js` loads up all other JavaScript.
+
+### Open another file
+By default, only one Acacia script is run at a time. But if you'd like to split up your code along multiple files, use the `open` keyword to load up another Acacia file.
+```javascript
+open "LinkedList.aci"; // This would be where LinkedList is defined.
+
+let list = LinkedList();
+
+list.push(10);
+list.push(20);
+list.push(30);
+```
