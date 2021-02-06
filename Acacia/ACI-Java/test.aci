@@ -7,9 +7,19 @@ list.push(20);
 list.push(30);
 
 println(list.find(30));
+println(list.get(2));
 
 for (let i = 0; i < 3; i++) {
     println(list.size, list.pop());
 }
 
-println(list.size);
+println(list.size + "\n");
+
+list.push("a");
+list.push("b");
+list.push("d");
+list.add(2, "c");
+
+for (let i = 0; i < list.size; i++) {
+    print(list.get(i) + ", ");
+}
