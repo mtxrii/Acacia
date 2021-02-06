@@ -30,6 +30,31 @@ public final class Natives {
                 }
             },
 
+            // 'generateRandomNumber()' - returns random number between 0 and 1
+            new AcaciaCallable() {
+                public final String name = "generateRandomNumber";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 0;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    return Math.random();
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
+            },
+
             // 'print(object)' - prints to console
             new AcaciaCallable() {
                 final String name = "print";

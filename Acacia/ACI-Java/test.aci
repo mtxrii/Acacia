@@ -9,4 +9,8 @@ println((1 + (1/x))^x);
 println(Math.pi);
 println(Math.abs(3-4));
 
-println(3^4);
+println(3^4 + "\n");
+
+for (let i = 0; i < 10; i++) {
+    println(generateRandomNumber());
+}
