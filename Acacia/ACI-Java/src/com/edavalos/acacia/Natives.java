@@ -50,7 +50,7 @@ public final class Natives {
                     for (Object arg : arguments) {
                         printer.append(Acacia.stringify(arg)).append(" ");
                     }
-                    System.out.print(printer.toString().trim());
+                    System.out.print(printer.toString().trim().replaceAll("\\\\n", "\n"));
                     return null;
                 }
 
@@ -80,7 +80,7 @@ public final class Natives {
                     for (Object arg : arguments) {
                         printer.append(Acacia.stringify(arg)).append(" ");
                     }
-                    System.out.println(printer.toString().trim());
+                    System.out.println(printer.toString().trim().replaceAll("\\\\n", "\n"));
                     return null;
                 }
 
