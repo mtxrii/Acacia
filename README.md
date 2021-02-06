@@ -1,7 +1,7 @@
 # Acacia 🌱
 Acacia strives to be a clean, elegant and modern OOP language with elements of functional programming.
 
-Largely based off of Bob Nystrom's [Lox](http://craftinginterpreters.com/), it is interpreted top down using a tree-walker written in Java. Most of the syntax and paradigms are parallel to that of Lox's, however it also includes support for sets (an array equivalent), more modern looping systems, and an extensive native library.
+Largely based off of Bob Nystrom's [Lox](http://craftinginterpreters.com/), it is interpreted top down using a tree-walker written in Java. Most of the syntax and paradigms are parallel to that of Lox's, however it shines in it's support for many modern utilities and features of which Lox lacks.
 
 Programming in Acacia should instantly feel familiar, with a syntax much like javascript's.
 ```javascript
