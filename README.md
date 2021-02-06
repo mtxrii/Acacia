@@ -5,8 +5,24 @@ Largely based off of Bob Nystrom's [Lox](http://craftinginterpreters.com/), it i
 
 Programming in Acacia should instantly feel familiar, with a syntax much like javascript's.
 ```javascript
-* add an example
+let x = 16;
+
+while (x > 0) {
+    //Print numbers divisible by 4.
+    if (x % 4 == 0) println(x);
+    x--;
+}
 ```
+
+Variables are dynamically typed and garbage collected. Loops and blocks use brackets. Statements end in semicolons. Comments start with double backslashes. All of that.
+
+But...
+### There are only 3 primitive types.
+Strings, Numbers and Booleans. 
+
+No need for chars. Or ints. Any single character string is still a string, and any number with no decimal is still a double (even if it ends with .0). Any internal conversions are automatically taken care of, and casting errors are no more.
+
+### Add more here.
 
 ## Test it out
 Once compiled (or downloaded), to fire it up in REPL mode simply run Acacia.
