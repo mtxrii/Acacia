@@ -347,3 +347,12 @@ list.push(10);
 list.push(20);
 list.push(30);
 ```
+
+`open` isnt limited to just the start of a script. And any string variable may be passed.
+```javascript
+print("What file would you like to load? >");
+let file = input();
+
+open file;
+println(file + " has been loaded.");
+```
