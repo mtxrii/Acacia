@@ -1,0 +1,17 @@
+let Math;
+
+{
+    class MathClass {
+        // Math methods here:
+        abs(x) {
+            if (x < 0) return -x;
+            else return x;
+        }
+    }
+
+    Math = MathClass();
+}
+
+// Math fields here:
+Math.pi = 3.141592653589793;
+Math.e  = 2.718281828459045;
