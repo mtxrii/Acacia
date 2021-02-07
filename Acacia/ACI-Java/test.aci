@@ -1,3 +1,3 @@
 open "math";
 
-println(Math.ceil(-5.5));
+println(Math.round(5.52));

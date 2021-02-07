@@ -4,7 +4,7 @@ let Math;
     def truncate(x, padding) {
         let num = convert(x, "string");
         let int = "";
-        foreach (let c; num; let i) {
+        foreach (let c; num;) {
             if (c == ".") exit;
             else int = int + c;
         }
@@ -26,6 +26,21 @@ let Math;
             if (x > 0) return truncate(x, 0);
             if (x < 0) return truncate(x, -1);
             else return x;
+        }
+        round(x) {
+            let num = convert(x, "string") + "6";
+            let dec = false;
+            foreach (let c; num;) {
+                if (c == "."){
+                    dec = true;
+                    next;
+                }
+                if (dec) {
+                    if (c == "5") next;
+                    else if (convert(c, "number") > 5) return this.ceil(x);
+                    else return this.floor(x);
+                }
+            }
         }
     }
 
