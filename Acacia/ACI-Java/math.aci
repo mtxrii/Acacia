@@ -59,6 +59,13 @@ let Math;
                 (-b - sqrt) / (2 * a)
             ];
         }
+        setSum(set) {
+            let total = 0;
+            foreach (let elem; set;) {
+                total = total + elem;
+            }
+            return total;
+        }
     }
 
     // Instantiate math class
