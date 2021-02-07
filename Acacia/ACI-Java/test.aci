@@ -19,4 +19,6 @@ println();
 let str = "tru";
 let num = 5.5;
 println(convert(str, "boolean"));
-println(convert(num, "string"));
+println(convert(num, "string").contains("5"));
+
+println([0,3,5,"dwad"].contains("dwa"));

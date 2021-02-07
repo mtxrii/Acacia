@@ -381,7 +381,7 @@ public final class Natives {
                 }
             },
 
-            // '.join(str) - returns a string from elements in a set with delimiter provided'
+            // '.join(str) - returns a string from elements in a set with delimiter provided
             new AcaciaCallable() {
                 public final String name = "join";
 
@@ -413,6 +413,34 @@ public final class Natives {
                         }
                     }
                     return String.join(delim, elems);
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
+            },
+
+            // '.contains(obj) - returns whether or not a set contains an object. Takes in anything to find.'
+            new AcaciaCallable() {
+                public final String name = "contains";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet)) return null;
+                    AcaciaSet set = ((AcaciaSet) arguments.get(0));
+
+                    return set.getAll().contains(arguments.get(1));
                 }
 
                 @Override
@@ -519,6 +547,39 @@ public final class Natives {
                     }
 
                     return str.replaceAll(((String) arguments.get(1)), ((String) arguments.get(2)));
+                }
+
+                @Override
+                public String toString() {
+                    return "<string method " + name + ">";
+                }
+            },
+
+            // '.contains(str) - returns whether or not a string contains another. Takes in a string to find.'
+            new AcaciaCallable() {
+                public final String name = "contains";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof String)) return null;
+                    String str = ((String) arguments.get(0));
+
+                    if (!(arguments.get(1) instanceof String)) {
+                        throw new RuntimeError(location, "Expected string as argument.");
+                    }
+                    String cont = ((String) arguments.get(1));
+
+                    return str.contains(cont);
                 }
 
                 @Override
