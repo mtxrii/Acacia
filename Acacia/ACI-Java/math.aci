@@ -73,5 +73,7 @@ let Math;
 }
 
 // Math fields here:
-Math.pi = 3.141592653589793;
-Math.e  = 2.718281828459045;
+Math.pi  = 3.141592653589793;
+Math.e   = 2.718281828459045;
+Math.tau = Math.pi * 2;
+Math.phi = 1.618033988749894;
