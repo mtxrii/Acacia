@@ -18,6 +18,7 @@
 
 #### String
 >These functions are mounted on strings automatically, but do not modify them. They only return a value. For example, `" abc ".strip()` returns `"abc"` but does not modify the original string. Note that `String` below refers to any string in code, as opposed to the word "String".
+* String.contains() - returns whether or not a string contains another. Takes in a string to find.
 * String.replace() - replaces given string with another. Takes in a string to find, and string to replace with.
 * String.split() - returns a set from a string. Takes in string to use as splitter. Default is one space.
 * String.strip() - removes spaces from beginning and end. Takes in no arguments.
