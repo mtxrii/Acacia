@@ -1,6 +1,5 @@
 open "math";
 
-println(Math.round(5.3)); // down
-println(Math.round(5.5)); // up
-println(Math.round(5.4)); // down
-println(Math.round(5.49)); // down
+for (let i = 0; i < 10; i++) {
+    println(Math.random(55, 70));
+}

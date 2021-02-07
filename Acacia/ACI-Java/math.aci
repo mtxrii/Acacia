@@ -41,6 +41,9 @@ let Math;
                 }
             }
         }
+        random(min, max) {
+            return min + generateRandomNumber() * (max - min);
+        }
     }
 
     Math = MathClass();
