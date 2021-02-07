@@ -14,3 +14,9 @@ println(3^4 + "\n");
 for (let i = 0; i < 10; i++) {
     println(generateRandomNumber());
 }
+println();
+
+let str = "tru";
+let num = 5.5;
+println(convert(str, "boolean"));
+println(convert(num, "string"));

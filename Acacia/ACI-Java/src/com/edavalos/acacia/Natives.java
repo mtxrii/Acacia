@@ -4,6 +4,9 @@ import java.util.*;
 
 // This class holds every native function of Acacia
 public final class Natives {
+    // List of valid strings that represent data types
+    static final String[] validTypes = {"boolean", "bool", "string", "number", "any"};
+
     static final List<AcaciaCallable> functions = Arrays.asList(
             // 'clock()' - returns current system time in seconds
             new AcaciaCallable() {
@@ -166,7 +169,6 @@ public final class Natives {
 
                 @Override
                 public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
-                    String[] validTypes = {"boolean", "bool", "string", "number", "any"};
                     if (arguments.size() > 1) {
                         throw new RuntimeError(location, "Expected 0 or 1 arguments but got " +
                                 arguments.size() + " (in '" + name + "').");
@@ -249,6 +251,79 @@ public final class Natives {
                     } catch (InterruptedException ignore) {}
 
                     return null;
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
+            },
+
+            // 'convert(object, string)' - converts a given object to given type (as string) and returns it
+            new AcaciaCallable() {
+                final String name = "convert";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 2;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    Object given = arguments.get(0);
+                    String newType = Acacia.stringify(arguments.get(1)).toLowerCase();
+                    if (!Arrays.asList(validTypes).contains(newType)) {
+                        throw new RuntimeError(location, "'" + newType + "' is not a valid type " +
+                                "to convert to. Must be: 'boolean', 'string' or 'number'.");
+                    }
+
+                    String err = "Failed to convert '" + Acacia.stringify(given) + "' to " + newType;
+
+                    if (newType.equals("string")) return Acacia.stringify(given);
+
+                    if (given instanceof String) {
+                        String obj = ((String) given);
+                        return switch (newType) {
+                            case "boolean" -> {
+                                if ("true".contains(obj.toLowerCase())) yield true;
+                                else if ("false".contains(obj.toLowerCase())) yield false;
+                                else throw new RuntimeError(location, err);
+                            }
+                            case "number" -> {
+                                try {
+                                    yield Double.parseDouble(obj);
+                                } catch (Exception e) {
+                                    throw new RuntimeError(location, err);
+                                }
+                            }
+                            default -> obj;
+                        };
+                    }
+
+                    else if (given instanceof Double) {
+                        Double obj = ((Double) given);
+                        if (newType.equals("boolean")) {
+                            if (obj <= 0) return false;
+                            else return true;
+                        }
+                        else return obj;
+                    }
+
+                    else if (given instanceof Boolean) {
+                        Boolean obj = ((Boolean) given);
+                        if (newType.equals("number")) {
+                            if (obj) return 1.0;
+                            else return 0.0;
+                        }
+                        else return obj;
+                    }
+
+                    else throw new RuntimeError(location, err);
                 }
 
                 @Override
