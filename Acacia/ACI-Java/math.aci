@@ -1,10 +1,30 @@
 let Math;
 
 {
+    def truncate(x, padding) {
+        let num = convert(x, "string");
+        let int = "";
+        foreach (let c; num; let i) {
+            if (c == ".") exit;
+            else int = int + c;
+        }
+        return convert(int, "number") + padding;
+    }
+
     class MathClass {
         // Math methods here:
         abs(x) {
             if (x < 0) return -x;
+            else return x;
+        }
+        ceil(x) {
+            if (x > 0) return truncate(x, 1);
+            if (x < 0) return truncate(x, 0);
+            else return x;
+        }
+        floor(x) {
+            if (x > 0) return truncate(x, 0);
+            if (x < 0) return truncate(x, -1);
             else return x;
         }
     }

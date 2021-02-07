@@ -298,6 +298,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
         nestedBlocks.push(BlockType.LOOP);
 
         resolve(new Stmt.Var(stmt.iterator, null));
+        resolve(stmt.iterable);
         if (stmt.index != null) {
             resolve(new Stmt.Var(stmt.index, new Expr.Literal(0.0)));
         }
