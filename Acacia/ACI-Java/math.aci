@@ -44,6 +44,14 @@ let Math;
         random(min, max) {
             return min + generateRandomNumber() * (max - min);
         }
+        min(a, b) {
+            if (a < b) return a;
+            else return b;
+        }
+        max(a, b) {
+            if (a > b) return a;
+            else return b;
+        }
     }
 
     Math = MathClass();
