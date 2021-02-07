@@ -1,3 +1,6 @@
 open "math";
 
-println(Math.round(5.52));
+println(Math.round(5.3)); // down
+println(Math.round(5.5)); // up
+println(Math.round(5.4)); // down
+println(Math.round(5.49)); // down

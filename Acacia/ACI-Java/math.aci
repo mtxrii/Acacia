@@ -28,7 +28,7 @@ let Math;
             else return x;
         }
         round(x) {
-            let num = convert(x, "string") + "6";
+            let num = convert(x, "string");
             let dec = false;
             foreach (let c; num;) {
                 if (c == "."){
@@ -36,8 +36,7 @@ let Math;
                     next;
                 }
                 if (dec) {
-                    if (c == "5") next;
-                    else if (convert(c, "number") > 5) return this.ceil(x);
+                    if (convert(c, "number") > 4) return this.ceil(x);
                     else return this.floor(x);
                 }
             }
