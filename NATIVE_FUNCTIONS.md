@@ -38,11 +38,18 @@
 * *Set.clear() - empties a set. Takes in no arguments.
 
 #### Time
->These functions are part of the [Time library]()
+>These functions are part of the [Time box]()
 * *Time.now() - gets system time.
 * *Time.diff() - returns the difference as a time object between two time objects. Takes in two time objects.
 
 #### Math
->These functions are part of the [Math library]()
-* *Math.random() - gets random number between 0 and 1.
-* *Math.abs() - returns absolute value. Takes in a number.
+>These functions are part of the [Math box]()
+* Math.random(min, max) - gets random number between the given minimum and maximum numbers.
+* Math.abs(x) - returns absolute value of x.
+* Math.ceil(x) - rounds to the nearest whole number above x.
+* Math.floor(x) - rounds to the nearest whole number below x.
+* Math.round(x) - rounds the number x to the nearest whole number.
+* Math.min(a, b) - Returns whichever number is smaller.
+* Math.max(a, b) - Returns whichever number is smaller.
+* Math.quadratic(a, b, c) - Runs the quadratic formula on the given 3 numbers, and returns a set with two elements: The positive result, and the negative result.
+* Math.setSum(set) - Returns the summation of every element in the set. Assumes elements in set are all numbers.
