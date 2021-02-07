@@ -1,5 +1,3 @@
 open "math";
 
-for (let i = 0; i < 10; i++) {
-    println(Math.random(55, 70));
-}
+println(Math.quadratic(-2, 4, 6)); // Should print -1 and 12/4 (whatever that means)

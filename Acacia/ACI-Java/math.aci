@@ -52,8 +52,16 @@ let Math;
             if (a > b) return a;
             else return b;
         }
+        quadratic(a, b, c) {
+            let sqrt = (b^2 - 4 * a * c) ^ 0.5;
+            return [
+                (-b + sqrt) / (2 * a),
+                (-b - sqrt) / (2 * a)
+            ];
+        }
     }
 
+    // Instantiate math class
     Math = MathClass();
 }
 
