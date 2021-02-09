@@ -43,5 +43,5 @@ Or specify a `.aci` file to run.
 ```
 
 ## Write some programs
-Acacia is a scripting language, meaning files are read and statements are evaluated top to bottom. No need for a main() method or other entry point. Just start scripting away. Any plaintext file can be read, but convention specifies that it should have the `.aci` extension. (but really do whatever you want, no one's stopping you).
+Acacia is a scripting language, meaning files are read and statements are evaluated top to bottom. No need for a main() method or other entry point. Just start scripting away. Any plaintext file can be read, but convention specifies that it should have the `.aci` extension.
 Learn more about language specifics in the [docs](DOCS.md).
