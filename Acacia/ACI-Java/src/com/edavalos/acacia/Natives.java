@@ -474,50 +474,7 @@ public final class Natives {
 
 
     static final List<AcaciaCallable> setMethods = Arrays.asList(
-            // '.sort()' - sorts a set.
-            new AcaciaCallable() {
-                public final String name = "sort";
-
-                @Override
-                public String name() {
-                    return name;
-                }
-
-                @Override
-                public int arity() {
-                    return 0;
-                }
-
-                @Override
-                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
-                    if (!(arguments.get(0) instanceof AcaciaSet)) return null;
-                    List<Object> set = ((AcaciaSet) arguments.get(0)).getAll();
-
-                    set.sort(new Comparator<Object>() {
-                        @Override
-                        public int compare(Object o1, Object o2) {
-                            if (o1 instanceof AcaciaClass ||
-                                o1 instanceof AcaciaInstance ||
-                                o1 instanceof AcaciaFunction) {
-                                    throw new RuntimeError(location, "Can't sort functions or classes.");
-                            }
-                            if (o2 instanceof AcaciaClass ||
-                                o2 instanceof AcaciaInstance ||
-                                o2 instanceof AcaciaFunction) {
-                                    throw new RuntimeError(location, "Can't sort functions or classes.");
-                            }
-
-                            return Double.compare(Acacia.weight(o1), Acacia.weight(o2));
-                        }
-                    });
-                    return null;
-                }
-
-                @Override
-                public String toString() {
-                    return "<set method " + name + ">";
-                }
-            },
+            // -- these only visit the original set:
 
             // '.join(str) - returns a string from elements in a set with delimiter provided
             new AcaciaCallable() {
@@ -579,6 +536,84 @@ public final class Natives {
                     AcaciaSet set = ((AcaciaSet) arguments.get(0));
 
                     return set.getAll().contains(arguments.get(1));
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
+            },
+
+            // -- these methods *modify* the original set:
+
+            // '.sort()' - sorts a set.
+            new AcaciaCallable() {
+                public final String name = "sort";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 0;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet))
+                        throw new RuntimeError(location, "'" + arguments.get(0) + "' is not a set.");
+                    List<Object> set = ((AcaciaSet) arguments.get(0)).getAll();
+
+                    set.sort(new Comparator<Object>() {
+                        @Override
+                        public int compare(Object o1, Object o2) {
+                            if (o1 instanceof AcaciaClass ||
+                                    o1 instanceof AcaciaInstance ||
+                                    o1 instanceof AcaciaFunction) {
+                                throw new RuntimeError(location, "Can't sort functions or classes.");
+                            }
+                            if (o2 instanceof AcaciaClass ||
+                                    o2 instanceof AcaciaInstance ||
+                                    o2 instanceof AcaciaFunction) {
+                                throw new RuntimeError(location, "Can't sort functions or classes.");
+                            }
+
+                            return Double.compare(Acacia.weight(o1), Acacia.weight(o2));
+                        }
+                    });
+                    return null;
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
+            },
+
+            // '.reverse()' - reverses order of a set.
+            new AcaciaCallable() {
+                public final String name = "reverse";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 0;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet))
+                        throw new RuntimeError(location, "'" + arguments.get(0) + "' is not a set.");
+                    List<Object> set = ((AcaciaSet) arguments.get(0)).getAll();
+
+                    Collections.reverse(set);
+                    return null;
                 }
 
                 @Override

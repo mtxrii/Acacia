@@ -1,14 +1,4 @@
-class Thing {}
-let c = Thing();
-
-class NewThing < Thing {}
-let nc = NewThing();
-
-class NewerThing < NewThing {}
-let nwc = NewerThing();
-                                  //should be:
-println(instanceof(c, Thing));       //true
-println(instanceof(c, NewThing));    //false
-println(instanceof(nc, Thing));      //true
-println(instanceof(nc, NewerThing)); //false
-println(instanceof(nwc, Thing));     //true
+let set = [2,3,4,5,"6",7,"8",9];
+println(set);
+set.reverse();
+println(set);
