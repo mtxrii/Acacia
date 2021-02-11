@@ -1,14 +1,9 @@
-let s = "str";
-let d = 4.5;
-let b = true;
-let n = nil;
-
-let l = [s,d,b,n];
-
 class Thing {}
 let c = Thing();
 
-def x() {}
-let f = x;
+class NewThing < Thing {}
+let nc = NewThing();
 
-println(callable(l), callable(Thing), callable(c), callable(f));
+println(inherits(NewThing, Thing));
+println(inherits(nc, Thing));
+println(inherits(nc, c));

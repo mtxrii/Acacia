@@ -393,6 +393,42 @@ public final class Natives {
                 public String toString() {
                     return "<native fn " + name + ">";
                 }
+            },
+
+            // 'inherits(object, class)' - returns true if given object inherits another class.
+            new AcaciaCallable() {
+                final String name = "inherits";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 2;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(1) instanceof AcaciaClass))
+                        throw new RuntimeError(location, "'" + arguments.get(1) + "' is not a valid class");
+                    AcaciaClass superior = ((AcaciaClass) arguments.get(1));
+
+                    if (arguments.get(0) instanceof AcaciaClass) {
+                        return ((AcaciaClass) arguments.get(0)).superclass == superior;
+                    }
+                    else if (arguments.get(0) instanceof AcaciaInstance) {
+                        return ((AcaciaInstance) arguments.get(0)).klass.superclass == superior;
+                    }
+                    else return false;
+
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
             }
     );
 
