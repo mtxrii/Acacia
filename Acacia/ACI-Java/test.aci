@@ -4,6 +4,11 @@ let c = Thing();
 class NewThing < Thing {}
 let nc = NewThing();
 
-println(inherits(NewThing, Thing));
-println(inherits(nc, Thing));
-println(inherits(nc, c));
+class NewerThing < NewThing {}
+let nwc = NewerThing();
+                                  //should be:
+println(instanceof(c, Thing));       //true
+println(instanceof(c, NewThing));    //false
+println(instanceof(nc, Thing));      //true
+println(instanceof(nc, NewerThing)); //false
+println(instanceof(nwc, Thing));     //true

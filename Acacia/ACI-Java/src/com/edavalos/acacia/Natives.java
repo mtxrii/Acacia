@@ -429,6 +429,45 @@ public final class Natives {
                 public String toString() {
                     return "<native fn " + name + ">";
                 }
+            },
+
+            // 'instanceof(object, class)' - returns true if given object is an instance of another class.
+            new AcaciaCallable() {
+                final String name = "instanceof";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 2;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(1) instanceof AcaciaClass))
+                        throw new RuntimeError(location, "'" + arguments.get(1) + "' is not a valid class");
+                    AcaciaClass type = ((AcaciaClass) arguments.get(1));
+
+                    if (arguments.get(0) instanceof AcaciaInstance) {
+                        AcaciaClass thing = ((AcaciaInstance) arguments.get(0)).klass;
+                        if (thing == type) return true;
+                        while (thing != null) {
+                            thing = thing.superclass;
+                            if (thing == type) return true;
+                        }
+                    }
+
+                    return false;
+
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
             }
     );
 
