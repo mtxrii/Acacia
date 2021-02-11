@@ -8,8 +8,8 @@
 * input() - gets console/user input. Takes in a type (as a string) to convert input to. 
 * sleep() - pauses thread. Takes in a number of milliseconds to sleep.
 * clock() - gets current system time in seconds. Takes in no arguments.
-* *type() - gets something's type. Takes in anything. 
-* *convert() - returns something of a new type. Takes in anything to convert, and new type (as a string) for it.
+* type() - gets something's type. Takes in anything. 
+* convert() - returns something of a new type. Takes in anything to convert, and new type (as a string) for it.
 * *callable() - returns true if a given object is callable. Takes in anything. 
 * *inherits() - returns true if a given object inherits another one. Takes in an object and the name of another (as a string).
 * len() - gets the number of elements in something. Takes in a set or string.
