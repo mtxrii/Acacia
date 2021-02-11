@@ -11,4 +11,4 @@ let c = Thing();
 def x() {}
 let f = x;
 
-println(type(s), type(d), type(b), type(n), type(l), type(c), type(f));
+println(callable(l), callable(Thing), callable(c), callable(f));

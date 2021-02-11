@@ -359,8 +359,34 @@ public final class Natives {
                         case "Set" -> "set";
                         case "Instance" -> "instance";
                         case "Function" -> "function";
-                        default -> name.getClass().getCanonicalName();
+                        case "Class" -> "class";
+                        default -> thing.getClass().getCanonicalName();
                     };
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
+            },
+
+            // 'callable(object)' - returns true if given object is callable
+            new AcaciaCallable() {
+                final String name = "callable";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    return (arguments.get(0) instanceof AcaciaCallable);
                 }
 
                 @Override
