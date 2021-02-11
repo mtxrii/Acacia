@@ -72,4 +72,22 @@ class LinkedList {
         }
         return 0;
     }
+
+    // Returns a string with all elements inside of this list.
+    toString() {
+        let str = ">";
+        let x = this.head;
+        let first = true;
+        for (let i = this.size-1; i >= 0; i--) {
+            let c = x.contents;
+            x = x.nextNode;
+
+            if (!first) str = ", " + str;
+            else first = false;
+
+            if (type(c) == "string") str = "'" + c + "'" + str;
+            else str = c + str;
+        }
+        return "<" + str;
+    }
 }
