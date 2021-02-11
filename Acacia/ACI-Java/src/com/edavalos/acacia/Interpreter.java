@@ -505,7 +505,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Void visitOpenStmt(Stmt.Open stmt) {
         Object value = evaluate(stmt.file);
         if (!(value instanceof String)) {
-            throw new RuntimeError(stmt.keyword, "File names must be strings.");
+            throw new RuntimeError(stmt.keyword, "Box/File names must be strings.");
         }
         String file = ((String) value);
         var parts = file.split("\\.");

@@ -36,8 +36,8 @@
 * Set.reverse() - reverses a set. Takes in no arguments.
 * Set.push() - adds an element to the end of a list. Takes in a new object to add.
 * Set.pop() - removes the last element of a set, and returns it. Takes in no arguments.
-* *Set.add() - adds an element to a set at the given index, shifting everything after it to the right by one. Takes in an object to add, and an index to put it at.
-* *Set.clear() - empties a set. Takes in no arguments.
+* Set.add() - adds an element to a set at the given index, shifting everything after it to the right by one. Takes in an object to add, and an index to put it at.
+* Set.clear() - empties a set. Takes in no arguments.
 
 #### Time
 >These functions are part of the [Time box]()

@@ -6,10 +6,13 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 
 public final class Acacia {
     static final String path = System.getProperty("user.dir") + "\\";
+    static final List<String> filesOpened = new LinkedList<>();
+
     static String sysArgs = null;
     static String currentFile = "";
 
@@ -40,6 +43,9 @@ public final class Acacia {
     }
 
     protected static void runFile(String file) {
+        if (filesOpened.contains(file)) return;
+        filesOpened.add(file);
+
         String path = Acacia.path + file;
         byte[] bytes = null;
         try {
