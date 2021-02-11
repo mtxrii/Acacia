@@ -12,6 +12,7 @@
 * convert() - returns something of a new type. Takes in anything to convert, and new type (as a string) for it.
 * callable() - returns true if a given object is callable. Takes in anything. 
 * inherits() - returns true if a given object inherits a given class. Takes in an object and a class.
+* instanceof() - returns true if a given object is an instance of a given class or its superclass.
 * len() - gets the number of elements in something. Takes in a set or string.
 * *read() - gets a string from a file. Takes in a string representing the file path.
 * *write() - writes a string to a file. Takes in a string representing the file path, and a string to write to file.
