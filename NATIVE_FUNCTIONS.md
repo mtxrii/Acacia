@@ -33,9 +33,9 @@
 * Set.join() - returns a newly joined string. Takes in a delimiter to put between elements of set.
 >These functions are also mounted on sets automatically, however they do modify the sets they are called on (and usually don't return anything). For example, `[4,5,2].sort()` returns null but converts `[4,5,2]` into `[2,4,5]`.
 * Set.sort() - sorts a set. Takes in no arguments.
-* *Set.reverse() - reverses a set. Takes in no arguments.
-* *Set.push() - adds an element to the end of a list. Takes in a new object to add.
-* *Set.pop() - removes the last element of a set, and returns it. Takes in no arguments.
+* Set.reverse() - reverses a set. Takes in no arguments.
+* Set.push() - adds an element to the end of a list. Takes in a new object to add.
+* Set.pop() - removes the last element of a set, and returns it. Takes in no arguments.
 * *Set.add() - adds an element to a set at the given index, shifting everything after it to the right by one. Takes in an object to add, and an index to put it at.
 * *Set.clear() - empties a set. Takes in no arguments.
 
