@@ -683,6 +683,47 @@ public final class Natives {
                 public String toString() {
                     return "<set method " + name + ">";
                 }
+            },
+
+            // '.add(index, element)' - adds an element at the specified index of the list,
+            //                          shifting everything after to the right by one.
+            new AcaciaCallable() {
+                public final String name = "add";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 2;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet))
+                        throw new RuntimeError(location, "'" + arguments.get(0) + "' is not a set.");
+
+                    if ((!(arguments.get(1) instanceof Double)) ||
+                            (((Double) arguments.get(1)) != Math.floor((Double) arguments.get(1)))) {
+                        throw new RuntimeError(location, "Function '" + name + "' expected" +
+                                " whole number as argument");
+                    }
+                    Double index = ((Double) arguments.get(1));
+                    List<Object> set = ((AcaciaSet) arguments.get(0)).getAll();
+
+                    if (index >= set.size()) index = set.size() - 1.0;
+                    else if (index < 0) index = 0.0;
+
+                    set.add(((int) index.floatValue()), arguments.get(2));
+                    return null;
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
             }
     );
 
