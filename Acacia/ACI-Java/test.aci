@@ -1,4 +1,25 @@
-let set = [2,3,4,5,"6",7,"8",9];
-println(set);
-set.reverse();
-println(set);
+open "linked";
+
+let linkedList = LinkedList();
+let arrayList = [];
+
+linkedList.push("a");
+arrayList.push("a");
+
+linkedList.push(2);
+arrayList.push(2);
+
+linkedList.push(true);
+arrayList.push(true);
+
+println(linkedList.toString());
+println(arrayList);
+println();
+
+for (let i = 0; i < 3; i++) {
+    println(linkedList.pop(), arrayList.pop());
+}
+
+println();
+println(linkedList.toString());
+println(arrayList);

@@ -165,6 +165,8 @@ public final class Acacia {
 
         // If object is a set, stringify each element inside
         if (object instanceof List) {
+            if (((List) object).size() == 0) return "[]";
+
             StringBuilder text = new StringBuilder("[");
             for (Object o : ((List) object)) {
                 if (o instanceof String) text.append("\"").append(o).append("\"").append(", ");

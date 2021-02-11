@@ -620,6 +620,69 @@ public final class Natives {
                 public String toString() {
                     return "<set method " + name + ">";
                 }
+            },
+
+            // '.push()' - adds an element to the end of a set.
+            new AcaciaCallable() {
+                public final String name = "push";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet))
+                        throw new RuntimeError(location, "'" + arguments.get(0) + "' is not a set.");
+                    List<Object> set = ((AcaciaSet) arguments.get(0)).getAll();
+
+                    set.add(arguments.get(1));
+                    return null;
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
+            },
+
+            // '.pop()' - removes the last element of a set and returns it.
+            new AcaciaCallable() {
+                public final String name = "pop";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 0;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet))
+                        throw new RuntimeError(location, "'" + arguments.get(0) + "' is not a set.");
+                    List<Object> set = ((AcaciaSet) arguments.get(0)).getAll();
+
+                    if (set.size() == 0) return null;
+
+                    Object thing = set.get(set.size()-1);
+                    set.remove(set.size()-1);
+                    return thing;
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
             }
     );
 
