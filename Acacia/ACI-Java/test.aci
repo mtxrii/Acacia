@@ -1,3 +1,14 @@
-open "math";
+let s = "str";
+let d = 4.5;
+let b = true;
+let n = nil;
 
-println(Math.setSum([1,2,3,4,5]));
+let l = [s,d,b,n];
+
+class Thing {}
+let c = Thing();
+
+def x() {}
+let f = x;
+
+println(type(s), type(d), type(b), type(n), type(l), type(c), type(f));

@@ -330,6 +330,43 @@ public final class Natives {
                 public String toString() {
                     return "<native fn " + name + ">";
                 }
+            },
+
+            // 'type(object)' - returns the type (as string) of whatever passed
+            new AcaciaCallable() {
+                final String name = "type";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    Object thing = arguments.get(0);
+                    if (thing == null) return null;
+                    if (thing instanceof Boolean) return validTypes[0];
+                    if (thing instanceof String) return validTypes[2];
+                    if (thing instanceof Double) return validTypes[3];
+
+                    String name = thing.getClass().getName().replace("com.edavalos.acacia.Acacia", "");
+                    return switch (name) {
+                        case "Set" -> "set";
+                        case "Instance" -> "instance";
+                        case "Function" -> "function";
+                        default -> name.getClass().getCanonicalName();
+                    };
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
             }
     );
 
