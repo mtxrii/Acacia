@@ -8,10 +8,11 @@
 * input() - gets console/user input. Takes in a type (as a string) to convert input to. 
 * sleep() - pauses thread. Takes in a number of milliseconds to sleep.
 * clock() - gets current system time in seconds. Takes in no arguments.
-* *type() - gets something's type. Takes in anything. 
-* *convert() - returns something of a new type. Takes in anything to convert, and new type (as a string) for it.
-* *callable() - returns true if a given object is callable. Takes in anything. 
-* *inherits() - returns true if a given object inherits another one. Takes in an object and the name of another (as a string).
+* type() - gets something's type. Takes in anything. 
+* convert() - returns something of a new type. Takes in anything to convert, and new type (as a string) for it.
+* callable() - returns true if a given object is callable. Takes in anything. 
+* inherits() - returns true if a given object inherits a given class. Takes in an object and a class.
+* instanceof() - returns true if a given object is an instance of a given class or its superclass.
 * len() - gets the number of elements in something. Takes in a set or string.
 * *read() - gets a string from a file. Takes in a string representing the file path.
 * *write() - writes a string to a file. Takes in a string representing the file path, and a string to write to file.
@@ -27,6 +28,7 @@
 >These functions are mounted on sets automatically, but do not modify them. They only return a value. For example, `[1,2,3].get(1)` returns `2` but does not modify the original set. Note that `Set` below refers to any set in code, as opposed to the word "Set".
 * *Set.find() - returns an index of an element. Takes in an object to look for.
 * *Set.get() - returns an object in a set. Takes in an index.
+* Set.contains() - returns true if a given element exists in the set. Takes in an object to look for.
 * *Set.copy() - returns a copy of a set. Takes in no arguments.
 * Set.join() - returns a newly joined string. Takes in a delimiter to put between elements of set.
 >These functions are also mounted on sets automatically, however they do modify the sets they are called on (and usually don't return anything). For example, `[4,5,2].sort()` returns null but converts `[4,5,2]` into `[2,4,5]`.
