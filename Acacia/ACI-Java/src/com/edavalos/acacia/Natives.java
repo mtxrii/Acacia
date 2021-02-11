@@ -724,6 +724,36 @@ public final class Natives {
                 public String toString() {
                     return "<set method " + name + ">";
                 }
+            },
+
+            // '.clear()' - empties a set.
+            new AcaciaCallable() {
+                public final String name = "clear";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 0;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet))
+                        throw new RuntimeError(location, "'" + arguments.get(0) + "' is not a set.");
+                    List<Object> set = ((AcaciaSet) arguments.get(0)).getAll();
+
+                    set.clear();
+                    return null;
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
             }
     );
 
