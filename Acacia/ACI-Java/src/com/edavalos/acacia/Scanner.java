@@ -33,7 +33,6 @@ class Scanner {
         keywords.put("this",     THIS);
         keywords.put("true",     TRUE);
         keywords.put("while",    WHILE);
-        keywords.put("with",     WITH);
     }
 
     private final String source;
