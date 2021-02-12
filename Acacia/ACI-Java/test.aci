@@ -1,2 +1,4 @@
-println("Hello, World!");
-open "test";
+let l = [1,2,3,4];
+
+println(l[0] + l[1]);
+println(l.get(0) + l.get(1));

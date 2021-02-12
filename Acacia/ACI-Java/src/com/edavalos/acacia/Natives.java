@@ -544,6 +544,40 @@ public final class Natives {
                 }
             },
 
+            // '.get(index) - returns an object in a set. Takes in an index.'
+            new AcaciaCallable() {
+                public final String name = "get";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 1;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet))
+                        throw new RuntimeError(location, "'" + arguments.get(0) + "' is not a set.");
+
+                    if ((!(arguments.get(1) instanceof Double)) ||
+                            (((Double) arguments.get(1)) != Math.floor((Double) arguments.get(1)))) {
+                        throw new RuntimeError(location, "Function '" + name + "' expected" +
+                                " whole number as argument");
+                    }
+                    Double index = ((Double) arguments.get(1));
+                    return ((AcaciaSet) arguments.get(0)).get(((int) index.floatValue()));
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
+            },
+
             // -- these methods *modify* the original set:
 
             // '.sort()' - sorts a set.
