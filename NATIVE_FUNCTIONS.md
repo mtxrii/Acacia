@@ -26,10 +26,9 @@
 
 #### Set
 >These functions are mounted on sets automatically, but do not modify them. They only return a value. For example, `[1,2,3].get(1)` returns `2` but does not modify the original set. Note that `Set` below refers to any set in code, as opposed to the word "Set".
-* *Set.find() - returns an index of an element. Takes in an object to look for.
-* *Set.get() - returns an object in a set. Takes in an index.
+* Set.get() - returns an object in a set. Takes in an index.
 * Set.contains() - returns true if a given element exists in the set. Takes in an object to look for.
-* *Set.copy() - returns a copy of a set. Takes in no arguments.
+* Set.copy() - returns a copy of a set. Takes in no arguments.
 * Set.join() - returns a newly joined string. Takes in a delimiter to put between elements of set.
 >These functions are also mounted on sets automatically, however they do modify the sets they are called on (and usually don't return anything). For example, `[4,5,2].sort()` returns null but converts `[4,5,2]` into `[2,4,5]`.
 * Set.sort() - sorts a set. Takes in no arguments.

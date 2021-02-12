@@ -1,4 +1,7 @@
-let l = [1,2,3,4];
+let l1 = [1,2,3,4];
 
-println(l[0] + l[1]);
-println(l.get(0) + l.get(1));
+let l2 = l1.copy();
+
+l1.pop();
+
+println(l1, "\n", l2);

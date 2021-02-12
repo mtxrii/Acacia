@@ -578,6 +578,37 @@ public final class Natives {
                 }
             },
 
+            // '.copy() - returns a copy of the set. Takes in no arguments.'
+            new AcaciaCallable() {
+                public final String name = "copy";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 0;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof AcaciaSet))
+                        throw new RuntimeError(location, "'" + arguments.get(0) + "' is not a set.");
+
+                    List<Object> current = ((AcaciaSet) arguments.get(0)).getAll();
+                    List<Object> copy = new ArrayList<>(current.size());
+                    Collections.copy(copy, current);
+                    return new AcaciaSet(copy);
+                }
+
+                @Override
+                public String toString() {
+                    return "<set method " + name + ">";
+                }
+            },
+
             // -- these methods *modify* the original set:
 
             // '.sort()' - sorts a set.
