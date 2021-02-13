@@ -51,7 +51,7 @@ public final class Acacia {
         try {
             bytes = Files.readAllBytes(Paths.get(path));
         } catch (IOException exception) {
-            System.err.println("[Error]: could not find file '" + path + "'");
+            System.err.println("[Error]: could not find file '" + file + "'");
             System.exit(64);
         }
 

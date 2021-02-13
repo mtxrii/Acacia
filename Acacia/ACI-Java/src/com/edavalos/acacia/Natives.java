@@ -924,6 +924,37 @@ public final class Natives {
                 }
             },
 
+            // '.charCode() - returns character code of the first char of a string'
+            new AcaciaCallable() {
+                public final String name = "charCode";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 0;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!(arguments.get(0) instanceof String)) return null;
+                    String str = ((String) arguments.get(0));
+
+                    if (str.length() == 0)
+                        throw new RuntimeError(location, "String is empty");
+
+                    return str.codePointAt(0);
+                }
+
+                @Override
+                public String toString() {
+                    return "<string method " + name + ">";
+                }
+            },
+
             // '.contains(str) - returns whether or not a string contains another. Takes in a string to find.'
             new AcaciaCallable() {
                 public final String name = "contains";

@@ -23,6 +23,7 @@
 * String.replace() - replaces given string with another. Takes in a string to find, and string to replace with.
 * String.split() - returns a set from a string. Takes in string to use as splitter. Default is one space.
 * String.strip() - removes spaces from beginning and end. Takes in no arguments.
+* String.charCode() - returns character code of first character of string. Takes in no arguments.
 
 #### Set
 >These functions are mounted on sets automatically, but do not modify them. They only return a value. For example, `[1,2,3].get(1)` returns `2` but does not modify the original set. Note that `Set` below refers to any set in code, as opposed to the word "Set".
