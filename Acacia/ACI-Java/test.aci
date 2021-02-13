@@ -1,7 +1,0 @@
-let l1 = [1,2,3,4];
-let lc = l1;
-let l2 = lc.copy();
-
-lc.pop();
-
-println(l1, l2);
