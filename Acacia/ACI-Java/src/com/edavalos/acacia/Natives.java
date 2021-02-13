@@ -597,10 +597,10 @@ public final class Natives {
                     if (!(arguments.get(0) instanceof AcaciaSet))
                         throw new RuntimeError(location, "'" + arguments.get(0) + "' is not a set.");
 
-                    List<Object> current = ((AcaciaSet) arguments.get(0)).getAll();
-                    List<Object> copy = new ArrayList<>(current.size());
-                    Collections.copy(copy, current);
-                    return new AcaciaSet(copy);
+//                    List<Object> current = ((AcaciaSet) arguments.get(0)).getAll();
+//                    List<Object> copy = new ArrayList<>(current.size());
+//                    Collections.copy(copy, current);
+                    return new AcaciaSet(new ArrayList<Object>(((AcaciaSet) arguments.get(0)).getAll()));
                 }
 
                 @Override

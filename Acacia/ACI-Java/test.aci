@@ -1,7 +1,7 @@
 let l1 = [1,2,3,4];
+let lc = l1;
+let l2 = lc.copy();
 
-let l2 = l1.copy();
+lc.pop();
 
-l1.pop();
-
-println(l1, "\n", l2);
+println(l1, l2);
