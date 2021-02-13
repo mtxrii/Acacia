@@ -234,8 +234,8 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitClassStmt(Stmt.Class stmt) {
-        if (nestedBlocks.size() > 1) {
-            Acacia.error(stmt.name, "Classes can only be declared at top level");
+        if (nestedBlocks.peek() != BlockType.NONE) {
+            Acacia.error(stmt.name, "Classes cannot be declared inside functions");
             return null;
         }
 
@@ -338,6 +338,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
     public Void visitOpenStmt(Stmt.Open stmt) {
         if (nestedBlocks.size() > 1) {
             Acacia.error(stmt.keyword, "'Open' can only be used in outermost scope.");
+            return null;
         }
         resolve(stmt.file);
         return null;

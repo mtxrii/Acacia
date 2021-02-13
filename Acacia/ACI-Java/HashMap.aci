@@ -1,0 +1,5 @@
+class Y {}
+
+def func() {
+    class X {}
+}
