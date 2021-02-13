@@ -336,8 +336,8 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>  {
 
     @Override
     public Void visitOpenStmt(Stmt.Open stmt) {
-        if (nestedBlocks.size() > 1) {
-            Acacia.error(stmt.keyword, "'Open' can only be used in outermost scope.");
+        if (scopes.size() > 0) {
+            Acacia.error(stmt.keyword, "'open' can only be used in outermost scope.");
             return null;
         }
         resolve(stmt.file);
