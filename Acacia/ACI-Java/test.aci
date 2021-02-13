@@ -1,5 +1,3 @@
-let a = "ab";
-let b = "b";
-let c = "c";
+open "HashMap";
 
-println(a[0].charCode(), b.charCode(), c.charCode());
+println(hashStr("hdiwah"));

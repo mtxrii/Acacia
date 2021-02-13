@@ -946,7 +946,7 @@ public final class Natives {
                     if (str.length() == 0)
                         throw new RuntimeError(location, "String is empty");
 
-                    return str.codePointAt(0);
+                    return str.codePointAt(0) + 0.0;
                 }
 
                 @Override
