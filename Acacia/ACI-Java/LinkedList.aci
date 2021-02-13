@@ -1,7 +1,7 @@
 // Acacia implementation of a simple linked list.
 // Do 'open "LinkedList"' if you'd like to use this object in your code.
 
-class LinkedListNode {
+class _LinkedListNode {
     init(contents, nextNode) {
         this.contents = contents;
         this.nextNode = nextNode;
@@ -16,7 +16,7 @@ class LinkedList {
 
     // Adds an element to the end of the list.
     push(elem) {
-        this.head = LinkedListNode(elem, this.head);
+        this.head = _LinkedListNode(elem, this.head);
         this.size = this.size + 1;
     }
 
