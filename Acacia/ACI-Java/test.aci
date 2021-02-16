@@ -1,3 +1,9 @@
 open "HashMap";
 
-println(hashStr("hdiwah"));
+// let map = HashMap();
+// map.set("a", "1");
+// map.set("b", "2");
+// map.set("c", "3");
+
+let x = "ababf3frf  fesf e fe";
+println(getHash(x)); // figure out mod

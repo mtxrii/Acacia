@@ -1,11 +1,12 @@
 // Acacia implementation of a simple hash map.
 // Do 'open "HashMap"' if you'd like to use this object in your code.
 
-def hashStr(str) {
+def getHash(obj) {
     let hash = 0;
-    for (let i = 0; i < len(str); i++) {
-        let code = str[i].charCode();
-        hash = hash + code;
+    let str = convert(obj, "string");
+    foreach (let c; str;) {
+        hash = hash + c.charCode();
     }
     return hash;
 }
+
