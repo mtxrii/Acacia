@@ -5,5 +5,10 @@ open "HashMap";
 // map.set("b", "2");
 // map.set("c", "3");
 
-let x = "ababf3frf  fesf e fe";
-println(getHash(x)); // figure out mod
+let x = [nil,nil,nil];
+println(getHash(x));
+
+let y = HashMap();
+println(y.contents);
+
+assert(true, "test");

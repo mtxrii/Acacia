@@ -649,17 +649,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     // Determines whether a given value is considered true
     private boolean isTruthy(Object object) {
-        // Anything nil is false
-        if (object == null) return false;
-
-        // Any boolean is just itself
-        if (object instanceof Boolean) return (boolean)object;
-
-        // Any number is false only if its value is zero
-        if (object instanceof Double) return ((double)object != 0.0);
-
-        // Anything else is true
-        return true;
+        return Acacia.isTruthy(object);
     }
 
     // Determined whether two values are equal

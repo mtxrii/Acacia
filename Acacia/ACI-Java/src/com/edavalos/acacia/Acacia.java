@@ -186,6 +186,21 @@ public final class Acacia {
         return object.toString();
     }
 
+    // Determines an object's truthiness
+    public static boolean isTruthy(Object object) {
+        // Anything nil is false
+        if (object == null) return false;
+
+        // Any boolean is just itself
+        if (object instanceof Boolean) return (boolean)object;
+
+        // Any number is false only if its value is zero
+        if (object instanceof Double) return ((double)object != 0.0);
+
+        // Anything else is true
+        return true;
+    }
+
     // Determines an object's "weight", or precedence based on size / length / order, etc
     public static double weight(Object object) {
         if (object == null) {

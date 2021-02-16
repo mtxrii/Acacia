@@ -468,6 +468,35 @@ public final class Natives {
                 public String toString() {
                     return "<native fn " + name + ">";
                 }
+            },
+
+            // 'assert(boolean, string)' - throws an error with given message if boolean is false.
+            new AcaciaCallable() {
+                final String name = "assert";
+
+                @Override
+                public String name() {
+                    return name;
+                }
+
+                @Override
+                public int arity() {
+                    return 2;
+                }
+
+                @Override
+                public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
+                    if (!Acacia.isTruthy(arguments.get(0)))
+                        throw new RuntimeError(location, "Assertion failed: " + arguments.get(1));
+
+                    return null;
+
+                }
+
+                @Override
+                public String toString() {
+                    return "<native fn " + name + ">";
+                }
             }
     );
 
