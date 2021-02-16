@@ -135,8 +135,8 @@ public final class Natives {
                 @Override
                 public Object call(Interpreter interpreter, List<Object> arguments, Token location) {
                     Object arg = arguments.get(0);
-                    if (arg instanceof List) {
-                        return (double)(((List) arg).size());
+                    if (arg instanceof AcaciaSet) {
+                        return (double)(((AcaciaSet) arg).cSize());
                     }
                     else if (arg instanceof String) {
                         return (double)(((String) arg).length());
