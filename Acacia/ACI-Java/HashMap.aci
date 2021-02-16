@@ -25,5 +25,17 @@ class HashMap {
         }
     }
 
+    set(key, value) {
+        assert(key != nil, "HashMap keys cannot be nil");
+
+        let k = getHash(key);
+        if ((this.contents)[k] == nil) {
+            this.contents.replace(k, [MapBucket(key, value)]);
+        }
+        else {
+            this.contents.get(k).push(MapBucket(key, value));
+        }
+    }
+
 
 }
