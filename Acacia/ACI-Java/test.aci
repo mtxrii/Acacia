@@ -1,14 +1,6 @@
 open "HashMap";
 
-// let map = HashMap();
-// map.set("a", "1");
-// map.set("b", "2");
-// map.set("c", "3");
-
-let x = [nil,nil,nil];
-println(getHash(x));
-
-let y = HashMap();
-println(y.contents);
-
-assert(true, "test");
+let map = HashMap();
+map.set(12, "1 2"); //99
+map.set(15, "1 5"); //102
+map.set(24, "2 4"); //102

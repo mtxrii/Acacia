@@ -7,6 +7,23 @@ def getHash(obj) {
     foreach (let c; str;) {
         hash = hash + c.charCode();
     }
-    return hash;
+    return hash % 1028;
 }
 
+class MapBucket {
+    init(key, value) {
+        this.key = key;
+        this.value = value;
+    }
+}
+
+class HashMap {
+    init() {
+        this.contents = [];
+        for (let i = 0; i < 1028; i++) {
+            this.contents.push(nil);
+        }
+    }
+
+
+}
