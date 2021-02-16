@@ -1,6 +1,8 @@
 open "HashMap";
 
 let map = HashMap();
-map.set(12, "1 2"); //99
-map.set(15, "1 5"); //102
-map.set(24, "2 4"); //102
+map.set(12, "1-2"); //99
+map.set(15, "1-5"); //102
+map.set(24, "2-4"); //102
+
+println(map.get(12), map.get(15), map.get(24), map.get(36));

@@ -37,5 +37,20 @@ class HashMap {
         }
     }
 
+    get(key) {
+        if (key == nil) return nil;
+
+        let k = getHash(key);
+        let buckets = this.contents.get(k);
+
+        if (buckets == nil) return nil;
+        if (len(buckets) == 1) return buckets[0].value;
+        else {
+            for (let i = 0; i < len(buckets); i++) {
+                if (buckets[i].key == key) return buckets[i].value;
+            }
+        }
+    }
+
 
 }
