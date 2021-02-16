@@ -14,6 +14,7 @@
 * inherits() - returns true if a given object inherits a given class. Takes in an object and a class.
 * instanceof() - returns true if a given object is an instance of a given class or its superclass.
 * len() - gets the number of elements in something. Takes in a set or string.
+* assert() - throws an error with a specified message if a given expression is false. Takes in an expression and a string.
 * *read() - gets a string from a file. Takes in a string representing the file path.
 * *write() - writes a string to a file. Takes in a string representing the file path, and a string to write to file.
 
