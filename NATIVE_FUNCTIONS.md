@@ -41,12 +41,12 @@
 * Set.clear() - empties a set. Takes in no arguments.
 
 #### Time
->These functions are part of the [Time box]()
+>These functions are part of the [Time box]().
 * *Time.now() - gets system time.
 * *Time.diff() - returns the difference as a time object between two time objects. Takes in two time objects.
 
 #### Math
->These functions are part of the [Math box]()
+>These functions are part of the [Math box]().
 * Math.random(min, max) - gets random number between the given minimum and maximum numbers.
 * Math.abs(x) - returns absolute value of x.
 * Math.ceil(x) - rounds to the nearest whole number above x.
@@ -56,3 +56,11 @@
 * Math.max(a, b) - Returns whichever number is smaller.
 * Math.quadratic(a, b, c) - Runs the quadratic formula on the given 3 numbers, and returns a set with two elements: The positive result, and the negative result.
 * Math.setSum(set) - Returns the summation of every element in the set. Assumes elements in set are all numbers.
+
+### HashMap
+>These functions are part of the [HashMap box](). `Dict` represents an example variable of type HashMap
+* Dict.set(key, value) - saves a value with a given key in the map.
+* Dict.get(key) - looks up a value with a given key in the map and returns it.
+* Dict.getKeys() - returns a set of all keys in the map.
+* Dict.getValues() - returns a set of all values in the map.
+* Dict.getPairs() - puts each key with their value in their own set, and returns a set of all those sets.
