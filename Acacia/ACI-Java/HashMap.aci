@@ -33,7 +33,14 @@ class HashMap {
             this.contents.replace(k, [MapBucket(key, value)]);
         }
         else {
-            this.contents.get(k).push(MapBucket(key, value));
+            let spot = this.contents.get(k);
+            foreach (let old_b; spot;) {
+                if (old_b.key == key) {
+                    old_b.value = value;
+                    return;
+                }
+            }
+            spot.push(MapBucket(key, value));
         }
     }
 
