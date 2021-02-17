@@ -52,5 +52,27 @@ class HashMap {
         }
     }
 
+    getKeys() {
+        let keys = [];
+        foreach (let bucketSet; this.contents;) {
+            if (bucketSet == nil) next;
+            foreach (let bucket; bucketSet;) {
+                keys.push(bucket.key);
+            }
+        }
+        return keys;
+    }
+
+    getValues() {
+        let vals = [];
+        foreach (let bucketSet; this.contents;) {
+            if (bucketSet == nil) next;
+            foreach (let bucket; bucketSet;) {
+                vals.push(bucket.value);
+            }
+        }
+        return vals;
+    }
+
 
 }
