@@ -74,5 +74,16 @@ class HashMap {
         return vals;
     }
 
+    getPairs() {
+        let pairs = [];
+        foreach (let bucketSet; this.contents;) {
+            if (bucketSet == nil) next;
+            foreach (let bucket; bucketSet;) {
+                pairs.push([bucket.key, bucket.value]);
+            }
+        }
+        return pairs;
+    }
+
 
 }
