@@ -14,3 +14,6 @@ map.set(12, "1-d"); //99
 map.set(24, "2-e"); //102
 
 println(map.get(12), map.get(15), map.get(24), map.get(36));
+
+println(map.getKeys(), map.getValues());
+println(map.getPairs());
