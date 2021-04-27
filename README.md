@@ -9,7 +9,7 @@ Programming in Acacia should feel familiar, with a syntax much like javascript's
 let x = 16;
 
 while (x > 0) {
-    //Print numbers divisible by 4.
+    // Print numbers divisible by 4.
     if (x % 4 == 0) println(x);
     x--;
 }
@@ -18,19 +18,20 @@ while (x > 0) {
 Variables are dynamically typed and garbage collected. Loops and blocks use brackets. Statements end in semicolons. Comments start with double backslashes. All of that.
 
 But...
-### There's only 3 primitive types.
-Strings, Numbers and Booleans. 
+* ### There's only 3 primitive types.
+Strings, Numbers and Booleans.
+```javascript
+```
 
-No need for chars. Or ints. Any single character string is still a string, and any number with no decimal is still a double (even if it ends with .0). Any internal conversions are automatically taken care of.
+* ### Closured functions, classes and variables.
+Open new blocks anywhere to create new environments, and save them for later use.
+```javascript
+```
 
-### Built in lists.
-Or sets, as they're called in Acacia, but same thing. Much like in python, no instantiations are necesary. let `set = [1,2,3]` and you're set. Sets also have a whole *set* of built in methods that harness their inner array-ness. Use them as a stack, queue, tuple, etc.
-
-### Closured functions, classes and variables.
-Blocks can be declared anywhere, not just in functions, classes and loops. At any point, a complete separation from the current environment is possible. Define a variable outside a scope, write some code inside, assign the result to the variable, and voila. All is stored under the hood, with any variables still live and accessible by whatever you pulled out from the block. This allows for easy test blocks, iterating functions, singleton classes, and singular variable imports. Speaking of which...
-
-### Open a box.
-Boxes, or packages, can represent anything from a full package extension to another one of your scripts you also want to load. Much like JavaScript, your starting script is the entry point, which then calls other boxes to be opened (with the `open` keyword) allowing extendable scripts the freedom to run their own code, modify your's, implement an object or data structure, or completely emerse you in a new api environment. And any code you write can be opened by another script. Just put everything you want to keep private in its own block.
+* ### Package, ship & open boxes.
+Load other scripts from your main program with the `open` keyword. Everything not in a block is automatically public and ready to be imported. Split up code into various files or import some libraries.
+```javascript
+```
 
 # Test it out
 Once compiled (or downloaded), fire it up in REPL mode by simply running Acacia.
@@ -40,7 +41,7 @@ Once compiled (or downloaded), fire it up in REPL mode by simply running Acacia.
 
 Or specify a `.aci` file to run.
 ```
-.\acacia testScript.aci
+.\acacia foo.aci
 ```
 
 ## Write some programs
