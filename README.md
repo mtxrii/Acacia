@@ -1,7 +1,7 @@
 # Acacia 🌱
 Acacia tries to be a clean, elegant and modern OOP scripting language with elements of functional programming.
 
-This project is largely based off of Bob Nystrom's [Lox](https://github.com/munificent/craftinginterpreters), it is interpreted top down using a tree-walker written in Java. Most of the syntax and elegant scoping rules are inspired by that of Lox's, however it also has support for modern convenience utilities and features of the realms of python and ruby. An infinite thanks to Nystrom's [book](http://craftinginterpreters.com/) though, which guided me through laying the foundations for this project.
+This project is largely based off of Bob Nystrom's [Lox](https://github.com/munificent/craftinginterpreters), it is interpreted top down using a tree-walker written in Java. Most of the syntax and elegant scoping rules are inspired by that of Lox's, however it also has support for modern convenience utilities and features of the realms of python and ruby. An infinite thanks to Nystrom's [Crafting Interpreters](http://craftinginterpreters.com/) though, which guided me through laying the foundations for this project.
 
 ## Features
 Programming in Acacia should feel familiar, with a syntax much like javascript's.
@@ -21,6 +21,9 @@ But...
 * ### There's only 3 primitive types.
 Strings, Numbers and Booleans.
 ```javascript
+let x = "string";
+let y = 3.5 + 2;
+let z = (x and y) or false //true
 ```
 
 * ### Closured functions, classes and variables.
@@ -34,7 +37,7 @@ Load other scripts from your main program with the `open` keyword. Everything no
 ```
 
 # Test it out
-Once compiled (or downloaded), fire it up in REPL mode by simply running Acacia.
+Once compiled (or downloaded), fire it up in REPL mode.
 ```
 .\acacia
 ```
