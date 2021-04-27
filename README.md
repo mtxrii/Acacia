@@ -27,13 +27,30 @@ let z = (x and y) or false //true
 ```
 
 * ### Closured functions, classes and variables.
-Open new blocks anywhere to create new environments, and save them for later use.
+Every new block creates a new environment, and preserves it outside of the block.
 ```javascript
+def makeCounter() {
+  let i = 0;
+  def count() {
+    i ++;
+    println(i);
+  }
+
+  return count;
+}
+
+let counter = makeCounter();
+counter(); // "1".
+counter(); // "2".
+counter(); // "3".
 ```
 
 * ### Package, ship & open boxes.
 Load other scripts from your main program with the `open` keyword. Everything not in a block is automatically public and ready to be imported. Split up code into various files or import some libraries.
 ```javascript
+open "Math.aci"
+open "HashMap.aci"
+open "Time.aci"
 ```
 
 # Test it out
