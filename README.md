@@ -1,10 +1,10 @@
 # Acacia 🌱
-Acacia strives to be a clean, elegant and modern OOP language with elements of functional programming.
+Acacia tries to be a clean, elegant and modern OOP scripting language with elements of functional programming.
 
-This project is largely based off of Bob Nystrom's [Lox](https://github.com/munificent/craftinginterpreters), it is interpreted top down using a tree-walker written in Java. Most of the syntax and elegant scoping rules are parallel to that of Lox's, however it also has support for modern convenience utilities and features of the realms of python and ruby. An infinite thanks to Nystrom's [book](http://craftinginterpreters.com/) though, which guided me through laying the foundations for this project.
+This project is largely based off of Bob Nystrom's [Lox](https://github.com/munificent/craftinginterpreters), it is interpreted top down using a tree-walker written in Java. Most of the syntax and elegant scoping rules are inspired by that of Lox's, however it also has support for modern convenience utilities and features of the realms of python and ruby. An infinite thanks to Nystrom's [book](http://craftinginterpreters.com/) though, which guided me through laying the foundations for this project.
 
 ## Features
-Programming in Acacia should instantly feel familiar, with a syntax much like javascript's.
+Programming in Acacia should feel familiar, with a syntax much like javascript's.
 ```javascript
 let x = 16;
 
@@ -44,5 +44,5 @@ Or specify a `.aci` file to run.
 ```
 
 ## Write some programs
-Acacia is a scripting language, meaning files are read and statements are evaluated top to bottom. No main() method or other entry point. Just start scripting away. Any plaintext file can be read, but for the sake of uniformity, acacia code is typically in files with an `.aci` extension.
+Acacia is a scripting language, meaning files are read and statements are evaluated top to bottom. No main() method or other entry point. Just start scripting away. Any plaintext file can be read, but for the sake of uniformity, code lives in `.aci` files.
 Learn more about language specifics in the [docs](DOCS.md).
