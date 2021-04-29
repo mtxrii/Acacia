@@ -1,8 +1,7 @@
 # Acacia 🌱
-At a glance, Acacia feels a lot like JavaScript. That's intentional, as it's designed to not only feel familiar, but be even more intuitive than your average dynamically typed c-style scripting language.
+At a glance, Acacia seems a lot like JavaScript. So the syntax should feel familiar.
 
 # Data Types
-Acacia contains our typical primitive types.
 * Booleans - true or false.
 * Strings - text enclosed in double quotes. Access individual chars with `[]`.
 * Numbers - ints and doubles are treated the same.
