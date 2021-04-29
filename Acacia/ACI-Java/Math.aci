@@ -60,6 +60,7 @@ let Math;
             ];
         }
         setSum(set) {
+            assert(type(set) == "set", set + " is not a set");
             let total = 0;
             foreach (let elem; set;) {
                 total = total + elem;

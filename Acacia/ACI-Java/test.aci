@@ -2,3 +2,9 @@ open "Math";
 let M = Math;
 
 println(M.max(3, 7));
+
+let x = ["test"];
+assert(type(x) == "set", "Failed");
+
+let y = [1,2,3];
+println(M.setSum(y));
