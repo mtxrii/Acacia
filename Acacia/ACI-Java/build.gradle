@@ -1,0 +1,24 @@
+plugins {
+	id "java-library"
+}
+
+
+group "com.edavalos"
+version "0.1.0"
+
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// none... for now >:)
+}
+
+
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+	
+	sourceCompatibility = JavaVersion.VERSION_14
+	targetCompatibility = JavaVersion.VERSION_14
+}

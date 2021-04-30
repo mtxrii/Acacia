@@ -1,0 +1,14 @@
+plugins {
+	id "cpp-library"
+}
+
+
+group "com.edavalos"
+version "0.1.0"
+
+
+model {
+	components {
+		main(NativeExecutableSpec) {}
+	}
+}
