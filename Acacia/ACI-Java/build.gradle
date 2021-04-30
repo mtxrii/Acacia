@@ -3,8 +3,8 @@ plugins {
 }
 
 
-group "com.edavalos"
-version "0.1.0"
+group properties["group"]
+version properties["version"]
 
 
 repositories {
