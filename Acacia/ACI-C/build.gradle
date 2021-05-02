@@ -1,0 +1,14 @@
+plugins {
+	id "cpp-library"
+}
+
+
+group properties["group"]
+version properties["version"]
+
+
+model {
+	components {
+		main(NativeExecutableSpec) {}
+	}
+}
